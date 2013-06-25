@@ -1,0 +1,15 @@
+{
+    "name": "lelesys/plugin-news",
+    "description": "News plugin for TYPO3 Neos",
+    "type":"typo3-flow-plugin",
+    "license": "GPL-3.0+",
+    "authors": [
+        {
+            "name": "Pankaj Lele",
+            "email": "pankaj@lelesys.com"
+        }
+    ],
+    "require": {
+
+    }
+}
