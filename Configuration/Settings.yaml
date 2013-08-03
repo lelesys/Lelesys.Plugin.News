@@ -1,0 +1,11 @@
+Lelesys:
+  Plugin:
+    News:
+      # Default template paths. DO NOT remove these lines
+      templateRootPath: 'resource://Lelesys.Plugin.News/Private/Templates/'
+      partialRootPath: 'resource://Lelesys.Plugin.News/Private/Partials/'
+      layoutRootPath: 'resource://Lelesys.Plugin.News/Private/Layouts/'
+      # Set Lastest News Limit
+      limitLatestNews: '2'
+
+

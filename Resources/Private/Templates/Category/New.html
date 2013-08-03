@@ -1,0 +1,45 @@
+<f:layout name="Default" />
+
+<f:section name="Title"></f:section>
+
+<f:section name="Content">
+	<div class="main-container">
+		<h2>Add Category</h2>
+		<f:form action="create" name="newCategory" enctype="multipart/form-data">
+			<div class="control-group">
+				<label for="title">Title</label>
+				<div class="controls">
+					<f:form.textfield property="title" id="title" class="span3 title-category"/>
+					<f:render partial="FormErrors" arguments="{for: 'newCategory.title'}" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label for="image">Image</label>
+				<div class="controls">
+					<f:form.upload property="image" id="image" class="img span3"/>
+				</div>
+			</div>
+				<div class="control-group">
+					<label for="parentcategory">Parent Category</label>
+					<div class="controls">
+						<f:form.select options="{newsParentCategory}" optionLabelField="title" prependOptionLabel="select category" id="parentCategory" property="parentCategory" class="span3"></f:form.select>
+					</div>
+				</div>
+			<div class="control-group">
+				<label for="description">Description</label>
+				<div class="controls">
+					<f:form.textarea rows="4" cols="8" property="description" id="description" class="span3"/>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<div class="controls">
+					<f:form.submit class="btn createCategory" value="Create"/>
+				</div>
+			</div>
+		</f:form>
+	</div>
+	<script>
+		checkTitle = "{f:uri.action(package:'Lelesys.Plugin.News', action:'checkTitle', controller:'Category')}";
+	</script>
+</f:section>

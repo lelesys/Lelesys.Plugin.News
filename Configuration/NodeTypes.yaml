@@ -1,0 +1,90 @@
+'Lelesys.Plugin.News:NewsList':
+  superTypes:
+    - 'TYPO3.Neos:Plugin'
+  ui:
+    label: 'News List'
+    group: Plugins
+    inlineEditable: true
+    icon: 'icon-puzzle-piece'
+
+'Lelesys.Plugin.News:LatestNews':
+  superTypes:
+    - 'TYPO3.Neos:Plugin'
+  ui:
+    label: 'Latest News'
+    group: Plugins
+    inlineEditable: true
+    icon: 'icon-puzzle-piece'
+    inspector:
+      groups:
+        newsoption:
+          label: News Options
+  properties:
+    limitNews:
+      type: string
+      defaultValue: '5'
+      ui:
+        label: 'Limit Number of News'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+
+'Lelesys.Plugin.News:AdminNewsList':
+  superTypes:
+    - 'TYPO3.Neos:Plugin'
+  ui:
+    label: 'Admin News List'
+    group: Plugins
+    inlineEditable: true
+    icon: 'icon-puzzle-piece'
+
+'Lelesys.Plugin.News:CategoryList':
+  superTypes:
+    - 'TYPO3.Neos:Plugin'
+  ui:
+    label: 'Category List'
+    inlineEditable: true
+    icon: 'icon-puzzle-piece'
+
+'Lelesys.Plugin.News:AdminCategoryList':
+  superTypes:
+    - 'TYPO3.Neos:Plugin'
+  ui:
+    label: 'Admin Category List'
+    inlineEditable: true
+    icon: 'icon-puzzle-piece'
+
+'Lelesys.Plugin.News:TagList':
+  superTypes:
+    - 'TYPO3.Neos:Plugin'
+  ui:
+    label: 'Tag List'
+    group: Plugins
+    inlineEditable: true
+    icon: 'icon-puzzle-piece'
+
+'Lelesys.Plugin.News:AdminTagList':
+  superTypes:
+    - 'TYPO3.Neos:Plugin'
+  ui:
+    label: 'Admin Tag List'
+    group: Plugins
+    inlineEditable: true
+    icon: 'icon-puzzle-piece'
+
+'Lelesys.Plugin.News:SearchNews':
+  superTypes:
+    - 'TYPO3.Neos:Plugin'
+  ui:
+    label: 'Search News'
+    group: Plugins
+    inlineEditable: true
+    icon: 'icon-puzzle-piece'
+
+'Lelesys.Plugin.News:Archive':
+  superTypes:
+    - 'TYPO3.Neos:Plugin'
+  ui:
+    label: 'Archive'
+    inlineEditable: true
+    icon: 'icon-puzzle-piece'

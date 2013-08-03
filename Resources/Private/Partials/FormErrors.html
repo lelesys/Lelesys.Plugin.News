@@ -1,0 +1,10 @@
+<f:form.validationResults >
+	<f:if condition="{validationResults.flattenedErrors}">
+		<div class="alert alert-error form-error error">
+			<button data-dismiss="alert" class="close" type="button">×</button>
+			<f:for each="{validationResults.flattenedErrors}" key="propertyPath" as="errors">
+				<f:for each="{errors}" as="error">{error}</f:for>
+			</f:for>
+		</div>
+	</f:if>
+</f:form.validationResults>

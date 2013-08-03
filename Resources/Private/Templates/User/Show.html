@@ -1,0 +1,63 @@
+<f:layout name="Default" />
+
+<f:section name="Title">Show user "{user.name}"</f:section>
+
+<f:section name="Content">
+	<table>
+		<tr>
+			<th>Gender</th>
+			<td>{user.gender}</td>
+		</tr>
+
+		<tr>
+			<th>Address</th>
+			<td>{user.address}</td>
+		</tr>
+
+		<tr>
+			<th>Phone no</th>
+			<td>{user.phoneNo}</td>
+		</tr>
+
+		<tr>
+			<th>Profile image</th>
+			<td>{user.profileImage}</td>
+		</tr>
+
+		<tr>
+			<th>Create date</th>
+			<td>{user.createDate -> f:format.date(format: 'Y-m-d H:i')}</td>
+		</tr>
+
+		<tr>
+			<th>Updated date</th>
+			<td>{user.updatedDate -> f:format.date(format: 'Y-m-d H:i')}</td>
+		</tr>
+
+		<tr>
+			<th>News</th>
+			<td>{user.news}</td>
+		</tr>
+
+		<tr>
+			<th>Name</th>
+			<td>{user.name}</td>
+		</tr>
+
+		<tr>
+			<th>Electronic addresses</th>
+			<td>{user.electronicAddresses}</td>
+		</tr>
+
+		<tr>
+			<th>Primary electronic address</th>
+			<td>{user.primaryElectronicAddress}</td>
+		</tr>
+
+		<tr>
+			<th>Accounts</th>
+			<td>{user.accounts}</td>
+		</tr>
+	</table>
+	<f:link.action action="index">Back</f:link.action>
+</f:section>

@@ -1,0 +1,192 @@
+/***************************List View*********************/
+h2 {
+	font-size: 22px;
+    margin-top: 0;
+    text-transform: capitalize;
+}
+.main-container {
+    padding: 0 15px 15px 30px;
+}
+#sub-nav {
+	margin-bottom: 10px;
+}
+.title-link a {
+    font-size: 16px;
+    font-weight: bold;
+}
+.container-fluid .date{
+	text-transform: capitalize;
+    color: #999999;
+    font-size: 12px;
+    line-height: 20px;
+	margin-left: 0px;
+}
+.news_footer span{
+	margin: 0 65px 0 0;
+	display: inline;
+}
+.news_footer {
+	margin: 20px 0px 20px 0px;
+	border-color: #DDDDDD #FFFFFF;
+    border-style: solid;
+    border-width: 1px;
+    color: #777777;
+    padding: 3px;
+	margin-left: 0px !important;
+	min-height: 0 !important;
+    line-height: 15px;
+}
+.horizontal{
+	border-bottom: 1px solid;
+	border-color: #F5F5F5;
+	padding: 10px 10px 10px 0px;
+	margin-bottom: 12px;
+}
+.container-fluid .asset-img {
+	float: left;
+	margin-right: 10px;
+}
+/************************ show view *********************/
+.rel_title p {
+	background-color: #373737;
+    color: #FFFFFF;
+    font: bold 14px arial;
+    height: 15px;
+    padding: 5px 0 5px 8px;
+	text-transform: uppercase;
+}
+.rel_title {
+	margin-bottom: 10px;
+}
+.show_link ul{
+	padding-left: 15px;
+}
+.rel_title li {
+    border-bottom: 1px dotted #C4C4C4;
+    padding: 5px 0 5px 15px;
+}
+.news_content_left {
+	float: left;
+}
+.show_link p, .category_title span{
+	color: #666666;
+}
+.show_link{
+	margin-left: 0px !important;
+}
+.container-fluid ul {
+	list-style: none;
+	margin-left: 0px !important;
+}
+.news_descript {
+	float: left;
+    margin: 20px 0px 10px 0px;
+	width: 100%;
+}
+.news_content_left .span5 {
+	margin-top: 20px;
+}
+.news_content_left .relate-news,.news_content_left .relate-news-links{
+	margin-left: 0px !important;
+}
+.news_content_left .relate-news {
+	margin-right: 20px;
+}
+.container-fluid .date{
+	text-transform: capitalize;
+    color: #999999;
+    font-size: 12px;
+    line-height: 20px;
+	margin-left: 0px;
+}
+.news-rel {
+	margin-left: 0px !important;
+}
+
+/************************ add news view *********************/
+
+.main-container .tab-size {
+	width: 57%;
+}
+
+.main-container .tab-size .tab-content {
+	padding-left: 14px;
+}
+
+.main-container .tab-size .btn {
+	margin-left: 15px;
+}
+
+.remove-file {
+	margin-right: 32px;
+    margin-top: -25px;
+}
+.news_listimg .demo-1{
+	margin-top: 20px;
+}
+
+.nice-edit-size {
+	margin-left: 0px !important;
+	margin-bottom: 15px;
+}
+
+.hide-show-file {
+	margin-right: 11px;
+    margin-top: -25px;
+}
+
+/*********************Search*********************/
+.searchbtn {
+	margin-left: 15px;
+}
+
+.error {
+	width: 33%;
+}
+.category-title-error {
+	width: 19.3%;
+}
+
+/************** responsive css for news list view *******************/
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+	.news_footer span.date {
+		display: block;
+		margin-bottom: 6px;
+	}
+
+	.news_footer span {
+		display: inline-block;
+		margin-bottom: 3px;
+		margin-right: 18px;
+	}
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+	.news_footer span.date {
+		display: block;
+		margin-bottom: 6px;
+	}
+
+	.news_footer span {
+		display: inline-block;
+		margin-bottom: 3px;
+		margin-right: 18px;
+	}
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+	.news_footer span.date {
+		display: block;
+		margin-bottom: 6px;
+	}
+
+	.news_footer span {
+		display: inline-block;
+		margin-bottom: 3px;
+		margin-right: 18px;
+	}
+}

@@ -1,0 +1,38 @@
+<f:layout name="Default" />
+
+<f:section name="Title"></f:section>
+
+<f:section name="Content">
+	<div id="sub-nav" class="span7">
+		<h2>Category List</h2>
+		<f:render partial="FlashMessage" arguments="{severityName: flashmessage}" />
+	</div>
+	<div>
+		<f:if condition="{categories}">
+			<f:then>
+				<div class="span7">
+					<f:widget.paginate objects="{categories}" as="categoriesPagination" configuration="{itemsPerPage: 5}">
+						<table class="table table-striped table-bordered">
+							<thead>
+								<tr>
+									<th>Category name</th>
+								</tr>
+							</thead>
+							<tbody>
+							<f:for each="{categoriesPagination}" as="category">
+								<tr>
+									<td><f:link.action action="show" arguments="{category: category}">{category.title}</f:link.action></td>
+								</tr>
+							</f:for>
+							</tbody>
+						</table>
+					</f:widget.paginate>
+				</div>
+			</f:then>
+			<f:else>
+				<div class="clearfix"></div>
+				<p>No categories created yet.</p>
+			</f:else>
+		</f:if>
+	</div>
+</f:section>

@@ -1,0 +1,82 @@
+<f:layout name="Default" />
+
+<f:section name="Title"></f:section>
+
+<f:section name="Content">
+	<div class="news-list-container container-fluid">
+		<div class="horizontal">
+			<h2>News List</h2>
+			<f:render partial="FlashMessage" arguments="{severityName: flashmessage}" />
+			<f:link.action action="new"><i class="icon-plus-sign icon-plus-image"></i> &nbsp; Add News</f:link.action>
+		</div>
+		<f:if condition="{allNews}">
+			<f:then>
+				<f:widget.paginate objects="{allNews}" as="newsPagination" configuration="{itemsPerPage: 5}">
+					<f:for each="{newsPagination}" as="news">
+						<div class="clearfix">
+							<div class="clearfix">
+								<div class="title-link">
+									<f:link.action action="show" arguments="{news: news}">{news.title}</f:link.action>
+									<p class="date">Published on {news.dateTime -> f:format.date(format: 'j M y, h:i A')}</p>
+								</div>
+								<article>
+									<f:if condition="{news.assets}">
+										<f:then>
+											<div class="asset-img">
+												<f:for each="{news.assets}" as="asset" iteration="fooIterator">
+													{f:if(condition: fooIterator.isLast, then: '<img src="{f:uri.resource(resource: asset.originalResource)}" class="thumbnail" alt="image" width="100" />')}
+												</f:for>
+											</div>
+										</f:then>
+										<f:else>
+											<div class="asset-img">
+												<img src="{f:uri.resource(path:'images/no_photo.jpg')}" alt="image" width="100" />
+											</div>
+										</f:else>
+									</f:if>
+									<div>
+										<p>{news.subTitle}</p>
+										<p class="date"><f:link.action action="show" arguments="{news: news}">read more</f:link.action></p>
+									</div>
+								</article>
+							</div>
+							<div class="news_footer">
+								<f:if condition="{news.authorName}"><span class="date">author name: &nbsp;{news.authorName}</span></f:if>
+								<span><f:link.action action="edit" arguments="{news: news}" rel="tooltip" title="Edit" class="tooltip-demo"><i class="icon-pencil"></i> Edit</f:link.action></span>
+								<span>
+									<f:link.action action="delete" arguments="{news: news}" rel="tooltip" title="Delete" class="tooltip-demo delete"><i class="icon-trash"></i> Delete</f:link.action>
+									<f:form action="delete" name="deleteItem" id="deleteItem" style="display: none;">
+										<f:form.hidden value="DELETE" />
+									</f:form>
+									<script>
+										var deleteMessage = 'Are you sure you want to delete?';
+									</script>
+								</span>
+								<span>
+									<f:if condition="{news.hidden} == 1">
+										<f:then>
+											<f:link.action action="showNews" arguments="{news: news}" class="show-hide-item show-news tooltip-demo" rel="tooltip" title="Show"><i class="icon-eye-open"></i> Show</f:link.action>
+											<f:form action="showNews" name="showItem" id="showHideItem" style="display: none;">
+												<f:form.hidden value="Show" />
+											</f:form>
+										</f:then>
+										<f:else>
+											<f:link.action action="hideNews" arguments="{news: news}" class="show-hide-item hide-news tooltip-demo" rel="tooltip" title="Hide"><i class="icon-eye-close"></i> Hide</f:link.action>
+											<f:form action="hideNews" name="hideItem" id="showHideItem" style="display: none;">
+												<f:form.hidden value="Hide" />
+											</f:form>
+										</f:else>
+									</f:if>
+								</span>
+							</div>
+						</div>
+					</f:for>
+				</f:widget.paginate>
+			</f:then>
+			<f:else>
+				<div class="clearfix"></div>
+				<p>No news created yet.</p>
+			</f:else>
+		</f:if>
+	</div>
+</f:section>

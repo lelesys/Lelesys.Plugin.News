@@ -1,0 +1,22 @@
+<f:layout name="Default" />
+
+<f:section name="Title"></f:section>
+
+<f:section name="Content">
+	<div class="main-container">
+		<h2>Edit tag</h2>
+		<f:form action="update" object="{tag}" name="tag">
+			<div class="control-group">
+				<label for="title">Title</label>
+				<div class="controls">
+					<f:form.textfield property="title" id="title" class="span3"/>
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="controls">
+					<f:form.submit class="btn" value="Update"/>
+				</div>
+			</div>
+		</f:form>
+	</div>
+</f:section>

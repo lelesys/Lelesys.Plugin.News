@@ -1,0 +1,232 @@
+<f:layout name="Default" />
+
+<f:section name="Content">
+	<div class="main-container">
+		<h2>Add News</h2>
+		<f:form action="create" name="newNews" enctype="multipart/form-data">
+			<div class="tabbable tab tab-size">
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#tab1" data-toggle="tab">General</a></li>
+					<li><a href="#tab2" data-toggle="tab">Options</a></li>
+					<li><a href="#tab3" data-toggle="tab">Relations</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="tab1">
+						<div class="control-group">
+							<label for="title">Title</label>
+							<div class="controls">
+								<f:form.textfield class="span5 newsTitle" property="title" id="title" />
+								<f:render partial="FormErrors" arguments="{for: 'newNews.title'}" />
+							</div>
+						</div>
+						<div class="control-group">
+							<label for="subTitle">Sub Title</label>
+							<div class="controls">
+								<f:form.textarea class="span5" rows="4" cols="5" property="subTitle" id="subTitle" />
+							</div>
+						</div>
+						<div class="control-group">
+							<label for="alternativeTitle">Alternative Title</label>
+							<div class="controls">
+								<f:form.textfield class="span5" property="alternativeTitle" id="alternativeTitle" />
+							</div>
+						</div>
+						<div class="control-group">
+							<label for="authorName">Author Name</label>
+							<div class="controls">
+								<f:form.textfield class="span5" property="authorName" id="authorName" />
+							</div>
+						</div>
+						<div class="control-group">
+							<label for="authorEmail">Author Email</label>
+							<div class="controls">
+								<f:form.textfield class="span5" property="authorEmail" id="authorEmail" />
+								<f:render partial="FormErrors" arguments="{for: 'newNews.authorEmail'}" />
+							</div>
+						</div>
+						<div class="control-group">
+							<label for="dateTime">Date time</label>
+							<div class="controls">
+								<f:form.textfield type="datetime" value="{f:format.date(date: 'now', format: 'm/d/Y')}" property="dateTime" id="dateTime" class="datepicker span5"/>
+							</div>
+						</div>
+						<div class="control-group">
+							<label for="archiveDate">Archive date</label>
+							<div class="controls">
+								<f:form.textfield type="datetime" property="archiveDate" id="archiveDate" class="datepicker span5"/>
+							</div>
+						</div>
+						<div class="control-group">
+							<label for="news-description">Description</label>
+							<div class="controls span10 nice-edit-size">
+								<f:form.textarea cols="43" rows="10" property="description" id="news-description" />
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane" id="tab2">
+						<div class="control-group">
+							<label for="categories">Categories</label>
+							<div class="controls">
+							<f:if condition="{newsCategories}">
+								<f:then>
+									<f:form.select class="span5" options="{newsCategories}" optionLabelField="title" id="categories" property="categories" multiple="true" size="7"></f:form.select>
+								</f:then>
+								<f:else>
+									<f:form.select disabled="disabled" class="span5" options="{newsCategories}" optionLabelField="title" id="categories" property="categories" size="7"></f:form.select>
+								</f:else>
+							</f:if>
+							</div>
+						</div>
+						<div class="control-group">
+							<label for="tags">Tags</label>
+							<div class="controls">
+								<f:if condition="{tags}">
+								<f:then>
+									<f:form.select class="span5" options="{tags}" optionLabelField="title" id="tags" property="tags" multiple="true" size="7"></f:form.select>
+							</f:then>
+								<f:else>
+									<f:form.select disabled="disabled" class="span5" options="{tags}" optionLabelField="title" id="tags" property="tags" size="7"></f:form.select>
+							</f:else>
+							</f:if>
+							</div>
+						</div>
+						<div class="control-group">
+							<label for="relatedNews">Related news</label>
+							<div class="controls">
+								<f:if condition="{related}">
+								<f:then>
+									<f:form.select class="span5" options="{related}" optionLabelField="title" id="relatedNews" property="relatedNews" multiple="true" size="7"></f:form.select>
+							</f:then>
+								<f:else>
+									<f:form.select disabled="disabled" class="span5" options="{related}" optionLabelField="title" id="relatedNews" property="relatedNews" size="7"></f:form.select>
+							</f:else>
+							</f:if>
+								</div>
+						</div>
+						<div class="control-group">
+							<label for="keywords">Keywords ( , )</label>
+							<div class="controls">
+								<f:form.textarea class="span5" rows="4" cols="5" property="keywords" id="keywords" />
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane" id="tab3">
+						<label>Media Element</label>
+						<div class="accordion" id="accordionOne">
+							<div class="accordion-group" style="display: none;">
+								<div class="accordion-heading">
+									<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionOne" href="#collapse-media-0">
+										Related Media #0
+									</a>
+									<f:form.hidden class="show-hide-value" value="0" name="media[0][hidden]" />
+									<f:link.external uri="javascript:void(0)" class="asset-toggle hide-asset pull-right hide-show-file tooltip-demo" rel="tooltip" title="Hide"><i class="icon-eye-close"></i> </f:link.external>
+								</div>
+								<div id="collapse-media-0" class="accordion-body collapse in">
+									<div class="accordion-inner">
+										<div class="control-group">
+											<label class="control-label" for="originalResource-0">Image</label>
+											<div class="controls">
+												<f:form.upload name="media[0][originalResource]" id="originalResource-0" />
+											</div>
+										</div>
+										<div class="control-group">
+											<label class="control-label" for="caption-0">Caption</label>
+											<div class="controls">
+												<f:form.textfield class="span5" name="media[0][caption]" id="caption-0" />
+											</div>
+										</div>
+										<div class="control-group">
+											<label class="control-label" for="copyRight-0">Copy right</label>
+											<div class="controls">
+												<f:form.textfield class="span5" name="media[0][copyRight]" id="copyRight-0" />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<f:link.external uri="javascript:void(0)" class="add-more-media">Add more Media</f:link.external>
+						</div>
+						<label>Related Files</label>
+						<div class="accordion" id="accordionTwo">
+							<div class="accordion-group" style="display: none;">
+								<div class="accordion-heading">
+									<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionTwo" href="#collapse-file-0">
+										Related File #0
+									</a>
+									<f:form.hidden class="show-hide-value" value="0" name="file[0][hidden]" />
+									<f:link.external uri="javascript:void(0)" class="asset-toggle hide-asset pull-right hide-show-file tooltip-demo" rel="tooltip" title="Hide"><i class="icon-eye-close"></i> </f:link.external>
+								</div>
+								<div id="collapse-file-0" class="accordion-body collapse in">
+									<div class="accordion-inner">
+										<div class="control-group">
+											<label class="control-label" for="file-originalResource-0">File</label>
+											<div class="controls">
+												<f:form.upload name="file[0][originalFileResource]" id="file-originalResource-0" />
+											</div>
+										</div>
+										<div class="control-group">
+											<label class="control-label" for="file-title-0">Title</label>
+											<div class="controls">
+												<f:form.textfield class="span5" name="file[0][title]" id="file-title-0" />
+											</div>
+										</div>
+										<div class="control-group">
+											<label class="control-label" for="file-description-0">Description</label>
+											<div class="controls">
+												<f:form.textarea rows="4" cols="5" class="span5" name="file[0][description]" id="file-description-0" />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<f:link.external uri="javascript:void(0)" class="add-more-files">Add more Files</f:link.external>
+						</div>
+						<label>Related Links</label>
+						<div class="accordion" id="collapseThree">
+							<div class="accordion-group" style="display: none;">
+								<div class="accordion-heading">
+									<a class="accordion-toggle" data-toggle="collapse" data-parent="#collapseThree" href="#collapse-link-0">
+										Related Link #0
+									</a>
+									<f:form.hidden class="show-hide-value" value="0" name="relatedLink[0][hidden]" />
+									<f:link.external uri="javascript:void(0)" class="asset-toggle hide-asset pull-right hide-show-file tooltip-demo" rel="tooltip" title="Hide"><i class="icon-eye-close"></i> </f:link.external>
+								</div>
+								<div id="collapse-link-0" class="accordion-body collapse in">
+									<div class="accordion-inner">
+										<div class="control-group">
+											<label class="control-label" for="relatedLinks-0">Uri</label>
+											<div class="controls">
+												<f:form.textfield class="span5 text-added"  name="relatedLink[0][relatedUri]" id="relatedLinks-0" />
+											</div>
+										</div>
+										<div class="control-group">
+											<label class="control-label" for="relatedLinks-title-0">Title</label>
+											<div class="controls">
+												<f:form.textfield class="span5"  name="relatedLink[0][relatedUriTitle]" id="relatedLinks-title-0" />
+											</div>
+										</div>
+										<div class="control-group">
+											<label class="control-label" for="relatedLinks-description-0">Description</label>
+											<div class="controls">
+												<f:form.textarea class="span5" rows="4" cols="5" name="relatedLink[0][relatedUriDescription]" id="relatedLinks-description-0" />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<f:link.external uri="javascript:void(0)" class="add-more-related-link">Add more Related Links</f:link.external>
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+						<f:form.submit class="btn createNews" value="Create" />
+					</div>
+				</div>
+			</div>
+		</f:form>
+	</div>
+	<!--This js is to display rte -->
+	<script src="{f:uri.resource(path:'nicEdit/nicEdit.js')}" type="text/javascript"></script>
+	<script src="{f:uri.resource(path:'nicEdit/domscript.js')}" type="text/javascript"></script>
+</f:section>

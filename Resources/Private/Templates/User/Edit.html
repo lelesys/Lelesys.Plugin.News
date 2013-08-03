@@ -1,0 +1,68 @@
+<f:layout name="Default" />
+
+<f:section name="Title">Edit user "{user.name}"</f:section>
+
+<f:section name="Content">
+	<f:form action="update" object="{user}" name="user">
+		<ol>
+			<li>
+				<label for="gender">Gender</label>
+			<f:form.textfield property="gender" id="gender" />
+			</li>
+
+			<li>
+				<label for="address">Address</label>
+			<f:form.textfield property="address" id="address" />
+			</li>
+
+			<li>
+				<label for="phoneNo">Phone no</label>
+			<f:form.textfield property="phoneNo" id="phoneNo" />
+			</li>
+
+			<li>
+				<label for="profileImage">Profile image</label>
+			<f:form.textfield property="profileImage" id="profileImage" />
+			</li>
+
+			<li>
+				<label for="createDate">Create date</label>
+			<f:form.textfield type="datetime" value="{user.createDate -> f:format.date(format: 'Y-m-d\TH:i:sP')}" property="createDate" id="createDate" />
+			</li>
+
+			<li>
+				<label for="updatedDate">Updated date</label>
+			<f:form.textfield type="datetime" value="{user.updatedDate -> f:format.date(format: 'Y-m-d\TH:i:sP')}" property="updatedDate" id="updatedDate" />
+			</li>
+
+			<li>
+				<label for="news">News</label>
+			<f:form.textfield property="news" id="news" />
+			</li>
+
+			<li>
+				<label for="name">Name</label>
+			<f:form.textfield property="name" id="name" />
+			</li>
+
+			<li>
+				<label for="electronicAddresses">Electronic addresses</label>
+			<f:form.textfield property="electronicAddresses" id="electronicAddresses" />
+			</li>
+
+			<li>
+				<label for="primaryElectronicAddress">Primary electronic address</label>
+			<f:form.textfield property="primaryElectronicAddress" id="primaryElectronicAddress" />
+			</li>
+
+			<li>
+				<label for="accounts">Accounts</label>
+			<f:form.textfield property="accounts" id="accounts" />
+			</li>
+
+			<li>
+			<f:form.submit value="Update"/>
+			</li>
+		</ol>
+	</f:form>
+</f:section>
