@@ -10,16 +10,22 @@
 			<div class="news_content_left">
 				<f:if condition="{news.assets}">
 					<f:then>
-						<div id="slides">
-							<div class="span6 slides_container" id ="gallery">
+						<div id="myCarousel" class="carousel slide news-slider">
+							<div class="carousel-inner">
 								<f:for each="{news.assets}" as="asset">
 									<f:if condition="{asset.hidden} != 1">
-										<a href="{f:uri.resource(resource: asset.originalResource)}">
-											<img src="{f:uri.resource(resource: asset.originalResource)}" alt="image" width="300" />
-										</a>
+										<div class="item">
+											<a href="{f:uri.resource(resource: asset.originalResource)}">
+												<img src="{f:uri.resource(resource: asset.originalResource)}" alt="image" width="500"/>
+											</a>
+										</div>
 									</f:if>
 								</f:for>
 							</div>
+							<f:if condition="{assetCount -> f:count()}>1">
+								<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+								<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+							</f:if>
 						</div>
 					</f:then>
 				</f:if>

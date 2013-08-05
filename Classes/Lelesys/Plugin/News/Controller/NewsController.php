@@ -2,7 +2,7 @@
 
 namespace Lelesys\Plugin\News\Controller;
 
-/*                                                                         *
+/* *
  * This script belongs to the package "Lelesys.Plugin.News".               *
  *                                                                         *
  * It is free software; you can redistribute it and/or modify it under     *
@@ -97,31 +97,16 @@ class NewsController extends AbstractNewsController {
 	 * @return void
 	 */
 	public function showAction(\Lelesys\Plugin\News\Domain\Model\News $news) {
-		$tags = $news->getTags();
-		$categories = $news->getCategories();
-		$relatedNews = $news->getRelatedNews();
-		$relatedLinks = $news->getRelatedLinks();
-		$linkData = array();
-		$combineLinkData = array();
-		foreach ($relatedLinks as $relatedLink) {
-			$email = $relatedLink->getUri();
-			$title = $relatedLink->getTitle();
-			$pattern = "/[a-z0-9_\+-]+(\.[a-z0-9_\+-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*\.([a-z]{2,4})/";
-			if (!preg_match($pattern, $email)) {
-				$linkData['email'] = $email;
-				$linkData['emailTitle'] = '';
-			} else {
-				$linkData['email'] = 'mailto:' . $email;
-				$linkData['emailTitle'] = $email;
+		foreach ($news->getAssets() as $singleAsset) {
+			if ($singleAsset->getHidden() !== 1) {
+				$asset[] = $singleAsset;
 			}
-			$linkData['title'] = $title;
-			$linkData['hidden'] = $relatedLink->getHidden();
-			$combineLinkData[] = $linkData;
 		}
-		$this->view->assign('relatedLinkData', $combineLinkData);
-		$this->view->assign('relatedNews', $relatedNews);
-		$this->view->assign('categories', $categories);
-		$this->view->assign('tags', $tags);
+		$this->view->assign('assetCount', $asset);
+		$this->view->assign('relatedLinkData', $this->newsService->show($news));
+		$this->view->assign('relatedNews', $news->getRelatedNews());
+		$this->view->assign('categories', $news->getCategories());
+		$this->view->assign('tags', $news->getTags());
 		$this->view->assign('news', $news);
 	}
 
@@ -182,12 +167,9 @@ class NewsController extends AbstractNewsController {
 		$this->view->assign('newsCategories', $this->categoryService->listAll());
 		$this->view->assign('tags', $this->tagService->listAll());
 		$this->view->assign('news', $news);
-		$media = $news->getAssets();
-		$this->view->assign('media', $media);
-		$files = $news->getFiles();
-		$this->view->assign('files', $files);
-		$relatedLinks = $news->getRelatedLinks();
-		$this->view->assign('relatedLinks', $relatedLinks);
+		$this->view->assign('media', $news->getAssets());
+		$this->view->assign('files', $news->getFiles());
+		$this->view->assign('relatedLinks', $news->getRelatedLinks());
 	}
 
 	/**

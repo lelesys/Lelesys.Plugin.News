@@ -2,7 +2,7 @@
 
 namespace Lelesys\Plugin\News\Domain\Service;
 
-/*                                                                         *
+/* *
  * This script belongs to the package "Lelesys.Plugin.News".               *
  *                                                                         *
  * It is free software; you can redistribute it and/or modify it under     *
@@ -51,16 +51,16 @@ class NewsService {
 	protected $fileService;
 
 	/**
-	* @var array
-	*/
+	 * @var array
+	 */
 	protected $settings;
 
 	/**
-	* Inject settings
-	*
-	* @param array $settings
-	* @return void
-	*/
+	 * Inject settings
+	 *
+	 * @param array $settings
+	 * @return void
+	 */
 	public function injectSettings(array $settings) {
 		$this->settings = $settings;
 	}
@@ -93,6 +93,33 @@ class NewsService {
 	 */
 	public function listAll() {
 		return $this->newsRepository->getEnabledNews();
+	}
+
+	/**
+	 * Shows a list of news
+	 * @param \Lelesys\Plugin\News\Domain\Model\News $news
+	 * @return array $combineLinkData
+	 */
+	public function show(\Lelesys\Plugin\News\Domain\Model\News $news) {
+		$linkData = array();
+		$combineLinkData = array();
+		$relatedLinks = $news->getRelatedLinks();
+		foreach ($relatedLinks as $relatedLink) {
+			$email = $relatedLink->getUri();
+			$title = $relatedLink->getTitle();
+			$pattern = "/[a-z0-9_\+-]+(\.[a-z0-9_\+-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*\.([a-z]{2,4})/";
+			if (!preg_match($pattern, $email)) {
+				$linkData['email'] = $email;
+				$linkData['emailTitle'] = '';
+			} else {
+				$linkData['email'] = 'mailto:' . $email;
+				$linkData['emailTitle'] = $email;
+			}
+			$linkData['title'] = $title;
+			$linkData['hidden'] = $relatedLink->getHidden();
+			$combineLinkData[] = $linkData;
+		}
+		return $combineLinkData;
 	}
 
 	/**
@@ -376,8 +403,8 @@ class NewsService {
 	 * @return \Lelesys\Plugin\News\Domain\Model\News
 	 */
 	public function searchResult($searchval) {
-		if($searchval !== NULL) {
-		return $this->newsRepository->searchAll($searchval);
+		if ($searchval !== NULL) {
+			return $this->newsRepository->searchAll($searchval);
 		}
 	}
 

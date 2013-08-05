@@ -1,12 +1,4 @@
 /***************************List View*********************/
-h2 {
-	font-size: 22px;
-    margin-top: 0;
-    text-transform: capitalize;
-}
-.main-container {
-    padding: 0 15px 15px 30px;
-}
 #sub-nav {
 	margin-bottom: 10px;
 }
@@ -65,9 +57,6 @@ h2 {
     border-bottom: 1px dotted #C4C4C4;
     padding: 5px 0 5px 15px;
 }
-.news_content_left {
-	float: left;
-}
 .show_link p, .category_title span{
 	color: #666666;
 }
@@ -77,11 +66,6 @@ h2 {
 .container-fluid ul {
 	list-style: none;
 	margin-left: 0px !important;
-}
-.news_descript {
-	float: left;
-    margin: 20px 0px 10px 0px;
-	width: 100%;
 }
 .news_content_left .span5 {
 	margin-top: 20px;
@@ -101,6 +85,9 @@ h2 {
 }
 .news-rel {
 	margin-left: 0px !important;
+}
+.news-slider {
+	width: 65%
 }
 
 /************************ add news view *********************/
