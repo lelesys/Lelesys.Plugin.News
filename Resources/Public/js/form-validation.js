@@ -118,6 +118,7 @@ jQuery(document).ready(function() {
 								return false;
 							} else {
 								jQuery('.title-category').next('.error').remove();
+								jQuery('#news-category-form').submit();
 							}
 						}
 					});

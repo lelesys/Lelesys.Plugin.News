@@ -3,7 +3,6 @@ prototype(Lelesys.Plugin.News:NewsList) {
      package = 'Lelesys.Plugin.News'
      controller = 'News'
      action = 'index'
-	 argumentNamespace = 'newsList'
 }
 
 prototype(Lelesys.Plugin.News:LatestNews) < prototype(TYPO3.Neos:Plugin)
@@ -11,7 +10,6 @@ prototype(Lelesys.Plugin.News:LatestNews) {
      package = 'Lelesys.Plugin.News'
      controller = 'News'
      action = 'latestNews'
-	 argumentNamespace = 'latestNews'
 	 limitNews = ${q(node).property('limitNews')}
 }
 
@@ -29,7 +27,6 @@ prototype(Lelesys.Plugin.News:CategoryList) {
      package = 'Lelesys.Plugin.News'
      controller = 'Category'
      action = 'index'
-	 argumentNamespace = 'categoryList'
 }
 
 prototype(Lelesys.Plugin.News:AdminCategoryList) < prototype(TYPO3.Neos:Plugin)
@@ -45,7 +42,6 @@ prototype(Lelesys.Plugin.News:TagList) {
      package = 'Lelesys.Plugin.News'
      controller = 'Tag'
      action = 'index'
-	 argumentNamespace = 'tagList'
 }
 
 prototype(Lelesys.Plugin.News:AdminTagList) < prototype(TYPO3.Neos:Plugin)
@@ -61,7 +57,6 @@ prototype(Lelesys.Plugin.News:SearchNews) {
      package = 'Lelesys.Plugin.News'
      controller = 'News'
      action = 'searchNews'
-	 argumentNamespace = 'searchNews'
 }
 
 prototype(Lelesys.Plugin.News:Archive) < prototype(TYPO3.Neos:Plugin)
@@ -69,5 +64,4 @@ prototype(Lelesys.Plugin.News:Archive) {
      package = 'Lelesys.Plugin.News'
      controller = 'News'
      action = 'archive'
-	 argumentNamespace = 'archive'
 }

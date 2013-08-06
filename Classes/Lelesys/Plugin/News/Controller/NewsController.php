@@ -97,6 +97,7 @@ class NewsController extends AbstractNewsController {
 	 * @return void
 	 */
 	public function showAction(\Lelesys\Plugin\News\Domain\Model\News $news) {
+		$asset = array();
 		foreach ($news->getAssets() as $singleAsset) {
 			if ($singleAsset->getHidden() !== 1) {
 				$asset[] = $singleAsset;
