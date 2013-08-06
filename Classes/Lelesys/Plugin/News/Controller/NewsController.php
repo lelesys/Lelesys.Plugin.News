@@ -2,7 +2,7 @@
 
 namespace Lelesys\Plugin\News\Controller;
 
-/* *
+/*                                                                         *
  * This script belongs to the package "Lelesys.Plugin.News".               *
  *                                                                         *
  * It is free software; you can redistribute it and/or modify it under     *
@@ -103,6 +103,8 @@ class NewsController extends AbstractNewsController {
 				$asset[] = $singleAsset;
 			}
 		}
+		$argumentNamespace = $this->request->getArgumentNamespace();
+		$this->view->assign('argumentNamespace', $argumentNamespace);
 		$this->view->assign('assetCount', $asset);
 		$this->view->assign('relatedLinkData', $this->newsService->show($news));
 		$this->view->assign('relatedNews', $news->getRelatedNews());
