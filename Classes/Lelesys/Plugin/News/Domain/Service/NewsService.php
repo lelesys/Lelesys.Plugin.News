@@ -83,7 +83,8 @@ class NewsService {
 	 * @return \Lelesys\Plugin\News\Domain\Model\News
 	 */
 	public function adminNewsList() {
-		return $this->newsRepository->getNewsEntries();
+		$limitNews = $this->settings['limitAdminListNews'];
+		return $this->newsRepository->getNewsEntries($limitNews);
 	}
 
 	/**
@@ -92,7 +93,75 @@ class NewsService {
 	 * @return \Lelesys\Plugin\News\Domain\Model\News
 	 */
 	public function listAll() {
-		return $this->newsRepository->getEnabledNews();
+		$limitNews = $this->settings['limitListNews'];
+		return $this->newsRepository->getEnabledNews($limitNews);
+	}
+
+	/**
+	 * List of related news
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\News $news
+	 * @return array $related
+	 */
+	public function related(\Lelesys\Plugin\News\Domain\Model\News $news) {
+		$related = array();
+		$assets = array();
+		foreach ($news->getAssets() as $singleAsset) {
+			if ($singleAsset->getHidden() !== TRUE) {
+				$assets[] = $singleAsset;
+			}
+		}
+		$comments = array();
+		foreach ($news->getComments() as $singleComment) {
+			if ($singleComment->getSetHidden() !== TRUE) {
+				$comments[] = $singleComment;
+			}
+		}
+		$categories = array();
+		foreach ($news->getCategories() as $singleCategory) {
+			if ($singleCategory->getHidden() !== TRUE) {
+				$categories[] = $singleCategory;
+			}
+		}
+		$relatedNews = array();
+		foreach ($news->getRelatedNews() as $singleNews) {
+			if ($singleNews->getHidden() !== TRUE) {
+				$relatedNews[] = $singleNews;
+			}
+		}
+		$relatedFiles = array();
+		foreach ($news->getFiles() as $singleFile) {
+			if ($singleFile->getHidden() !== TRUE) {
+				$relatedFiles[] = $singleFile;
+			}
+		}
+		$related['assets'] = $assets;
+		$related['comments'] = $comments;
+		$related['news'] = $relatedNews;
+		$related['categories'] = $categories;
+		$related['files'] = $relatedFiles;
+		return $related;
+	}
+
+	/**
+	 * News assets
+	 * @param \Lelesys\Plugin\News\Domain\Model\News $newsObj
+	 *
+	 * @return array $newsAssets
+	 */
+	public function assetsForNews($newsObj) {
+		$newsAssets = array();
+		foreach ($newsObj as $news) {
+			$assets = $news->getAssets();
+			if (count($assets) > 0) {
+				foreach ($assets as $asset) {
+					if ($asset->getHidden() !== TRUE) {
+						$newsAssets[$news->getUuid()][] = $asset;
+					}
+				}
+			}
+		}
+		return $newsAssets;
 	}
 
 	/**
@@ -105,19 +174,21 @@ class NewsService {
 		$combineLinkData = array();
 		$relatedLinks = $news->getRelatedLinks();
 		foreach ($relatedLinks as $relatedLink) {
-			$email = $relatedLink->getUri();
-			$title = $relatedLink->getTitle();
-			$pattern = "/[a-z0-9_\+-]+(\.[a-z0-9_\+-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*\.([a-z]{2,4})/";
-			if (!preg_match($pattern, $email)) {
-				$linkData['email'] = $email;
-				$linkData['emailTitle'] = '';
-			} else {
-				$linkData['email'] = 'mailto:' . $email;
-				$linkData['emailTitle'] = $email;
+			if ($relatedLink->getHidden() !== TRUE) {
+				$email = $relatedLink->getUri();
+				$title = $relatedLink->getTitle();
+				$pattern = "/[a-z0-9_\+-]+(\.[a-z0-9_\+-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*\.([a-z]{2,4})/";
+				if (!preg_match($pattern, $email)) {
+					$linkData['email'] = $email;
+					$linkData['emailTitle'] = '';
+				} else {
+					$linkData['email'] = 'mailto:' . $email;
+					$linkData['emailTitle'] = $email;
+				}
+				$linkData['title'] = $title;
+				$linkData['hidden'] = $relatedLink->getHidden();
+				$combineLinkData[] = $linkData;
 			}
-			$linkData['title'] = $title;
-			$linkData['hidden'] = $relatedLink->getHidden();
-			$combineLinkData[] = $linkData;
 		}
 		return $combineLinkData;
 	}
@@ -129,7 +200,7 @@ class NewsService {
 	 */
 	public function latestNews() {
 		$limitNews = $this->settings['limitLatestNews'];
-		return $this->newsRepository->getEnabledLatestNews($limitNews);
+		return $this->newsRepository->getEnabledNews($limitNews);
 	}
 
 	/**

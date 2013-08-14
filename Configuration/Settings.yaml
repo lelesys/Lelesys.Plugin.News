@@ -5,7 +5,47 @@ Lelesys:
       templateRootPath: 'resource://Lelesys.Plugin.News/Private/Templates/'
       partialRootPath: 'resource://Lelesys.Plugin.News/Private/Partials/'
       layoutRootPath: 'resource://Lelesys.Plugin.News/Private/Layouts/'
+      paginateTemplatePath: 'resource://Lelesys.Plugin.News/Private/Templates/ViewHelpers/Widget/Paginate/Index.html'
       # Set Lastest News Limit
       limitLatestNews: '2'
+      # Set List News Limit
+      limitAdminListNews: '5'
+      limitListNews: '2'
 
-
+# Backend modules configuration
+TYPO3:
+  Neos:
+    modules:
+      newsmanagement:
+        label: 'News Management'
+        controller: '\Lelesys\Plugin\News\Controller\Module\NewsManagementController'
+        description: 'Contains multiple modules related to news management of content'
+        icon: 'icon-briefcase'
+        resource: 'Lelesys_Plugin_News_Module_NewsManagement'
+        submodules:
+          news:
+            label: 'News'
+            controller: '\Lelesys\Plugin\News\Controller\Module\NewsManagement\News\NewsController'
+            description: 'The News module provides you with an overview of the news. You can edit, add and delete information of news.'
+            icon: 'icon-archive'
+            resource: 'Lelesys_Plugin_News_Module_NewsManagement_News'
+            actions:
+              new:
+                label: 'Create News'
+                title: 'Create news'
+          category:
+            label: 'Category'
+            controller: '\Lelesys\Plugin\News\Controller\Module\NewsManagement\Category\CategoryController'
+            description: 'The News module provides you with an overview of the news. You can edit, add and delete information of news.'
+            icon: 'icon-archive'
+            resource: 'Lelesys_Plugin_News_Module_NewsManagement_Category'
+            actions:
+              new:
+                label: 'Create Category'
+                title: 'Create Category'
+          comment:
+            label: 'Comment'
+            controller: '\Lelesys\Plugin\News\Controller\Module\NewsManagement\Comment\CommentController'
+            description: 'The News module provides you with an overview of the news. You can edit, add and delete information of news.'
+            icon: 'icon-archive'
+            resource: 'Lelesys_Plugin_News_Module_NewsManagement_Comment'

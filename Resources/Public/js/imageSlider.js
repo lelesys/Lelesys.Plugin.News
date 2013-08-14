@@ -1,7 +1,10 @@
 jQuery(document).ready(function() {
+	jQuery('.carousel-inner .item:first-child').addClass('active');
 	//function to show lightbox
-	jQuery('#myCarousel').carousel({
-		interval: 5000
+	jQuery('#myCarousel').each(function() {
+		jQuery(this).carousel({
+			interval: 5000
+		});
 	});
 	jQuery('.carousel-inner a').lightBox({
 		imageLoading: '/_Resources/Static/Packages/Lelesys.Plugin.News/images/lightbox-ico-loading.gif',

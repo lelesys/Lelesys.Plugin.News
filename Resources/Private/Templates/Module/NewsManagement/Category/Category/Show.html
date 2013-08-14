@@ -1,0 +1,87 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+<f:layout name="DefaultBackend" />
+<f:section name="Content">
+	<f:section name="subtitle">
+		<div class="row neos-module-container indented">
+			<h2>News for "{category.title}"</h2>
+		</div>
+	</f:section>
+	<div class="row neos-module-container indented">
+		<f:render partial="FlashMessage" arguments="{severityName: flashmessage}" />
+		<f:if condition="{categoryNews}">
+			<f:then>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Title</th>
+							<th>Published On</th>
+						</tr>
+					</thead>
+					<f:for each="{categoryNews}" as="news">
+						<tr>
+							<td>
+						<f:if condition="{assetsForNews}">
+							<f:then>
+								<f:for each="{assetsForNews}" as="assets" key="newsId">
+									<f:if condition="{newsId} == {news.uuid}">
+										<f:for each="{assets}" as="asset" iteration="fooIterator">
+											{f:if(condition: fooIterator.isLast, then: '<img src="{f:uri.resource(resource: asset.originalResource)}" alt="image" width="50" />')}
+										</f:for>
+									</f:if>
+								</f:for>
+							</f:then>
+							<f:else>
+								<img src="{f:uri.resource(path:'images/no_photo.jpg')}" alt="image" width="100" />
+							</f:else>
+						</f:if>
+						&nbsp;{news.title}
+						</td>
+						<td>{news.dateTime -> f:format.date(format: 'j M y, h:i A')}</td>
+						<td>
+							<div class="pull-right">
+								<neos:link.module action="show" path="newsmanagement/news" arguments="{news: news}" class="btn neos-button" title="Click to view">
+									<i class="icon-info-sign icon-white"></i>
+								</neos:link.module>
+								<neos:link.module action="edit" path="newsmanagement/news" arguments="{news: news}" class="btn neos-button" title="Click to edit">
+									<i class="icon-pencil icon-white"></i>
+								</neos:link.module>
+								<neos:link.module action="delete" path="newsmanagement/news" arguments="{news: news}" class="btn neos-button delete" title="Click to delete">
+									<i class="icon-trash icon-white"></i>
+								</neos:link.module>
+								<f:form action="delete" name="deleteItem" id="deleteItem" style="display: none;">
+									<f:form.hidden value="DELETE" />
+								</f:form>
+								<script>
+									var deleteMessage = 'Are you sure you want to delete?';
+								</script>
+								<f:if condition="{news.hidden} == 1">
+									<f:then>
+										<neos:link.module action="showNews" path="newsmanagement/news" arguments="{news: news}" class="btn neos-button show-hide-item show-news" title="Click to Show"><i class="icon-eye-open icon-white"></i>
+										</neos:link.module>
+										<f:form action="showNews" name="showItem" id="showHideItem" style="display: none;">
+											<f:form.hidden value="Show" />
+										</f:form>
+									</f:then>
+									<f:else>
+										<neos:link.module action="hideNews" path="newsmanagement/news" arguments="{news: news}" class="btn neos-button show-hide-item hide-news" title="Click to Hide"><i class="icon-eye-close icon-white"></i>
+										</neos:link.module>
+										<f:form action="hideNews" name="hideItem" id="showHideItem" style="display: none;">
+											<f:form.hidden value="Hide" />
+										</f:form>
+									</f:else>
+								</f:if>
+							</div>
+						</td>
+						</tr>
+					</f:for>
+				</table>
+			</f:then>
+			<f:else>
+				<p>No news created yet.</p>
+			</f:else>
+		</f:if>
+	</div>
+	<div class="form-actions form-footer">
+		<f:link.action action="index" class="btn neos-button">Back</f:link.action>
+	</div>
+</f:section>

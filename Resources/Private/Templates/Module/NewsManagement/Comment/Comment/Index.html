@@ -1,0 +1,76 @@
+<f:layout name="DefaultBackend" />
+
+<f:section name="Content">
+	<div class="row neos-module-container indented">
+		<f:render partial="FlashMessage" arguments="{severityName: flashmessage}" />
+		<f:if condition="{comments}">
+			<f:then>
+				<f:widget.paginate objects="{comments}" as="commentsPagination" configuration="{itemsPerPage: 5}">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Comment title</th>
+								<th> Related News</th>
+								<th>State</th>
+							</tr>
+						</thead>
+						<tbody>
+						<f:for each="{commentsPagination}" as="comment">
+							<tr>
+								<td>
+									{comment.message}</td>
+								<td>
+									{comment.news.title}</td>
+								<td>
+							<f:if condition="{comment.setHidden} == 1">
+								<f:then>
+									<span class="badge badge-important">Inactive</span>
+								</f:then>
+								<f:else>
+									<span class="badge badge-success">Active</span>
+								</f:else>
+							</f:if>
+							</td>
+							<td>
+								<div class="pull-right">
+									<f:if condition="{comment.setHidden} == 1">
+										<f:then>
+											<f:link.action class="btn btn-success neos-button show-hide-item show-news" title="Click to publish" action="publish" arguments="{comment: comment}"><i class="icon-plus-sign icon-white"></i></f:link.action>
+											<f:form action="publish" name="showItem" id="showHideItem" style="display: none;">
+												<f:form.hidden value="Show" />
+											</f:form>
+										</f:then>
+										<f:else>
+											<f:link.action class="btn btn-warning neos-button show-hide-item hide-news" title="Click to unPublish" action="unPublish" arguments="{comment: comment}"><i class="icon-minus-sign icon-white"></i></f:link.action>
+											<f:form action="unPublish" name="hideItem" id="showHideItem" style="display: none;">
+												<f:form.hidden value="Hide" />
+											</f:form>
+										</f:else>
+									</f:if>
+									<f:link.action action="delete" class="btn btn-danger neos-button delete" title="Delete" arguments="{comment: comment}">
+										<i class="icon-trash icon-white"></i>
+									</f:link.action>
+									<f:form action="delete" name="deleteItem" id="deleteItem" style="display: none;">
+										<f:form.hidden value="DELETE" />
+									</f:form>
+									<script>
+										var deleteMessage = 'Are you sure you want to delete?';
+									</script>
+								</div>
+							</td>
+							</tr>
+						</f:for>
+						</tbody>
+					</table>
+				</f:widget.paginate>
+			</f:then>
+			<f:else>
+				<div class="clearfix"></div>
+				<p>No comments created yet.</p>
+			</f:else>
+		</f:if>
+	</div>
+	<div class="form-actions form-footer"></div>
+	<script src="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/js/jquery-2.0.3.min.js')}" type="text/javascript"></script>
+	<script src="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/js/form-validation.js')}" type="text/javascript"></script>
+</f:section>

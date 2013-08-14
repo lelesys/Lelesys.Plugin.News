@@ -22,43 +22,47 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Repository {
 	/**
 	 * Get news entries
 	 *
+	 * @param integer $limitNews
 	 * @return \TYPO3\FLOW3\Persistence\QueryResultInterface The query result
 	 */
-	public function getNewsEntries() {
-		$query = $this->createQuery();
-		return $query
-						->setOrderings(array('dateTime' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING))
-						->execute();
+	public function getNewsEntries($limitNews = NULL) {
+		if (!empty($limitNews)) {
+			$query = $this->createQuery();
+			return $query
+							->setOrderings(array('dateTime' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING))
+							->setLimit($limitNews)
+							->execute();
+		} else {
+			$query = $this->createQuery();
+			return $query
+							->setOrderings(array('dateTime' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING))
+							->execute();
+		}
 	}
 
 	/**
 	 * Get news entries
 	 *
-	 * @return \TYPO3\FLOW3\Persistence\QueryResultInterface The query result
-	 */
-	public function getEnabledNews() {
-		$query = $this->createQuery();
-		return $query->matching(
-								$query->equals('hidden', 0)
-						)
-						->setOrderings(array('dateTime' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING))
-						->execute();
-	}
-
-	/**
-	 * Get latest news entries
-	 *
 	 * @param integer $limitNews
 	 * @return \TYPO3\FLOW3\Persistence\QueryResultInterface The query result
 	 */
-	public function getEnabledLatestNews($limitNews) {
-		$query = $this->createQuery();
-		return $query->matching(
-								$query->equals('hidden', 0)
-						)
-						->setOrderings(array('dateTime' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING))
-						->setLimit($limitNews)
-						->execute();
+	public function getEnabledNews($limitNews = NULL) {
+		if (!empty($limitNews)) {
+			$query = $this->createQuery();
+			return $query->matching(
+									$query->equals('hidden', 0)
+							)
+							->setOrderings(array('dateTime' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING))
+							->setLimit($limitNews)
+							->execute();
+		} else {
+			$query = $this->createQuery();
+			return $query->matching(
+									$query->equals('hidden', 0)
+							)
+							->setOrderings(array('dateTime' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING))
+							->execute();
+		}
 	}
 
 	/**

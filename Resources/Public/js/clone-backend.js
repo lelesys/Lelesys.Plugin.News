@@ -29,6 +29,7 @@ jQuery(document).ready(function(){
 			var assetId = jQuery('.asset-id').val();
 			var newsId = jQuery('.news-id').val();
 			var eleobj = this;
+			//alert(removeAsset); exit;
 			jQuery.ajax({
 				beforeSend: function() {
 					jQuery(eleobj).prev('.loader').show();
@@ -36,7 +37,7 @@ jQuery(document).ready(function(){
 				complete: function(){
 					jQuery('.loader').hide();
 				},
-				url: removeAsset+'&--adminNewsList[assetId]='+assetId+'&--adminNewsList[newsId]='+newsId,
+				url:removeAsset+'&moduleArguments[assetId]='+assetId+'&moduleArguments[newsId]='+newsId,
 				async:false,
 				dataType: 'json',
 				success: function(data) {
@@ -65,7 +66,7 @@ jQuery(document).ready(function(){
 				complete: function(){
 					jQuery('.loader').hide();
 				},
-				url: removeFile+'&--adminNewsList[fileId]='+fileId+'&--adminNewsList[newsId]='+newsId,
+				url: removeFile+'&moduleArguments[fileId]='+fileId+'&moduleArguments[newsId]='+newsId,
 				async:false,
 				dataType: 'json',
 				success: function(data) {
@@ -93,7 +94,7 @@ jQuery(document).ready(function(){
 				complete: function(){
 					jQuery('.loader').hide();
 				},
-				url: removeRelatedLink+'&--adminNewsList[linkId]='+linkId+'&--adminNewsList[newsId]='+newsId,
+				url: removeRelatedLink+'&moduleArguments[linkId]='+linkId+'&moduleArguments[newsId]='+newsId,
 				async:false,
 				dataType: 'json',
 				success: function(data) {
@@ -131,20 +132,20 @@ function cloneAddLink() {
 	div.find('.accordion-body').attr('id','collapse-link-'+newId);
 	div.find('.accordion-toggle').attr('href','#collapse-link-'+newId);
 	div.find('.accordion-toggle').text('Related Link #'+newId);
-	div.find('.show-hide-value').val(0).attr('name','--adminNewsList[relatedLink]['+newId+'][hidden]');
+	div.find('.show-hide-value').val(0).attr('name','moduleArguments[relatedLink]['+newId+'][hidden]');
 	div.find('.asset-toggle').attr('data-original-title', 'Hide').addClass('hide-asset link-clone-toggle').removeClass('show-asset');
 	div.find('.asset-toggle').children('i').addClass('icon-eye-close').removeClass('icon-eye-open');
 	var a = newId - 1;
 	div.find('#relatedLinks-'+a).attr({
-		'name': '--adminNewsList[relatedLink]['+newId+'][relatedUri]',
+		'name': 'moduleArguments[relatedLink]['+newId+'][relatedUri]',
 		'id': 'relatedLinks-'+newId
 	}).parent().prev('label').attr('for','relatedLinks-'+newId);
 	div.find('#relatedLinks-title-'+a).attr({
-		'name': '--adminNewsList[relatedLink]['+newId+'][relatedUriTitle]',
+		'name': 'moduleArguments[relatedLink]['+newId+'][relatedUriTitle]',
 		'id': 'relatedLinks-title-'+newId
 	}).parent().prev('label').attr('for','relatedLinks-title-'+newId);
 	div.find('#relatedLinks-description-'+a).attr({
-		'name': '--adminNewsList[relatedLink]['+newId+'][relatedUriDescription]',
+		'name': 'moduleArguments[relatedLink]['+newId+'][relatedUriDescription]',
 		'id': 'relatedLinks-description-'+newId
 	}).parent().prev('label').attr('for','relatedLinks-description-'+newId);
 	div.find('#collapse-link-'+newId).removeClass('in').removeAttr("style");
@@ -168,20 +169,20 @@ function cloneAddFiles() {
 	div.find('.accordion-body').attr('id','collapse-file-'+newId);
 	div.find('.accordion-toggle').attr('href','#collapse-file-'+newId);
 	div.find('.accordion-toggle').text('Related Files #'+newId);
-	div.find('.show-hide-value').val(0).attr('name','--adminNewsList[file]['+newId+'][hidden]');
+	div.find('.show-hide-value').val(0).attr('name','moduleArguments[file]['+newId+'][hidden]');
 	div.find('.asset-toggle').attr('data-original-title', 'Hide').addClass('hide-asset file-clone-toggle').removeClass('show-asset');
 	div.find('.asset-toggle').children('i').addClass('icon-eye-close').removeClass('icon-eye-open');
 	var a = newId - 1;
 	div.find('#file-originalResource-'+a).attr({
-		'name': '--adminNewsList[file]['+newId+'][originalFileResource]',
+		'name': 'moduleArguments[file]['+newId+'][originalFileResource]',
 		'id': 'file-originalResource-'+newId
 	}).parent().prev('label').attr('for','file-originalResource-'+newId);
 	div.find('#file-title-'+a).attr({
-		'name': '--adminNewsList[file]['+newId+'][title]',
+		'name': 'moduleArguments[file]['+newId+'][title]',
 		'id': 'file-title-'+newId
 	}).parent().prev('label').attr('for','file-title-'+newId);
 	div.find('#file-description-'+a).attr({
-		'name': '--adminNewsList[file]['+newId+'][description]',
+		'name': 'moduleArguments[file]['+newId+'][description]',
 		'id': 'file-description-'+newId
 	}).parent().prev('label').attr('for','file-description-'+newId);
 	div.find('#file-originalResource-'+newId).next('img').remove();
@@ -206,20 +207,20 @@ function cloneAddFiles() {
 	div.find('.accordion-body').attr('id','collapse-media-'+newId);
 	div.find('.accordion-toggle').attr('href','#collapse-media-'+newId);
 	div.find('.accordion-toggle').text('Related Media #'+newId);
-	div.find('.show-hide-value').val(0).attr('name','--adminNewsList[media]['+newId+'][hidden]');
+	div.find('.show-hide-value').val(0).attr('name','moduleArguments[media]['+newId+'][hidden]');
 	div.find('.asset-toggle').attr('data-original-title', 'Hide').addClass('hide-asset asset-clone-toggle').removeClass('show-asset');
 	div.find('.asset-toggle').children('i').addClass('icon-eye-close').removeClass('icon-eye-open');
 	var a = newId - 1;
 	div.find('#originalResource-'+a).attr({
-		'name': '--adminNewsList[media]['+newId+'][originalResource]',
+		'name': 'moduleArguments[media]['+newId+'][originalResource]',
 		'id': 'originalResource-'+newId
 	}).parent().prev('label').attr('for','originalResource-'+newId);
 	div.find('#caption-'+a).attr({
-		'name': '--adminNewsList[media]['+newId+'][caption]',
+		'name': 'moduleArguments[media]['+newId+'][caption]',
 		'id': 'caption-'+newId
 	}).parent().prev('label').attr('for','caption-'+newId);
 	div.find('#copyRight-'+a).attr({
-		'name': '--adminNewsList[media]['+newId+'][copyRight]',
+		'name': 'moduleArguments[media]['+newId+'][copyRight]',
 		'id': 'copyRight-'+newId
 	}).parent().prev('label').attr('for','copyRight-'+newId)
 	div.find('#originalResource-'+newId).next('img').remove();

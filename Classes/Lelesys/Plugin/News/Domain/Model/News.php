@@ -673,7 +673,7 @@ class News {
 	 *
 	 * @return \Doctrine\Common\Collections\Collection The News's comments
 	 */
-	public function getcomments() {
+	public function getComments() {
 		return $this->comments;
 	}
 

@@ -16,7 +16,9 @@
 			<div class="control-group">
 				<label for="image">Image</label>
 				<div class="controls">
-					<img src="{f:uri.resource(resource: category.image)}" class="thumbnail" alt="image" width="100" />
+					<f:if condition="{category.image}">
+						<img src="{f:uri.resource(resource: category.image)}" class="thumbnail" alt="image" width="100" />
+					</f:if>
 					<f:form.upload property="image" id="image" />
 				</div>
 			</div>

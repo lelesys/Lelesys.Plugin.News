@@ -1,4 +1,4 @@
-jQuery(document).ready(function(){
-	jQuery('.datepicker').datepicker()
-	jQuery('.tooltip-demo').tooltip();
+jQuery(document).ready(function($){
+	$('.datepicker').datepicker();
+	$('.tooltip-demo').tooltip();
 });

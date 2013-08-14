@@ -1,0 +1,17 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+<link href="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/StyleSheets/default-backend.css')}" rel="stylesheet" type="text/css" media="all" />
+<link href="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/StyleSheets/datepicker.css')}" rel="stylesheet" type="text/css" media="all" />
+<link href="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/StyleSheets/jquery.lightbox-0.5.css')}" rel="stylesheet" type="text/css" media="all" />
+<div class="neos-content container well">
+	<ul class="breadcrumb">
+		<f:for each="{moduleBreadcrumb}" key="path" as="name" iteration="iterator">
+			<li>
+			<neos:link.module path="{path}">{name}</neos:link.module>
+			<f:if condition="{iterator.isLast}"><f:else><span class="divider">&gt;</span></f:else></f:if>
+			</li>
+		</f:for>
+	</ul>
+	<h1>{moduleConfiguration.label}</h1>
+	<f:render section="subtitle" optional="1" />
+	<f:render section="Content" />
+</div>

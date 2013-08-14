@@ -1,6 +1,6 @@
 <?php
 
-namespace Lelesys\Plugin\News\Controller;
+namespace Lelesys\Plugin\News\Controller\Module\NewsManagement\News;
 
 /* *
  * This script belongs to the package "Lelesys.Plugin.News".               *
@@ -11,7 +11,6 @@ namespace Lelesys\Plugin\News\Controller;
  *                                                                         */
 
 use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Mvc\Controller\ActionController;
 use \Lelesys\Plugin\News\Domain\Model\News;
 
 /**
@@ -19,7 +18,7 @@ use \Lelesys\Plugin\News\Domain\Model\News;
  *
  * @Flow\Scope("singleton")
  */
-class NewsController extends AbstractNewsController {
+class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleController {
 
 	/**
 	 * @Flow\Inject
@@ -69,28 +68,6 @@ class NewsController extends AbstractNewsController {
 	 * @return void
 	 */
 	public function indexAction() {
-		$allNews = $this->newsService->listAll();
-		$this->view->assign('allNews', $allNews);
-		$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
-	}
-
-	/**
-	 * Shows a list of news
-	 *
-	 * @return void
-	 */
-	public function latestNewsAction() {
-		$allNews = $this->newsService->latestNews();
-		$this->view->assign('allNews', $allNews);
-		$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
-	}
-
-	/**
-	 * Shows a list of news for admin
-	 *
-	 * @return void
-	 */
-	public function adminListAction() {
 		$allNews = $this->newsService->adminNewsList();
 		$this->view->assign('allNews', $allNews);
 		$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
@@ -156,7 +133,7 @@ class NewsController extends AbstractNewsController {
 		try {
 			$this->newsService->create($newNews, $media, $file, $relatedLink);
 			$this->addFlashMessage('Created a new news.', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
-			$this->redirect('adminList');
+			$this->redirect('index');
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
 			$this->addFlashMessage('Cannot create news at this time!!.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
@@ -205,9 +182,10 @@ class NewsController extends AbstractNewsController {
 	 */
 	public function updateAction(\Lelesys\Plugin\News\Domain\Model\News $news, $media, $file, $relatedLink) {
 		try {
+			//\TYPO3\Flow\var_dump($media); exit;
 			$this->newsService->update($news, $media, $file, $relatedLink);
 			$this->addFlashMessage('Updated the news.', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
-			$this->redirect('adminList');
+			$this->redirect('index');
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
 			$this->addFlashMessage('Cannot update news at this time!!.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
@@ -223,7 +201,7 @@ class NewsController extends AbstractNewsController {
 		try {
 			$this->newsService->delete($news);
 			$this->addFlashMessage('Deleted a news.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
-			$this->redirect('adminList');
+			$this->redirect('index');
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
 			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
@@ -296,7 +274,7 @@ class NewsController extends AbstractNewsController {
 		try {
 			$this->newsService->hideNews($news);
 			$this->addFlashMessage('News is Hidden', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
-			$this->redirect('adminList');
+			$this->redirect('index');
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
 			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
@@ -312,40 +290,10 @@ class NewsController extends AbstractNewsController {
 		try {
 			$this->newsService->showNews($news);
 			$this->addFlashMessage('News is Visible', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
-			$this->redirect('adminList');
+			$this->redirect('index');
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
 			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
-	}
-
-	/**
-	 * Searches news by title
-	 *
-	 * @param string $search
-	 * @return void
-	 */
-	public function searchNewsAction($search = NULL) {
-		$this->view->assign('newsSearched', $this->newsService->searchResult($search));
-	}
-
-	/**
-	 * Shows Archive Date menu
-	 *
-	 * @return void
-	 */
-	public function archiveAction() {
-		$this->view->assign('archiveView', $this->newsService->archiveDateView());
-	}
-
-	/**
-	 * Shows list of news as per month
-	 *
-	 * @param integer $year
-	 * @param string $month
-	 * @return void
-	 */
-	public function showArchiveNewsAction($year, $month) {
-		$this->view->assign('archiveNewsList', $this->newsService->archiveNewsList($year, $month));
 	}
 
 }

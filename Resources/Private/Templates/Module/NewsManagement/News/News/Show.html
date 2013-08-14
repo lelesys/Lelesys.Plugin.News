@@ -1,0 +1,129 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+<f:layout name="DefaultBackend" />
+
+<f:section name="Content">
+	<div class="row neos-module-container">
+		<div class="span7">
+			<legend>{news.title}</legend>
+			<br />
+			<p class="date">
+			<f:if condition="{news.authorName}">
+				Author name:&nbsp;{news.authorName}&nbsp;&nbsp;
+			</f:if>
+			Published on: &nbsp;{news.dateTime -> f:format.date(format: 'j M y, h:i A')}
+			</p>
+				<f:if condition="{assets}">
+					<f:then>
+						<br />
+						<div id="myCarousel" class="carousel slide backend-news-slider">
+							<div class="carousel-inner">
+								<f:for each="{assets}" as="asset">
+									<div class="item">
+										<a href="{f:uri.resource(resource: asset.originalResource)}">
+											<img src="{f:uri.resource(resource: asset.originalResource)}" alt="image" width="500"/>
+										</a>
+									</div>
+								</f:for>
+							</div>
+							<f:if condition="{assets -> f:count()}>1">
+								<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+								<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+							</f:if>
+						</div>
+					</f:then>
+				</f:if>
+			<div class="news_descript">
+				<p><b>{news.subTitle}</b></p>
+				<p><f:format.raw>{news.description}</f:format.raw></p>
+			</div>
+			<br />
+			<f:if condition="{categories}">
+				<div class="news-rel rel_title category_title">
+					<label>Category </label>
+					<ul>
+						<f:for each="{categories}" as="category">
+							<li><neos:link.module action="show" path="newsmanagement/category" arguments="{category: category}">{category.title}</neos:link.module></li>
+						</f:for>
+					</ul>
+				</div>
+				<br />
+			</f:if>
+			<f:if condition="{relatedNews}">
+				<div class="news-rel rel_title relate-news">
+					<label>Related News</label>
+					<ul>
+						<f:for each="{relatedNews}" as="newsRelated">
+							<li><f:link.action action="show" arguments="{news: newsRelated}">{newsRelated.title}</f:link.action></li>
+						</f:for>
+					</ul>
+				</div>
+				<br />
+			</f:if>
+			<f:if condition="{relatedLinkData}">
+				<div class="news-rel rel_title relate-news-links">
+					<label>Related Links</label>
+					<ul>
+						<f:for each="{relatedLinkData}" as="linkData">
+								<li>
+								<f:link.external uri="{linkData.email}" target="_blank">
+									<f:if condition="{linkData.title}">
+										<f:then>
+											{linkData.title}
+										</f:then>
+										<f:else>
+											<f:if condition="{linkData.emailTitle}">
+												<f:then>
+													{linkData.emailTitle}
+												</f:then>
+												<f:else>
+													{linkData.email}
+												</f:else>
+											</f:if>
+										</f:else>
+									</f:if>
+								</f:link.external>
+								</li>
+						</f:for>
+					</ul>
+				</div>
+				<br />
+			</f:if>
+			<f:if condition="{relatedFiles}">
+				<div class="news-rel news_listimg rel_title">
+					<label>Related Files</label>
+					<ul id="show-carousel-lightbox">
+						<f:for each="{relatedFiles}" as="file">
+								<li><a href="{f:uri.resource(resource: file.originalFileResource)}"><img src="{f:uri.resource(resource: file.originalFileResource)}" alt="image" width="120"/></a></li>
+						</f:for>
+					</ul>
+				</div>
+			</f:if>
+		</div>
+	</div>
+	<div class="form-actions form-footer">
+		<div class="pull-left">
+			<f:link.action action="index" class="btn neos-button">Back</f:link.action>
+		</div>
+		<div class="pull-right">
+			<f:link.action action="edit" arguments="{news: news}" class="btn neos-button" title="Click to edit">
+				<i class="icon-pencil icon-white"></i>
+				Edit
+			</f:link.action>
+			<f:link.action action="delete" arguments="{news: news}" class="btn neos-button delete" title="Click to delete">
+				<i class="icon-trash icon-white"></i>
+				Delete
+			</f:link.action>
+			<f:form action="delete" name="deleteItem" id="deleteItem" style="display: none;">
+				<f:form.hidden value="DELETE" />
+			</f:form>
+			<script>
+				var deleteMessage = 'Are you sure you want to delete?';
+			</script>
+		</div>
+	</div>
+	<script src="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/js/jquery-2.0.3.min.js')}" type="text/javascript"></script>
+	<script src="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/js/bootstrap.min.js')}" type="text/javascript"></script>
+	<script src="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/js/form-validation.js')}" type="text/javascript"></script>
+	<script src="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/js/jquery.lightbox-0.5.js')}" type="text/javascript"></script>
+	<script src="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/js/imageSlider.js')}" type="text/javascript"></script>
+</f:section>

@@ -1,0 +1,47 @@
+<f:layout name="DefaultBackend" />
+
+<f:section name="Content">
+	<f:form action="create" name="newCategory" id="news-category-form" enctype="multipart/form-data">
+		<div class="row neos-module-container">
+			<fieldset class="span5">
+				<legend>New Category</legend>
+				<div class="control-group">
+					<label for="title">Title</label>
+					<div class="controls">
+						<f:form.textfield property="title" id="title" class="title-category1"/>
+						<f:render partial="FormErrors" arguments="{for: 'newCategory.title'}" />
+					</div>
+				</div>
+				<div class="control-group">
+					<label for="image">Image</label>
+					<div class="controls">
+						<f:form.upload property="image" id="image" class="img"/>
+					</div>
+				</div>
+				<div class="control-group">
+					<label for="parentcategory">Parent Category</label>
+					<div class="controls">
+						<f:form.select options="{newsParentCategory}" optionLabelField="title" prependOptionLabel="select category" id="parentCategory" property="parentCategory"></f:form.select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label for="description">Description</label>
+					<div class="controls">
+						<f:form.textarea rows="4" cols="8" property="description" id="description"/>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="form-actions form-footer">
+			<f:link.action action="index" class="btn neos-button">Cancel</f:link.action>
+			<div class="pull-right">
+				<input class="btn btn-primary neos-button createCategory1" type="submit" value="Save">
+			</div>
+		</div>
+	</f:form>
+	<script>
+		checkTitle = "{f:uri.action(package:'Lelesys.Plugin.News', action:'checkTitle', controller:'Category')}";
+	</script>
+	<script src="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/js/jquery-2.0.3.min.js')}" type="text/javascript"></script>
+	<script src="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/js/form-validation.js')}" type="text/javascript"></script>
+</f:section>

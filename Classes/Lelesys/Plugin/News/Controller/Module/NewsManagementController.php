@@ -1,8 +1,8 @@
 <?php
 
-namespace Lelesys\Plugin\News\Domain\Repository;
+namespace Lelesys\Plugin\News\Controller\Module;
 
-/* *
+/*                                                                         *
  * This script belongs to the package "Lelesys.Plugin.News".               *
  *                                                                         *
  * It is free software; you can redistribute it and/or modify it under     *
@@ -13,23 +13,12 @@ namespace Lelesys\Plugin\News\Domain\Repository;
 use TYPO3\Flow\Annotations as Flow;
 
 /**
- * A repository for Comments
+ * News controller for the Lelesys.Plugin.News package
  *
  * @Flow\Scope("singleton")
  */
-class CommentRepository extends \TYPO3\Flow\Persistence\Repository {
-
-	/**
-	 * Get comment entries
-	 *
-	 * @return \TYPO3\FLOW3\Persistence\QueryResultInterface The query result
-	 */
-	public function getCommentEntries() {
-		$query = $this->createQuery();
-		return $query
-						->setOrderings(array('createdDate' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING))
-						->execute();
-	}
+class NewsManagementController extends \TYPO3\Neos\Controller\Module\AbstractModuleController {
 
 }
+
 ?>

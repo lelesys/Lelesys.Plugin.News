@@ -1,0 +1,402 @@
+<f:layout name="DefaultBackend" />
+
+<f:section name="Content">
+	<f:render partial="FlashMessage" arguments="{severityName: flashmessage}" />
+	<f:section name="subtitle">
+		<div class="row neos-module-container indented">
+			<h2>Edit "{news.title}"</h2>
+		</div>
+	</f:section>
+	<f:form action="update" object="{news}" name="news" enctype="multipart/form-data">
+		<div class="row neos-module-container">
+			<div class="tabbable tab tab-size">
+				<ul class="nav nav-tabs" style="margin-left: 30px;">
+					<li class="active"><a href="#tab1" data-toggle="tab">General</a></li>
+					<li><a href="#tab2" data-toggle="tab">Options</a></li>
+					<li><a href="#tab3" data-toggle="tab">Relations</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="tab1">
+						<fieldset class="span5">
+							<div class="control-group">
+								<label for="title">Title</label>
+								<div class="controls">
+									<f:form.textfield class="" property="title" id="title" />
+									<f:render partial="FormErrors" arguments="{for: 'newNews.title'}" />
+								</div>
+							</div>
+							<div class="control-group">
+								<label for="subTitle">Sub title</label>
+								<div class="controls">
+									<f:form.textarea class="" rows="4" cols="5" property="subTitle" id="subTitle" />
+								</div>
+							</div>
+							<div class="control-group">
+								<label for="news-description">Description</label>
+								<div class="controls nice-edit-size">
+									<f:form.textarea cols="43" rows="10" property="description" id="news-description" />
+								</div>
+							</div>
+						</fieldset>
+						<fieldset class="span5">
+							<div class="control-group">
+								<label for="alternativeTitle">Alternative title</label>
+								<div class="controls">
+									<f:form.textfield class="" property="alternativeTitle" id="alternativeTitle" />
+								</div>
+							</div>
+							<div class="control-group">
+								<label for="authorName">Author name</label>
+								<div class="controls">
+									<f:form.textfield class="" property="authorName" id="authorName" />
+								</div>
+							</div>
+							<div class="control-group">
+								<label for="authorEmail">Author email</label>
+								<div class="controls">
+									<f:form.textfield class="" property="authorEmail" id="authorEmail" />
+									<f:render partial="FormErrors" arguments="{for: 'newNews.authorEmail'}" />
+								</div>
+							</div>
+							<div class="control-group">
+								<label for="dateTime">Date time</label>
+								<div class="controls">
+									<f:form.textfield type="datetime" value="{news.dateTime -> f:format.date(format: 'm/d/Y')}" property="dateTime" id="dateTime" class="datepicker "/>
+								</div>
+							</div>
+							<div class="control-group">
+								<label for="archiveDate">Archive date</label>
+								<div class="controls">
+									<f:form.textfield type="datetime" value="{news.archiveDate -> f:format.date(format: 'm/d/Y')}" property="archiveDate" id="archiveDate" class="datepicker "/>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+					<div class="tab-pane" id="tab2">
+						<fieldset class="span5">
+							<div class="control-group">
+								<label for="categories">Categories</label>
+								<div class="controls">
+									<f:if condition="{newsCategories}">
+										<f:then>
+											<f:form.select class="" options="{newsCategories}" optionLabelField="title" id="categories" property="categories" multiple="true" size="7"></f:form.select>
+										</f:then>
+										<f:else>
+											<f:form.select disabled="disabled" class="" options="{newsCategories}" optionLabelField="title" id="categories" property="categories" size="7"></f:form.select>
+										</f:else>
+									</f:if>
+								</div>
+							</div>
+							<div class="control-group">
+								<label for="tags">Tags</label>
+								<div class="controls">
+									<f:if condition="{tags}">
+										<f:then>
+											<f:form.select class="" options="{tags}" optionLabelField="title" id="tags" property="tags" multiple="true" size="7"></f:form.select>
+										</f:then>
+										<f:else>
+											<f:form.select disabled="disabled" class="" options="{tags}" optionLabelField="title" id="tags" property="tags" size="7"></f:form.select>
+										</f:else>
+									</f:if>
+								</div>
+							</div>
+						</fieldset>
+						<fieldset class="span5">
+							<div class="control-group">
+								<label for="relatedNews">Related news</label>
+								<div class="controls">
+									<f:if condition="{relatedNews}">
+										<f:then>
+											<f:form.select class="" options="{relatedNews}" optionLabelField="title" id="relatedNews" property="relatedNews" multiple="true" size="7"></f:form.select>
+										</f:then>
+										<f:else>
+											<f:form.select disabled="disabled" class="" options="{relatedNews}" optionLabelField="title" id="relatedNews" property="relatedNews" size="7"></f:form.select>
+										</f:else>
+									</f:if>
+								</div>
+							</div>
+							<div class="control-group">
+								<label for="keywords">Keywords ( , )</label>
+								<div class="controls">
+									<f:form.textarea class="" rows="4" cols="5" property="keywords" id="keywords" />
+								</div>
+							</div>
+						</fieldset>
+					</div>
+					<f:form.hidden value="{news.uuid}" class="news-id" />
+					<div class="tab-pane" id="tab3">
+						<fieldset class="span5">
+							<label>Media Element</label>
+							<div class="accordion" id="accordionOne">
+								<div class="accordion-group" style="display: none;">
+									<div class="accordion-heading">
+										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionOne" href="#collapse-media-0">
+											Related Media #0
+										</a>
+										<f:form.hidden class="show-hide-value" value="0" name="media[0][hidden]" />
+										<f:link.external uri="javascript:void(0)" class="asset-toggle hide-asset pull-right hide-show-file tooltip-demo" rel="tooltip" title="Hide"><i class="icon-eye-close"></i> </f:link.external>
+									</div>
+									<div id="collapse-media-0" class="accordion-body collapse in">
+										<div class="accordion-inner">
+											<div class="control-group">
+												<label class="control-label" for="originalResource-0">Image</label>
+												<div class="controls">
+													<f:form.upload name="media[0][originalResource]" id="originalResource-0" />
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="caption-0">Caption</label>
+												<div class="controls">
+													<f:form.textfield class="" name="media[0][caption]" id="caption-0" />
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="copyRight-0">Copy right</label>
+												<div class="controls">
+													<f:form.textfield class="" name="media[0][copyRight]" id="copyRight-0" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<f:for each="{media}" as="asset" iteration="indexIteration">
+									<div class="accordion-group">
+										<div class="accordion-heading">
+											<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionOne" href="#collapse-media-{indexIteration.cycle}">
+												{asset.originalResource.fileName}
+											</a>
+											<div class="loader pull-right remove-file" style="display: none; margin-right: 50px;  margin-top: -26px;"><img src="{f:uri.resource(path: 'images/ajax-loader.gif')}"/></div>
+											<f:link.external uri="javascript:void(0)" class="pull-right remove-file remove-media tooltip-demo" rel="tooltip" title="Delete"><i class="icon-trash"></i></f:link.external>
+											<f:if condition="{asset.hidden} == 1">
+												<f:then>
+													<f:form.hidden class="show-hide-value" value="1" name="media[{indexIteration.cycle}][hidden]" />
+													<f:link.external uri="javascript:void(0)" class="asset-toggle show-asset pull-right hide-show-file tooltip-demo" rel="tooltip" title="Show"><i class="icon-eye-open"></i></f:link.external>
+												</f:then>
+												<f:else>
+													<f:form.hidden class="show-hide-value" value="0" name="media[{indexIteration.cycle}][hidden]" />
+													<f:link.external uri="javascript:void(0)" class="asset-toggle hide-asset pull-right hide-show-file tooltip-demo" rel="tooltip" title="Hide"><i class="icon-eye-close"></i> </f:link.external>
+												</f:else>
+											</f:if>
+										</div>
+										<div id="collapse-media-{indexIteration.cycle}" class="accordion-body collapse">
+											<div class="accordion-inner">
+												<div class="control-group">
+													<label class="control-label" for="originalResource">Image</label>
+													<div class="controls">
+														<f:form.upload style="display: none;" name="media[{indexIteration.cycle}][originalResource]" id="originalResource-{indexIteration.cycle}" />
+														<img class="thumbnail" src="{f:uri.resource(resource: asset.originalResource)}" alt="{asset.caption}" width="100"/>
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label" for="caption">Caption</label>
+													<div class="controls">
+														<f:form.textfield value="{asset.caption}" class="" name="media[{indexIteration.cycle}][caption]" id="caption-{indexIteration.cycle}" />
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label" for="copyRight">Copy right</label>
+													<div class="controls">
+														<f:form.textfield value="{asset.copyRight}" class="" name="media[{indexIteration.cycle}][copyRight]" id="copyRight-{indexIteration.cycle}" />
+														<f:form.hidden value="{asset.uuid}" class="asset-id" name="media[{indexIteration.cycle}][uuid]" />
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</f:for>
+								<f:link.external uri="javascript:void(0)" class="add-more-media">Add more Media</f:link.external>
+							</div>
+							<label>Related Files</label>
+							<div class="accordion" id="accordionTwo">
+								<div class="accordion-group" style="display: none;">
+									<div class="accordion-heading">
+										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionTwo" href="#collapse-file-0">
+											Related File #0
+										</a>
+										<f:form.hidden class="show-hide-value" value="0" name="file[0][hidden]" />
+										<f:link.external uri="javascript:void(0)" class="asset-toggle hide-asset pull-right hide-show-file tooltip-demo" rel="tooltip" title="Hide"><i class="icon-eye-close"></i> </f:link.external>
+									</div>
+									<div id="collapse-file-0" class="accordion-body collapse in">
+										<div class="accordion-inner">
+											<div class="control-group">
+												<label class="control-label" for="file-originalResource-0">File</label>
+												<div class="controls">
+													<f:form.upload name="file[0][originalFileResource]" id="file-originalResource-0" />
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="file-title-0">Title</label>
+												<div class="controls">
+													<f:form.textfield class="" name="file[0][title]" id="file-title-0" />
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="file-description-0">Description</label>
+												<div class="controls">
+													<f:form.textarea rows="4" cols="5" class="" name="file[0][description]" id="file-description-0" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<f:for each="{files}" as="file" iteration="indexIteration">
+									<div class="accordion-group">
+										<div class="accordion-heading">
+											<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionTwo" href="#collapse-file-{indexIteration.cycle}">
+												{file.originalFileResource.fileName}
+											</a>
+											<div class="loader pull-right remove-file" style="display: none; margin-right: 50px;  margin-top: -26px;"><img src="{f:uri.resource(path: 'images/ajax-loader.gif')}"/></div>
+											<f:link.external uri="javascript:void(0)" class="pull-right remove-file delete-file tooltip-demo" rel="tooltip" title="Delete"><i class="icon-trash"></i></f:link.external>
+											<f:if condition="{file.hidden} == 1">
+												<f:then>
+													<f:form.hidden class="show-hide-value" value="1" name="file[{indexIteration.cycle}][hidden]" />
+													<f:link.external uri="javascript:void(0)" class="asset-toggle show-asset tooltip-demo pull-right hide-show-file" rel="tooltip" title="Show"><i class="icon-eye-open"></i></f:link.external>
+												</f:then>
+												<f:else>
+													<f:form.hidden class="show-hide-value" value="0" name="file[{indexIteration.cycle}][hidden]" />
+													<f:link.external uri="javascript:void(0)" class="asset-toggle hide-asset tooltip-demo pull-right hide-show-file" rel="tooltip" title="Hide"><i class="icon-eye-close"></i> </f:link.external>
+												</f:else>
+											</f:if>
+										</div>
+										<div id="collapse-file-{indexIteration.cycle}" class="accordion-body collapse">
+											<div class="accordion-inner">
+												<div class="control-group">
+													<label class="control-label" for="file-originalResource">File</label>
+													<div class="controls">
+														<f:form.upload style="display: none;" name="file[{indexIteration.cycle}][originalFileResource]" id="file-originalResource-{indexIteration.cycle}" />
+														<img class="thumbnail" src="{f:uri.resource(resource: file.originalFileResource)}" alt="{file.title}" width="100"/>
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label" for="file-title">Title</label>
+													<div class="controls">
+														<f:form.textfield value="{file.title}" class="" name="file[{indexIteration.cycle}][title]" id="file-title-{indexIteration.cycle}" />
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label" for="file-description">Description</label>
+													<div class="controls">
+														<f:form.textarea rows="4" cols="5" class="" value="{file.description}" name="file[{indexIteration.cycle}][description]" id="file-description-{indexIteration.cycle}" />
+														<f:form.hidden value="{file.uuid}" class="file-id" name="file[{indexIteration.cycle}][uuid]" />
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</f:for>
+								<f:link.external uri="javascript:void(0)" class="add-more-files">Add more Files</f:link.external>
+							</div>
+							<label>Related Links</label>
+							<div class="accordion" id="collapseThree">
+								<div class="accordion-group" style="display: none;">
+									<div class="accordion-heading">
+										<a class="accordion-toggle" data-toggle="collapse" data-parent="#collapseThree" href="#collapse-link-0">
+											Related Link #0
+										</a>
+										<f:form.hidden class="show-hide-value" value="0" name="relatedLink[0][hidden]" />
+										<f:link.external uri="javascript:void(0)" class="asset-toggle hide-asset pull-right hide-show-file tooltip-demo" rel="tooltip" title="Hide"><i class="icon-eye-close"></i> </f:link.external>
+									</div>
+									<div id="collapse-link-0" class="accordion-body collapse in">
+										<div class="accordion-inner">
+											<div class="control-group">
+												<label class="control-label" for="relatedLinks-0">Uri</label>
+												<div class="controls">
+													<f:form.textfield class=" text-added"  name="relatedLink[0][relatedUri]" id="relatedLinks-0" />
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="relatedLinks-title-0">Title</label>
+												<div class="controls">
+													<f:form.textfield class=""  name="relatedLink[0][relatedUriTitle]" id="relatedLinks-title-0" />
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="relatedLinks-description-0">Description</label>
+												<div class="controls">
+													<f:form.textarea class="" rows="4" cols="5" name="relatedLink[0][relatedUriDescription]" id="relatedLinks-description-0" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<f:for each="{relatedLinks}" as="link" iteration="indexIteration">
+									<div class="accordion-group">
+										<div class="accordion-heading">
+											<a class="accordion-toggle" data-toggle="collapse" data-parent="#collapseThree" href="#collapse-link-{indexIteration.cycle}">
+												{link.uri}
+											</a>
+											<div class="loader pull-right remove-file" style="display: none; margin-right: 50px;  margin-top: -26px;"><img src="{f:uri.resource(path: 'images/ajax-loader.gif')}"/></div>
+											<f:link.external uri="javascript:void(0)" class="pull-right remove-file remove-related-link tooltip-demo" rel="tooltip" title="Delete"><i class="icon-trash"></i></f:link.external>
+											<f:if condition="{link.hidden} == 1">
+												<f:then>
+													<f:form.hidden class="show-hide-value" value="1" name="relatedLink[{indexIteration.cycle}][hidden]" />
+													<f:link.external uri="javascript:void(0)" class="asset-toggle show-asset tooltip-demo pull-right hide-show-file" rel="tooltip" title="Show"><i class="icon-eye-open"></i></f:link.external>
+												</f:then>
+												<f:else>
+													<f:form.hidden class="show-hide-value" value="0" name="relatedLink[{indexIteration.cycle}][hidden]" />
+													<f:link.external uri="javascript:void(0)" class="asset-toggle hide-asset tooltip-demo pull-right hide-show-file" rel="tooltip" title="Hide"><i class="icon-eye-close"></i> </f:link.external>
+												</f:else>
+											</f:if>
+										</div>
+										<div id="collapse-link-{indexIteration.cycle}" class="accordion-body collapse">
+											<div class="accordion-inner">
+												<div class="control-group">
+													<label class="control-label" for="relatedLinks-1">Uri</label>
+													<div class="controls">
+														<f:form.textfield class=" text-added" value="{link.uri}" name="relatedLink[{indexIteration.cycle}][relatedUri]" id="relatedLinks-{indexIteration.cycle}" />
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label" for="relatedLinks-title-1">Title</label>
+													<div class="controls">
+														<f:form.textfield class="" value="{link.title}" name="relatedLink[{indexIteration.cycle}][relatedUriTitle]" id="relatedLinks-title-{indexIteration.cycle}" />
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label" for="relatedLinks-description-{indexIteration.cycle}">Description</label>
+													<div class="controls">
+														<f:form.textarea class="" value="{link.description}" rows="4" cols="5" name="relatedLink[{indexIteration.cycle}][relatedUriDescription]" id="relatedLinks-description-{indexIteration.cycle}" />
+														<f:form.hidden value="{link.uuid}" class="link-id" name="relatedLink[{indexIteration.cycle}][uuid]" />
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</f:for>
+								<f:link.external uri="javascript:void(0)" class="add-more-related-link">Add more Related Links</f:link.external>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-actions form-footer">
+			<f:link.action action="index" class="btn neos-button">Cancel</f:link.action>
+			<div class="pull-right">
+				<f:form.submit value="Update" class="btn createNews1 btn-primary neos-button" />
+			</div>
+		</div>
+	</f:form>
+	<script>
+		deleteMessage = "Are you sure you want to delete?";
+		removeAsset = "{f:uri.action(package:'Lelesys.Plugin.News', action:'removeAsset', controller:'News')}";
+		removeFile = "{f:uri.action(package:'Lelesys.Plugin.News', action:'removeRelatedFile', controller:'News')}";
+		removeRelatedLink = "{f:uri.action(package:'Lelesys.Plugin.News', action:'removeRelatedLink', controller:'News')}";
+		showAsset= "{f:uri.action(package:'Lelesys.Plugin.News', action:'showAsset', controller:'News')}";
+		hideAsset= "{f:uri.action(package:'Lelesys.Plugin.News', action:'hideAsset', controller:'News')}";
+		showFile= "{f:uri.action(package:'Lelesys.Plugin.News', action:'showFile', controller:'News')}";
+		hideFile= "{f:uri.action(package:'Lelesys.Plugin.News', action:'hideFile', controller:'News')}";
+		showLink= "{f:uri.action(package:'Lelesys.Plugin.News', action:'showLink', controller:'News')}";
+		hideLink= "{f:uri.action(package:'Lelesys.Plugin.News', action:'hideLink', controller:'News')}";
+	</script>
+	<!--This js is to display rte -->
+	<script src="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/js/jquery-2.0.3.min.js')}" type="text/javascript"></script>
+	<script src="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/js/bootstrap.min.js')}" type="text/javascript"></script>
+	<script src="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/js/bootstrap-datepicker.js')}" type="text/javascript"></script>
+	<script src="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/js/bootstrap-tooltip.js')}" type="text/javascript"></script>
+	<script src="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/js/calender.js')}" type="text/javascript"></script>
+	<script src="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/js/clone-backend.js')}" type="text/javascript"></script>
+	<script src="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/js/form-validation.js')}" type="text/javascript"></script>
+	<script src="{f:uri.resource(path:'nicEdit/nicEdit.js')}" type="text/javascript"></script>
+	<script src="{f:uri.resource(path:'nicEdit/domscript.js')}" type="text/javascript"></script>
+</f:section>

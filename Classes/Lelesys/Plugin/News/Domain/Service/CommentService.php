@@ -2,7 +2,7 @@
 
 namespace Lelesys\Plugin\News\Domain\Service;
 
-/*                                                                         *
+/* *
  * This script belongs to the package "Lelesys.Plugin.News".               *
  *                                                                         *
  * It is free software; you can redistribute it and/or modify it under     *
@@ -32,7 +32,7 @@ class CommentService {
 	 * @return \Lelesys\Plugin\News\Domain\Model\Comment
 	 */
 	public function listAll() {
-		$this->view->assign('comments', $this->commentRepository->findAll());
+		return $this->commentRepository->getCommentEntries();
 	}
 
 	/**
@@ -45,16 +45,6 @@ class CommentService {
 	public function create(\Lelesys\Plugin\News\Domain\Model\Comment $newComment, \Lelesys\Plugin\News\Domain\Model\News $news) {
 		$newComment->setNews($news);
 		$this->commentRepository->add($newComment);
-	}
-
-	/**
-	 * Updates the given comment object
-	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\Comment $comment The comment to update
-	 * @return void
-	 */
-	public function update(\Lelesys\Plugin\News\Domain\Model\Comment $comment) {
-		$this->commentRepository->update($comment);
 	}
 
 	/**
@@ -76,6 +66,28 @@ class CommentService {
 	public function findById($identifier) {
 		$comment = $this->commentRepository->findByIdentifier($identifier);
 		return $comment;
+	}
+
+	/**
+	 * hide's the category
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Comment $comment
+	 * @return void
+	 */
+	public function unPublishComment(\Lelesys\Plugin\News\Domain\Model\Comment $comment) {
+		$comment->setSetHidden(1);
+		$this->commentRepository->update($comment);
+	}
+
+	/**
+	 * shows's the hidden category
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Comment $category
+	 * @return void
+	 */
+	public function publishComment(\Lelesys\Plugin\News\Domain\Model\Comment $comment) {
+		$comment->setSetHidden(0);
+		$this->commentRepository->update($comment);
 	}
 
 }

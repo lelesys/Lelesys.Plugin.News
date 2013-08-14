@@ -1,0 +1,26 @@
+/************************ show view *********************/
+
+.rel_title label {
+    border-bottom: 1px dotted #C4C4C4;
+}
+.backend-news-slider {
+	width: 65%;
+}
+.nice-edit-size {
+	color: #555555;
+}
+
+.datepicker-days {
+	color: #555555;
+}
+.datepicker-days th {
+	font-weight: bold;
+}
+.hide-show-file {
+    margin-right: 11px;
+    margin-top: -25px;
+}
+.remove-file {
+    margin-right: 32px;
+    margin-top: -25px;
+}

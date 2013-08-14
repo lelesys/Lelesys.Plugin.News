@@ -11,45 +11,49 @@
 		<f:if condition="{allNews}">
 			<f:then>
 				<f:for each="{allNews}" as="news">
+					<div class="clearfix">
 						<div class="clearfix">
-							<div class="clearfix">
-								<div class="title-link">
-									<f:link.action action="show" arguments="{news: news}">{news.title}</f:link.action>
-									<p class="date">Published on {news.dateTime -> f:format.date(format: 'j M y, h:i A')}</p>
-								</div>
-								<article>
-									<f:if condition="{news.assets}">
-										<f:then>
-											<div class="asset-img">
-												<f:for each="{news.assets}" as="asset" iteration="fooIterator">
-													{f:if(condition: fooIterator.isLast, then: '<img src="{f:uri.resource(resource: asset.originalResource)}" class="thumbnail" alt="image" width="100" />')}
-												</f:for>
-											</div>
-										</f:then>
-										<f:else>
-											<div class="asset-img">
-												<img src="{f:uri.resource(path:'images/no_photo.jpg')}" alt="image" width="100" />
-											</div>
-										</f:else>
-									</f:if>
-									<div>
-										<p>{news.subTitle}</p>
-										<p class="date"><f:link.action action="show" arguments="{news: news}">read more</f:link.action></p>
-									</div>
-								</article>
+							<div class="title-link">
+								<f:link.action action="show" arguments="{news: news}">{news.title}</f:link.action>
+								<p class="date">Published on {news.dateTime -> f:format.date(format: 'j M y, h:i A')}</p>
 							</div>
-							<f:if condition="{news.authorName}">
-								<f:then>
-									<div class="news_footer">
+							<article>
+								<f:if condition="{assetsForNews}">
+									<f:then>
+										<f:for each="{assetsForNews}" as="assets" key="newsId">
+											<f:if condition="{newsId} == {news.uuid}">
+												<div class="asset-img">
+													<f:for each="{assets}" as="asset" iteration="fooIterator">
+														{f:if(condition: fooIterator.isLast, then: '<img src="{f:uri.resource(resource: asset.originalResource)}" class="thumbnail" alt="image" width="100" />')}
+													</f:for>
+												</div>
+											</f:if>
+										</f:for>
+									</f:then>
+									<f:else>
+										<div class="asset-img">
+											<img src="{f:uri.resource(path:'images/no_photo.jpg')}" alt="image" width="100" />
+										</div>
+									</f:else>
+								</f:if>
+								<div>
+									<p>{news.subTitle}</p>
+									<p class="date"><f:link.action action="show" arguments="{news: news}">read more</f:link.action></p>
+								</div>
+							</article>
+						</div>
+						<f:if condition="{news.authorName}">
+							<f:then>
+								<div class="news_footer">
 									<span class="date">author name: &nbsp;{news.authorName}</span>
 								</div>
-								</f:then>
-								<f:else>
-										<hr/>
-								</f:else>
-							</f:if>
-						</div>
-					</f:for>
+							</f:then>
+							<f:else>
+								<hr/>
+							</f:else>
+						</f:if>
+					</div>
+				</f:for>
 			</f:then>
 			<f:else>
 				<div class="clearfix"></div>

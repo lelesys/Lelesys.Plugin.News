@@ -1,0 +1,13 @@
+resources:
+  methods:
+    'Lelesys_Plugin_News_Module_NewsManagement': 'method(Lelesys\Plugin\News\Controller\Module\NewsManagementController->.*Action())'
+    'Lelesys_Plugin_News_Module_NewsManagement_News': 'method(Lelesys\Plugin\News\Controller\Module\NewsManagement\News\NewsController->.*Action())'
+    'Lelesys_Plugin_News_Module_NewsManagement_Category': 'method(Lelesys\Plugin\News\Controller\Module\NewsManagement\Category\CategoryController->.*Action())'
+    'Lelesys_Plugin_News_Module_NewsManagement_Comment': 'method(Lelesys\Plugin\News\Controller\Module\NewsManagement\Comment\CommentController->.*Action())'
+acls:
+   'TYPO3.Neos:Editor':
+    methods:
+      'Lelesys_Plugin_News_Module_NewsManagement': GRANT
+      'Lelesys_Plugin_News_Module_NewsManagement_News': GRANT
+      'Lelesys_Plugin_News_Module_NewsManagement_Category': GRANT
+      'Lelesys_Plugin_News_Module_NewsManagement_Comment': GRANT
