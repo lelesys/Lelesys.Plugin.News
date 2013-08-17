@@ -6,7 +6,7 @@
 		</div>
 	</f:section>
 	<div class="main-container">
-		<f:form action="update" object="{category}" name="category" enctype="multipart/form-data">
+		<f:form action="update" object="{category}" name="category" id="news-category-form" enctype="multipart/form-data">
 			<div class="row neos-module-container">
 				<fieldset class="span5">
 					<legend>Edit Category</legend>
@@ -43,7 +43,7 @@
 			<div class="form-actions form-footer">
 				<f:link.action action="index" class="btn neos-button">Cancel</f:link.action>
 				<div class="pull-right">
-					<f:form.submit class="btn btn-primary neos-button" value="Update"/>
+					<input  class="btn btn-primary neos-button createCategory" type="button" value="Update">
 				</div>
 			</div>
 		</f:form>
@@ -52,6 +52,6 @@
 		checkTitle = "{f:uri.action(package:'Lelesys.Plugin.News', action:'checkTitle', controller:'Category')}";
 	</script>
 	<script src="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/js/jquery-2.0.3.min.js')}" type="text/javascript"></script>
-	<script src="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/js/form-validation.js')}" type="text/javascript"></script>
+	<script src="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/js/form-validation-backend.js')}" type="text/javascript"></script>
 </f:section>
 

@@ -10,7 +10,7 @@ Lelesys:
       limitLatestNews: '2'
       # Set List News Limit
       limitAdminListNews: '5'
-      limitListNews: '2'
+      limitListNews: '5'
 
 # Backend modules configuration
 TYPO3:

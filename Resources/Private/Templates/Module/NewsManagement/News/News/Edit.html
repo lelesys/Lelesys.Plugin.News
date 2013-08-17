@@ -21,7 +21,7 @@
 							<div class="control-group">
 								<label for="title">Title</label>
 								<div class="controls">
-									<f:form.textfield class="" property="title" id="title" />
+									<f:form.textfield class="newsTitle" property="title" id="title" />
 									<f:render partial="FormErrors" arguments="{for: 'newNews.title'}" />
 								</div>
 							</div>
@@ -373,7 +373,7 @@
 		<div class="form-actions form-footer">
 			<f:link.action action="index" class="btn neos-button">Cancel</f:link.action>
 			<div class="pull-right">
-				<f:form.submit value="Update" class="btn createNews1 btn-primary neos-button" />
+				<f:form.submit value="Update" class="btn createNews btn-primary neos-button" />
 			</div>
 		</div>
 	</f:form>

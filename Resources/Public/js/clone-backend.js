@@ -29,7 +29,6 @@ jQuery(document).ready(function(){
 			var assetId = jQuery('.asset-id').val();
 			var newsId = jQuery('.news-id').val();
 			var eleobj = this;
-			//alert(removeAsset); exit;
 			jQuery.ajax({
 				beforeSend: function() {
 					jQuery(eleobj).prev('.loader').show();
@@ -37,7 +36,7 @@ jQuery(document).ready(function(){
 				complete: function(){
 					jQuery('.loader').hide();
 				},
-				url:removeAsset+'&moduleArguments[assetId]='+assetId+'&moduleArguments[newsId]='+newsId,
+				url:removeAsset+'?moduleArguments[%40package]=lelesys.plugin.news&moduleArguments[%40controller]=news&moduleArguments[%40action]=removeasset&moduleArguments[assetId]='+assetId+'&moduleArguments[newsId]='+newsId,
 				async:false,
 				dataType: 'json',
 				success: function(data) {
@@ -66,7 +65,7 @@ jQuery(document).ready(function(){
 				complete: function(){
 					jQuery('.loader').hide();
 				},
-				url: removeFile+'&moduleArguments[fileId]='+fileId+'&moduleArguments[newsId]='+newsId,
+				url: removeFile+'?moduleArguments[%40package]=lelesys.plugin.news&moduleArguments[%40controller]=news&moduleArguments[%40action]=removeRelatedFile&moduleArguments[fileId]='+fileId+'&moduleArguments[newsId]='+newsId,
 				async:false,
 				dataType: 'json',
 				success: function(data) {
@@ -94,7 +93,7 @@ jQuery(document).ready(function(){
 				complete: function(){
 					jQuery('.loader').hide();
 				},
-				url: removeRelatedLink+'&moduleArguments[linkId]='+linkId+'&moduleArguments[newsId]='+newsId,
+				url: removeRelatedLink+'?moduleArguments[%40package]=lelesys.plugin.news&moduleArguments[%40controller]=news&moduleArguments[%40action]=removeRelatedLink&moduleArguments[linkId]='+linkId+'&moduleArguments[newsId]='+newsId,
 				async:false,
 				dataType: 'json',
 				success: function(data) {
@@ -196,7 +195,7 @@ function cloneAddFiles() {
 	});
 };
 
-	function cloneAddMedia() {
+function cloneAddMedia() {
 	var div = jQuery('.add-more-media').prev('.accordion-group').clone();
 	div.css('display', 'block');
 	div.find('input[type="file"]').css('display', 'block');
