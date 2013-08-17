@@ -9,8 +9,10 @@ Lelesys:
       # Set Lastest News Limit
       limitLatestNews: '2'
       # Set List News Limit
-      limitAdminListNews: '5'
+      limitAdminListNews: ''
       limitListNews: '5'
+      # Set news item per page
+      newsPerPageAdmin: '8'
 
 # Backend modules configuration
 TYPO3:

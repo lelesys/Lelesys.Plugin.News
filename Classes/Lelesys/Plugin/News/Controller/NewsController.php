@@ -88,9 +88,14 @@ class NewsController extends AbstractNewsController {
 	/**
 	 * Shows a list of news for admin
 	 *
+	 * @param integer $recordLimit
 	 * @return void
 	 */
-	public function adminListAction() {
+	public function adminListAction($recordLimit = NULL) {
+		if ($recordLimit == NULL) {
+			$recordLimit = $this->settings['newsPerPageAdmin'];
+		}
+		$this->view->assign('recordLimit', $recordLimit);
 		$allNews = $this->newsService->adminNewsList();
 		$this->view->assign('allNews', $allNews);
 		$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
