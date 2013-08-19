@@ -40,6 +40,12 @@ class NewsService {
 
 	/**
 	 * @Flow\Inject
+	 * @var \TYPO3\Flow\Resource\ResourceManager
+	 */
+	protected $resourceManager;
+
+	/**
+	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Service\AssetService
 	 */
 	protected $assetService;
@@ -488,6 +494,29 @@ class NewsService {
 	public function findById($identifier) {
 		$news = $this->newsRepository->findByIdentifier($identifier);
 		return $news;
+	}
+
+	/**
+	 * Downloads the file
+	 *
+	 * @param array $file
+	 * @return void
+	 */
+	public function downloadFile(array $file) {
+		$fileResource = $this->propertyMapper->convert($file['__identity'], '\TYPO3\Flow\Resource\Resource');
+		$filePath = $this->resourceManager->getPersistentResourcesStorageBaseUri() . $fileResource->getResourcePointer()->getHash();
+		$fileMimeType = mime_content_type($filePath);
+		header('Content-Description: File Transfer');
+		header('Content-Type: ' . $fileMimeType);
+		header('Content-Disposition: attachment; filename=' . basename($fileResource->getFilename()));
+		header('Content-Transfer-Encoding: binary');
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header('Pragma: public');
+		header('Content-Length: ' . filesize($filePath));
+		ob_clean();
+		flush();
+		readfile($filePath);
 	}
 
 }

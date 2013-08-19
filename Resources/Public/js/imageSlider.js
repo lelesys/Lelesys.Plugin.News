@@ -13,11 +13,4 @@ jQuery(document).ready(function() {
 		imageBtnClose: '/_Resources/Static/Packages/Lelesys.Plugin.News/images/lightbox-btn-close.gif',
 		imageBlank:	'/_Resources/Static/Packages/Lelesys.Plugin.News/images/lightbox-blank.gif'
 	});
-	jQuery('#show-carousel-lightbox a').lightBox({
-		imageLoading: '/_Resources/Static/Packages/Lelesys.Plugin.News/images/lightbox-ico-loading.gif',
-		imageBtnPrev: '/_Resources/Static/Packages/Lelesys.Plugin.News/images/lightbox-btn-prev.gif',
-		imageBtnNext: '/_Resources/Static/Packages/Lelesys.Plugin.News/images/lightbox-btn-next.gif',
-		imageBtnClose: '/_Resources/Static/Packages/Lelesys.Plugin.News/images/lightbox-btn-close.gif',
-		imageBlank:	'/_Resources/Static/Packages/Lelesys.Plugin.News/images/lightbox-blank.gif'
-	});
 });

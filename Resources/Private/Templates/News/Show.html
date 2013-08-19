@@ -80,9 +80,11 @@
 					<f:if condition="{relatedFiles}">
 						<div class="news-rel news_listimg rel_title">
 							<p>Related Files</p>
-							<ul id="show-carousel-lightbox">
+							<ul>
 								<f:for each="{relatedFiles}" as="file">
-									<li><a href="{f:uri.resource(resource: file.originalFileResource)}"><img src="{f:uri.resource(resource: file.originalFileResource)}" alt="image" width="120"/></a></li>
+									<li>
+									<f:link.action action="downloadFile" arguments="{file: file.originalFileResource}" controller="news">{file.originalFileResource.fileName}</f:link.action>
+									</li>
 								</f:for>
 							</ul>
 						</div>
@@ -142,7 +144,7 @@
 								</div>
 							</div>
 						</f:form>
-						<f:link.action action="index">Back</f:link.action>
+						<a href="javascript:history.back()"> Back </a>
 					</div>
 				</div>
 			</f:then>

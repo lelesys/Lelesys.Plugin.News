@@ -296,6 +296,16 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 		}
 	}
 
+	/**
+	 * Downloads the file
+	 *
+	 * @param array $file
+	 * @return void
+	 */
+	public function downloadFileAction(array $file) {
+		$this->newsService->downloadFile($file);
+	}
+
 }
 
 ?>

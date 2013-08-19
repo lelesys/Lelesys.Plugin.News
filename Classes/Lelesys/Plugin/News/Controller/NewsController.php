@@ -108,8 +108,7 @@ class NewsController extends AbstractNewsController {
 	 * @return void
 	 */
 	public function showAction(\Lelesys\Plugin\News\Domain\Model\News $news = NULL) {
-		if ($news === NULL) {
-		} else {
+		if ($news !== NULL) {
 			$related = $this->newsService->related($news);
 			$argumentNamespace = $this->request->getArgumentNamespace();
 			$this->view->assign('argumentNamespace', $argumentNamespace);
@@ -354,6 +353,16 @@ class NewsController extends AbstractNewsController {
 	 */
 	public function showArchiveNewsAction($year, $month) {
 		$this->view->assign('archiveNewsList', $this->newsService->archiveNewsList($year, $month));
+	}
+
+	/**
+	 * Downloads the file
+	 *
+	 * @param array $file
+	 * @return void
+	 */
+	public function downloadFileAction(array $file) {
+		$this->newsService->downloadFile($file);
 	}
 
 }
