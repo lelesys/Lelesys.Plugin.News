@@ -7,10 +7,10 @@ Lelesys:
       layoutRootPath: 'resource://Lelesys.Plugin.News/Private/Layouts/'
       paginateTemplatePath: 'resource://Lelesys.Plugin.News/Private/Templates/ViewHelpers/Widget/Paginate/Index.html'
       # Set Lastest News Limit
-      limitLatestNews: '2'
+      limitLatestNews: ''
       # Set List News Limit
       limitAdminListNews: ''
-      limitListNews: '5'
+      limitListNews: ''
       # Set news item per page
       newsPerPageAdmin: '8'
 

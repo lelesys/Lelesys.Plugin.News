@@ -88,3 +88,12 @@
     label: 'Archive'
     inlineEditable: true
     icon: 'icon-puzzle-piece'
+
+'Lelesys.Plugin.News:DetailNews':
+  superTypes:
+    - 'TYPO3.Neos:Plugin'
+  ui:
+    label: 'News Detail'
+    group: Plugins
+    inlineEditable: true
+    icon: 'icon-puzzle-piece'

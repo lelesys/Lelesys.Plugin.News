@@ -65,3 +65,11 @@ prototype(Lelesys.Plugin.News:Archive) {
      controller = 'News'
      action = 'archive'
 }
+
+# Detail News
+prototype(Lelesys.Plugin.News:DetailNews) < prototype(TYPO3.Neos:Plugin)
+prototype(Lelesys.Plugin.News:DetailNews) {
+     package = 'Lelesys.Plugin.News'
+     controller = 'News'
+     action = 'show'
+}

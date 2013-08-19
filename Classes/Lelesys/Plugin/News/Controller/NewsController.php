@@ -107,18 +107,21 @@ class NewsController extends AbstractNewsController {
 	 * @param \Lelesys\Plugin\News\Domain\Model\News $news The news to show
 	 * @return void
 	 */
-	public function showAction(\Lelesys\Plugin\News\Domain\Model\News $news) {
-		$related = $this->newsService->related($news);
-		$argumentNamespace = $this->request->getArgumentNamespace();
-		$this->view->assign('argumentNamespace', $argumentNamespace);
-		$this->view->assign('assets', $related['assets']);
-		$this->view->assign('comments', $related['comments']);
-		$this->view->assign('relatedFiles', $related['files']);
-		$this->view->assign('relatedLinkData', $this->newsService->show($news));
-		$this->view->assign('relatedNews', $related['news']);
-		$this->view->assign('categories', $related['categories']);
-		$this->view->assign('tags', $news->getTags());
-		$this->view->assign('news', $news);
+	public function showAction(\Lelesys\Plugin\News\Domain\Model\News $news = NULL) {
+		if ($news === NULL) {
+		} else {
+			$related = $this->newsService->related($news);
+			$argumentNamespace = $this->request->getArgumentNamespace();
+			$this->view->assign('argumentNamespace', $argumentNamespace);
+			$this->view->assign('assets', $related['assets']);
+			$this->view->assign('comments', $related['comments']);
+			$this->view->assign('relatedFiles', $related['files']);
+			$this->view->assign('relatedLinkData', $this->newsService->show($news));
+			$this->view->assign('relatedNews', $related['news']);
+			$this->view->assign('categories', $related['categories']);
+			$this->view->assign('tags', $news->getTags());
+			$this->view->assign('news', $news);
+		}
 	}
 
 	/**

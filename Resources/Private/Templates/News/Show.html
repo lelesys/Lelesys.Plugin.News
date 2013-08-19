@@ -4,144 +4,151 @@
 
 <f:section name="Content">
 	<div class="container-fluid">
-		<h2><f:link.action action="show" arguments="{news: news}">{news.title}</f:link.action></h2>
-		<p class="date"> <f:if condition="{news.authorName}">author name:&nbsp;{news.authorName}&nbsp;&nbsp;</f:if>Published on&nbsp;{news.dateTime -> f:format.date(format: 'j M y, h:i A')}</p>
-		<div class="row-fluid">
-			<div class="news_content_left">
-				<f:if condition="{assets}">
-					<f:then>
-						<div id="myCarousel" class="carousel slide news-slider">
-							<div class="carousel-inner">
-								<f:for each="{assets}" as="asset">
-									<div class="item">
-										<a href="{f:uri.resource(resource: asset.originalResource)}">
-											<img src="{f:uri.resource(resource: asset.originalResource)}" alt="image" width="500"/>
-										</a>
+		<f:if condition="{news}">
+			<f:then>
+				<h2><f:link.action action="show" arguments="{news: news}">{news.title}</f:link.action></h2>
+				<p class="date"> <f:if condition="{news.authorName}">author name:&nbsp;{news.authorName}&nbsp;&nbsp;</f:if>Published on&nbsp;{news.dateTime -> f:format.date(format: 'j M y, h:i A')}</p>
+				<div class="row-fluid">
+					<div class="news_content_left">
+						<f:if condition="{assets}">
+							<f:then>
+								<div id="myCarousel" class="carousel slide news-slider">
+									<div class="carousel-inner">
+										<f:for each="{assets}" as="asset">
+											<div class="item">
+												<a href="{f:uri.resource(resource: asset.originalResource)}">
+													<img src="{f:uri.resource(resource: asset.originalResource)}" alt="image" width="500"/>
+												</a>
+											</div>
+										</f:for>
 									</div>
-								</f:for>
-							</div>
-							<f:if condition="{assets -> f:count()}>1">
-								<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-								<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
-							</f:if>
+									<f:if condition="{assets -> f:count()}>1">
+										<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+										<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+									</f:if>
+								</div>
+							</f:then>
+						</f:if>
+						<div class="news_descript">
+							<p><b>{news.subTitle}</b></p>
+							<p><f:format.raw>{news.description}</f:format.raw></p>
 						</div>
-					</f:then>
-				</f:if>
-				<div class="news_descript">
-					<p><b>{news.subTitle}</b></p>
-					<p><f:format.raw>{news.description}</f:format.raw></p>
-				</div>
-			</div>
-			<div class="clearfix"></div>
-			<f:if condition="{relatedNews}">
-				<div class="news-rel relate-news">
-					<div class="rel_title">
-						<p>Related News</p>
-						<ul>
-							<f:for each="{relatedNews}" as="newsRelated">
-								<li><f:link.action action="show" arguments="{news: newsRelated}">{newsRelated.title}</f:link.action></li>
-							</f:for>
-						</ul>
 					</div>
-				</div>
-			</f:if>
-			<f:if condition="{relatedLinkData}">
-				<div class="news-rel relate-news-links">
-					<div class="rel_title">
-						<p>Related Links</p>
-						<ul>
-							<f:for each="{relatedLinkData}" as="linkData">
-								<li>
-								<f:link.external uri="{linkData.email}" target="_blank">
-									<f:if condition="{linkData.title}">
-										<f:then>
-											{linkData.title}
-										</f:then>
-										<f:else>
-											<f:if condition="{linkData.emailTitle}">
+					<div class="clearfix"></div>
+					<f:if condition="{relatedNews}">
+						<div class="news-rel relate-news">
+							<div class="rel_title">
+								<p>Related News</p>
+								<ul>
+									<f:for each="{relatedNews}" as="newsRelated">
+										<li><f:link.action action="show" arguments="{news: newsRelated}">{newsRelated.title}</f:link.action></li>
+									</f:for>
+								</ul>
+							</div>
+						</div>
+					</f:if>
+					<f:if condition="{relatedLinkData}">
+						<div class="news-rel relate-news-links">
+							<div class="rel_title">
+								<p>Related Links</p>
+								<ul>
+									<f:for each="{relatedLinkData}" as="linkData">
+										<li>
+										<f:link.external uri="{linkData.email}" target="_blank">
+											<f:if condition="{linkData.title}">
 												<f:then>
-													{linkData.emailTitle}
+													{linkData.title}
 												</f:then>
 												<f:else>
-													{linkData.email}
+													<f:if condition="{linkData.emailTitle}">
+														<f:then>
+															{linkData.emailTitle}
+														</f:then>
+														<f:else>
+															{linkData.email}
+														</f:else>
+													</f:if>
 												</f:else>
 											</f:if>
-										</f:else>
-									</f:if>
-								</f:link.external>
-								</li>
-							</f:for>
-						</ul>
-					</div>
-				</div>
-			</f:if>
-			<f:if condition="{relatedFiles}">
-				<div class="news-rel news_listimg rel_title">
-					<p>Related Files</p>
-					<ul id="show-carousel-lightbox">
-						<f:for each="{relatedFiles}" as="file">
-							<li><a href="{f:uri.resource(resource: file.originalFileResource)}"><img src="{f:uri.resource(resource: file.originalFileResource)}" alt="image" width="120"/></a></li>
-						</f:for>
-					</ul>
-				</div>
-			</f:if>
-
-			<f:if condition="{categories}">
-				<div class="news-rel rel_title category_title">
-					<p>Category </p>
-					<ul>
-						<f:for each="{categories}" as="category">
-							<li><f:link.action action="show" arguments="{category: category}" controller="category">{category.title}</f:link.action></li>
-						</f:for>
-					</ul>
-				</div>
-			</f:if>
-
-			<div class="news-rel rel_title category_title">
-				<f:if condition="{comments}">
-					<p>Comments</p>
-					<ul>
-						<f:for each="{comments}" key="msgkey" as="comment">
-							<div>
-								<li>
-									{comment.message} <br>
-									<span class="date"> commented by:&nbsp;{comment.name}&nbsp;&nbsp;on&nbsp;{comment.CreatedDate -> f:format.date(format: 'j M y, h:i A')}</span>
-								</li>
+										</f:link.external>
+										</li>
+									</f:for>
+								</ul>
 							</div>
-						</f:for>
-					</ul>
-				</f:if>
-				<h2>Your Comment</h2>
-				<f:form action="create" controller="Comment" name="newComment" arguments="{news: news}">
-					<div class="control-group">
-						<label for="name">Name</label>
-						<div class="controls">
-							<f:form.textfield property="name" id="name" class="span5"/>
-							<f:render partial="FormErrors" arguments="{for: 'newComment.name'}" />
 						</div>
-					</div>
-					<div class="control-group">
-						<label for="email">Email</label>
-						<div class="controls">
-							<f:form.textfield property="email" id="email" class="span5"/>
-							<f:render partial="FormErrors" arguments="{for: 'newComment.email'}" />
+					</f:if>
+					<f:if condition="{relatedFiles}">
+						<div class="news-rel news_listimg rel_title">
+							<p>Related Files</p>
+							<ul id="show-carousel-lightbox">
+								<f:for each="{relatedFiles}" as="file">
+									<li><a href="{f:uri.resource(resource: file.originalFileResource)}"><img src="{f:uri.resource(resource: file.originalFileResource)}" alt="image" width="120"/></a></li>
+								</f:for>
+							</ul>
 						</div>
-					</div>
-					<div class="control-group">
-						<label for="message">Message</label>
-						<div class="controls">
-							<f:form.textarea rows="4" cols="5" property="message" id="message" class="span5"/>
-							<f:render partial="FormErrors" arguments="{for: 'newComment.message'}" />
+					</f:if>
+
+					<f:if condition="{categories}">
+						<div class="news-rel rel_title category_title">
+							<p>Category </p>
+							<ul>
+								<f:for each="{categories}" as="category">
+									<li><f:link.action action="show" arguments="{category: category}" controller="category">{category.title}</f:link.action></li>
+								</f:for>
+							</ul>
 						</div>
+					</f:if>
+
+					<div class="news-rel rel_title category_title">
+						<f:if condition="{comments}">
+							<p>Comments</p>
+							<ul>
+								<f:for each="{comments}" key="msgkey" as="comment">
+									<div>
+										<li>
+											{comment.message} <br>
+											<span class="date"> commented by:&nbsp;{comment.name}&nbsp;&nbsp;on&nbsp;{comment.CreatedDate -> f:format.date(format: 'j M y, h:i A')}</span>
+										</li>
+									</div>
+								</f:for>
+							</ul>
+						</f:if>
+						<h2>Your Comment</h2>
+						<f:form action="create" controller="Comment" name="newComment" arguments="{news: news}">
+							<div class="control-group">
+								<label for="name">Name</label>
+								<div class="controls">
+									<f:form.textfield property="name" id="name" class="span5"/>
+									<f:render partial="FormErrors" arguments="{for: 'newComment.name'}" />
+								</div>
+							</div>
+							<div class="control-group">
+								<label for="email">Email</label>
+								<div class="controls">
+									<f:form.textfield property="email" id="email" class="span5"/>
+									<f:render partial="FormErrors" arguments="{for: 'newComment.email'}" />
+								</div>
+							</div>
+							<div class="control-group">
+								<label for="message">Message</label>
+								<div class="controls">
+									<f:form.textarea rows="4" cols="5" property="message" id="message" class="span5"/>
+									<f:render partial="FormErrors" arguments="{for: 'newComment.message'}" />
+								</div>
+							</div>
+							<div class="control-group">
+								<div class="controls">
+									<f:form.submit class="btn create-comment" value="Create"/>
+								</div>
+							</div>
+						</f:form>
+						<f:link.action action="index">Back</f:link.action>
 					</div>
-					<div class="control-group">
-						<div class="controls">
-							<f:form.submit class="btn create-comment" value="Create"/>
-						</div>
-					</div>
-				</f:form>
-				<f:link.action action="index">Back</f:link.action>
-			</div>
-		</div>
+				</div>
+			</f:then>
+			<f:else>
+				<p>No news to display!!</p>
+			</f:else>
+		</f:if>
 	</div>
 </f:section>
