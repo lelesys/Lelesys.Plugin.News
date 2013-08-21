@@ -97,3 +97,10 @@
     group: Plugins
     inlineEditable: true
     icon: 'icon-puzzle-piece'
+
+# News Category node to set category identifier
+'Lelesys.Plugin.News:CategoryNode':
+  superTypes: ['TYPO3.Neos:Content']
+  properties:
+    categoryId:
+      type: 'string'

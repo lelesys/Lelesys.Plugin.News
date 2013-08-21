@@ -23,7 +23,7 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Repository {
 	 * Get news entries
 	 *
 	 * @param integer $limitNews
-	 * @return \TYPO3\FLOW3\Persistence\QueryResultInterface The query result
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function getNewsEntries($limitNews = NULL) {
 		if (!empty($limitNews)) {
@@ -41,10 +41,41 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Repository {
 	}
 
 	/**
+	 * Get the news list by category
+	 *
+	 * @param integer $limitNews
+	 * @param \Lelesys\Plugin\News\Domain\Model\Category $category The category
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
+	 */
+	public function getEnabledNewsByCategory($limitNews = NULL, \Lelesys\Plugin\News\Domain\Model\Category $category) {
+
+		if (!empty($limitNews)) {
+			$query = $this->createQuery();
+			return $query->matching(
+									$query->logicalAnd(
+											$query->equals('hidden', 0), $query->contains('categories', $category)
+									)
+							)
+							->setOrderings(array('dateTime' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING))
+							->setLimit($limitNews)
+							->execute();
+		} else {
+			$query = $this->createQuery();
+			return $query->matching(
+									$query->logicalAnd(
+											$query->equals('hidden', 0), $query->contains('categories', $category)
+									)
+							)
+							->setOrderings(array('dateTime' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING))
+							->execute();
+		}
+	}
+
+	/**
 	 * Get news entries
 	 *
 	 * @param integer $limitNews
-	 * @return \TYPO3\FLOW3\Persistence\QueryResultInterface The query result
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function getEnabledNews($limitNews = NULL) {
 		if (!empty($limitNews)) {

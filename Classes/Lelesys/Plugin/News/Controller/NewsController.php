@@ -64,14 +64,61 @@ class NewsController extends AbstractNewsController {
 	protected $linkService;
 
 	/**
+	 * @Flow\Inject
+	 * @var \Lelesys\Plugin\News\Domain\Repository\CategoryRepository
+	 */
+	protected $categoryRepository;
+
+	/**
+	 * @var \TYPO3\TYPO3CR\Domain\Service\NodeTypeManager
+	 * @Flow\Inject
+	 */
+	protected $nodeTypeManager;
+
+	/**
 	 * Shows a list of news
 	 *
 	 * @return void
 	 */
 	public function indexAction() {
-		$allNews = $this->newsService->listAll();
-		$this->view->assign('allNews', $allNews);
-		$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
+		$documentNode = $this->request->getInternalArgument('__documentNode');
+
+		$categoryId = NULL;
+
+		if ($documentNode->hasChildNodes('Lelesys.Plugin.News:CategoryNode')) {
+
+			$currentCategoryNodes = $documentNode->getChildNodes('Lelesys.Plugin.News:CategoryNode');
+			$currentCategory = $currentCategoryNodes[0];
+			$categoryId = $currentCategory->getProperty('categoryId');
+		}
+
+		if ($this->request->hasArgument('newsByCategory')) {
+			$categoryArgument = $this->request->getArgument('newsByCategory');
+
+			$categoryId = $categoryArgument['category'];
+
+			if ($documentNode->hasChildNodes('Lelesys.Plugin.News:CategoryNode')) {
+				$categoryNodes = $documentNode->getChildNodes('Lelesys.Plugin.News:CategoryNode');
+				$categoryNode = $categoryNodes[0];
+			} else {
+				$categoryNode = $documentNode->createNode(uniqid('category'), $this->nodeTypeManager->getNodeType('Lelesys.Plugin.News:CategoryNode'));
+			}
+			$categoryNode->setProperty('categoryId', $categoryId);
+		}
+
+		if ($categoryId === NULL) {
+			$allNews = $this->newsService->listAll();
+			$this->view->assign('allNews', $allNews);
+			$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
+		} else {
+			$this->view->assign('categoryId', $categoryId);
+			$category = $this->categoryRepository->findByIdentifier($categoryId);
+			$allNews = $this->newsService->listAllByCategory($category);
+			$this->view->assign('allNews', $allNews);
+			$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
+		}
+		// To show the list of news category
+		$this->view->assign('categories', $this->categoryService->listAll());
 	}
 
 	/**

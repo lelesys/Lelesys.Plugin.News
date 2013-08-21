@@ -100,6 +100,17 @@ class NewsService {
 	}
 
 	/**
+	 * Shows the list of news by category
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Category $category The category
+	 * @return \Lelesys\Plugin\News\Domain\Model\News
+	 */
+	public function listAllByCategory(\Lelesys\Plugin\News\Domain\Model\Category $category) {
+		$limitNews = $this->settings['limitListNews'];
+		return $this->newsRepository->getEnabledNewsByCategory($limitNews, $category);
+	}
+
+	/**
 	 * Shows a list of news
 	 *
 	 * @return \Lelesys\Plugin\News\Domain\Model\News
