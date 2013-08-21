@@ -169,7 +169,7 @@ class News {
 	/**
 	 * The comments
 	 * @var \Doctrine\Common\Collections\Collection<Lelesys\Plugin\News\Domain\Model\Comment>
-	 * @ORM\OneToMany(mappedBy="news")
+	 * @ORM\OneToMany(mappedBy="news" , cascade={"persist", "remove"})
 	 * @ORM\OrderBy({"createdDate" = "DESC"})
 	 */
 	protected $comments;
