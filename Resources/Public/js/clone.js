@@ -49,6 +49,33 @@ jQuery(document).ready(function(){
 		}
 	   });
 
+	/***Ajax to delete Tag****/
+	   jQuery('.remove-tag').click(function(event) {
+		       event.preventDefault();
+		       var itemDeleteMessage = confirm(deleteMessage);
+		       if (itemDeleteMessage == true) {
+			var tagId = jQuery('.tag-id').val();
+			var newsId = jQuery('.news-id').val();
+			var eleobj = this;
+			jQuery.ajax({
+				beforeSend: function() {
+					jQuery(eleobj).parent('.badge').prev('.loader').show();
+				},
+				complete: function(){
+					jQuery('.loader').hide();
+				},
+				url: removeTag+'&--adminNewsList[tagId]='+tagId+'&--adminNewsList[newsId]='+newsId,
+				async:false,
+				dataType: 'json',
+				success: function(data) {
+					jQuery(eleobj).parent().remove();
+				}
+			});
+		       }
+		else {
+			return false;
+		}
+	   });
 
 	/***Ajax to delete file****/
 	jQuery('.delete-file').click(function(event) {
@@ -195,7 +222,7 @@ function cloneAddFiles() {
 	});
 };
 
-	function cloneAddMedia() {
+function cloneAddMedia() {
 	var div = jQuery('.add-more-media').prev('.accordion-group').clone();
 	div.css('display', 'block');
 	div.find('input[type="file"]').css('display', 'block');

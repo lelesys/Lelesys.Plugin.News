@@ -126,12 +126,13 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 	 * @param \Lelesys\Plugin\News\Domain\Model\News $newNews A new news to add
 	 * @param array $media
 	 * @param array $file
+	 * @param array $tags
 	 * @param array $relatedLink
 	 * @return void
 	 */
-	public function createAction(\Lelesys\Plugin\News\Domain\Model\News $newNews, $media, $file, $relatedLink) {
+	public function createAction(\Lelesys\Plugin\News\Domain\Model\News $newNews, $media, $file, $relatedLink, $tags) {
 		try {
-			$this->newsService->create($newNews, $media, $file, $relatedLink);
+			$this->newsService->create($newNews, $media, $file, $relatedLink, $tags);
 			$this->addFlashMessage('Created a new news.', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
 			$this->redirect('index');
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
@@ -148,7 +149,7 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 	public function editAction(\Lelesys\Plugin\News\Domain\Model\News $news) {
 		$this->view->assign('relatedNews', $this->newsService->listRelatedNews($news));
 		$this->view->assign('newsCategories', $this->categoryService->listAll());
-		$this->view->assign('tags', $this->tagService->listAll());
+		$this->view->assign('newsTags', $news->getTags());
 		$this->view->assign('news', $news);
 		$this->view->assign('media', $news->getAssets());
 		$this->view->assign('files', $news->getFiles());
@@ -172,18 +173,37 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 	}
 
 	/**
+	 * Removes the tag of news
+	 *
+	 * @param string $newsId
+	 * @param string $tagId
+	 * @return void
+	 */
+	public function removeTagAction($newsId, $tagId) {
+		try {
+			$tag = $this->tagService->findById($tagId);
+			$news = $this->newsService->findById($newsId);
+			$this->newsService->removeTag($tag, $news);
+			echo json_encode(1);
+			exit;
+		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
+			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+		}
+	}
+
+	/**
 	 * Updates the given news object
 	 *
 	 * @param \Lelesys\Plugin\News\Domain\Model\News $news The news to update
 	 * @param array $media
 	 * @param array $file
 	 * @param array $relatedLink
+	 * @param array $tags
 	 * @return void
 	 */
-	public function updateAction(\Lelesys\Plugin\News\Domain\Model\News $news, $media, $file, $relatedLink) {
+	public function updateAction(\Lelesys\Plugin\News\Domain\Model\News $news, $media, $file, $relatedLink, $tags) {
 		try {
-			//\TYPO3\Flow\var_dump($media); exit;
-			$this->newsService->update($news, $media, $file, $relatedLink);
+			$this->newsService->update($news, $media, $file, $relatedLink, $tags);
 			$this->addFlashMessage('Updated the news.', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
 			$this->redirect('index');
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {

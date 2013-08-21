@@ -1,7 +1,8 @@
 <?php
+
 namespace Lelesys\Plugin\News\Domain\Model;
 
-/*                                                                         *
+/* *
  * This script belongs to the package "Lelesys.Plugin.News".               *
  *                                                                         *
  * It is free software; you can redistribute it and/or modify it under     *
@@ -185,6 +186,7 @@ class News {
 		$this->setHidden(0);
 		$this->setDeleted(0);
 		$this->setUpdatedDate(new \DateTime());
+		$this->setDateTime(new \DateTime());
 		$this->setEndDate(new \DateTime());
 		$this->setIsTopNews(0);
 	}
@@ -456,6 +458,26 @@ class News {
 	}
 
 	/**
+	 * Adds a News's tags
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Tag $tag
+	 * @return void
+	 */
+	public function addTags(\Lelesys\Plugin\News\Domain\Model\Tag $tag) {
+		$this->tags->add($tag);
+	}
+
+	/**
+	 * Removes a News's tags
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Tag $tag
+	 * @return void
+	 */
+	public function removeTags(\Lelesys\Plugin\News\Domain\Model\Tag $tag) {
+		$this->tags->removeElement($tag);
+	}
+
+	/**
 	 * Get the News's keywords
 	 *
 	 * @return string The News's keywords
@@ -629,7 +651,6 @@ class News {
 		$this->relatedNews = $relatedNews;
 	}
 
-
 	/**
 	 * Get the News's is top news
 	 *
@@ -697,4 +718,5 @@ class News {
 	}
 
 }
+
 ?>

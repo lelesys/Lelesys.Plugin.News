@@ -2,7 +2,7 @@
 
 namespace Lelesys\Plugin\News\Domain\Service;
 
-/*                                                                         *
+/* *
  * This script belongs to the package "Lelesys.Plugin.News".               *
  *                                                                         *
  * It is free software; you can redistribute it and/or modify it under     *
@@ -65,12 +65,11 @@ class TagService {
 	public function getNewsByTag(\Lelesys\Plugin\News\Domain\Model\Tag $tag) {
 		$enabledNews = array();
 		foreach ($tag->getNews() as $news) {
-			if($news->getHidden() !== TRUE) {
+			if ($news->getHidden() !== TRUE) {
 				$enabledNews[] = $news;
 			}
 		}
 		return $enabledNews;
-
 	}
 
 	/**
@@ -114,6 +113,26 @@ class TagService {
 	public function showTag(\Lelesys\Plugin\News\Domain\Model\Tag $tag) {
 		$tag->setHidden(0);
 		$this->tagRepository->update($tag);
+	}
+
+	/**
+	 * returns an object of tag based on the name provided
+	 *
+	 * @param string $tagname
+	 * @return \Lelesys\Plugin\News\Domain\Model\Tag $tag
+	 */
+	public function findTagByName($tagname) {
+		return $this->tagRepository->findOneByTitle($tagname);
+	}
+
+	/**
+	 * return tag for given identifier
+	 *
+	 * @param string $identifier
+	 * @return \Lelesys\Plugin\News\Domain\Model\Tag $tag
+	 */
+	public function findById($identifier) {
+		return $this->tagRepository->findByIdentifier($identifier);
 	}
 
 }

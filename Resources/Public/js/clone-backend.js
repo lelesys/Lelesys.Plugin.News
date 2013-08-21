@@ -49,6 +49,35 @@ jQuery(document).ready(function(){
 		}
 	   });
 
+	/***Ajax to delete Tag****/
+	   jQuery('.remove-tag').click(function(event) {
+		       event.preventDefault();
+		       var itemDeleteMessage = confirm(deleteMessage);
+		       if (itemDeleteMessage == true) {
+			var tagId = jQuery('.tag-id').val();
+			var newsId = jQuery('.news-id').val();
+			var eleobj = this;
+			jQuery.ajax({
+				beforeSend: function() {
+					jQuery(eleobj).parent('.badge').prev('.loader').show();
+				},
+				complete: function(){
+					jQuery('.loader').hide();
+				},
+				url:removeTag+'?moduleArguments[%40package]=lelesys.plugin.news&moduleArguments[%40controller]=news&moduleArguments[%40action]=removetag&moduleArguments[tagId]='+tagId+'&moduleArguments[newsId]='+newsId,
+				async:false,
+				dataType: 'json',
+				success: function(data) {
+					jQuery(eleobj).parent().remove();
+				}
+			});
+		       }
+		else {
+			return false;
+		}
+	   });
+
+
 
 	/***Ajax to delete file****/
 	jQuery('.delete-file').click(function(event) {

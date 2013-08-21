@@ -82,15 +82,22 @@
 						</div>
 						<div class="control-group">
 							<label for="tags">Tags</label>
+							<f:if condition="{newsTags}">
+								<f:then>
+									<f:for each="{newsTags}" as="tag">
+										<span class="loader" style="display: none;"><img src="{f:uri.resource(path: 'images/ajax-loader.gif')}"/></span>
+										<span class="badge">
+											<i class="icon-tag"></i>
+											&nbsp;{tag.title}&nbsp;
+											<f:link.external uri="javascript:void(0)" class="remove-tag" title="Delete"><i class="icon-trash"></i></f:link.external>
+											<f:form.hidden value="{tag.uuid}" class="tag-id" name="tag[uuid]" />
+										</span>
+									</f:for>
+									<br />
+								</f:then>
+							</f:if>
 							<div class="controls">
-								<f:if condition="{tags}">
-									<f:then>
-										<f:form.select class="span5" options="{tags}" optionLabelField="title" id="tags" property="tags" multiple="true" size="7"></f:form.select>
-									</f:then>
-									<f:else>
-										<f:form.select disabled="disabled" class="span5" options="{tags}" optionLabelField="title" id="tags" property="tags" size="7"></f:form.select>
-									</f:else>
-								</f:if>
+								<f:form.textfield name="tags[title]" id="tags"/>
 							</div>
 						</div>
 						<div class="control-group">
@@ -370,6 +377,7 @@
 	<script>
 		deleteMessage = "Are you sure you want to delete?";
 		removeAsset = "{f:uri.action(package:'Lelesys.Plugin.News', action:'removeAsset', controller:'News')}";
+		removeTag = "{f:uri.action(package:'Lelesys.Plugin.News', action:'removeTag', controller:'News')}";
 		removeFile = "{f:uri.action(package:'Lelesys.Plugin.News', action:'removeRelatedFile', controller:'News')}";
 		removeRelatedLink = "{f:uri.action(package:'Lelesys.Plugin.News', action:'removeRelatedLink', controller:'News')}";
 		showAsset= "{f:uri.action(package:'Lelesys.Plugin.News', action:'showAsset', controller:'News')}";

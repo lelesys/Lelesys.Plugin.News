@@ -52,6 +52,12 @@ class NewsService {
 
 	/**
 	 * @Flow\Inject
+	 * @var \Lelesys\Plugin\News\Domain\Service\TagService
+	 */
+	protected $tagService;
+
+	/**
+	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Service\FileService
 	 */
 	protected $fileService;
@@ -215,10 +221,25 @@ class NewsService {
 	 * @param \Lelesys\Plugin\News\Domain\Model\News $newNews A new news to add
 	 * @param array $media
 	 * @param array $file
+	 * @param array $tags
 	 * @param array $relatedLink
 	 * @return void
 	 */
-	public function create(\Lelesys\Plugin\News\Domain\Model\News $newNews, $media, $file, $relatedLink) {
+	public function create(\Lelesys\Plugin\News\Domain\Model\News $newNews, $media, $file, $relatedLink, $tags) {
+		if (!empty($tags['title'])) {
+			$tagsArray = array_unique(\TYPO3\Flow\Utility\Arrays::trimExplode(',', strtolower($tags['title'])));
+			foreach ($tagsArray as $tag) {
+				$existTag = $this->tagService->findTagByName($tag);
+				if (!empty($existTag)) {
+					$newNews->addTags($existTag);
+				} else {
+					$newTag = new \Lelesys\Plugin\News\Domain\Model\Tag();
+					$newTag->setTitle($tag);
+					$this->tagService->create($newTag);
+					$newNews->addTags($newTag);
+				}
+			}
+		}
 		$mediaPath = $media;
 		foreach ($mediaPath as $mediaSource) {
 			if (!empty($mediaSource['originalResource']['name'])) {
@@ -285,10 +306,28 @@ class NewsService {
 	 * @param \Lelesys\Plugin\News\Domain\Model\News $news The news to update
 	 * @param array $media
 	 * @param array $file
+	 * @param array $tags
 	 * @param array $relatedLink
 	 * @return void
 	 */
-	public function update(\Lelesys\Plugin\News\Domain\Model\News $news, $media, $file, $relatedLink) {
+	public function update(\Lelesys\Plugin\News\Domain\Model\News $news, $media, $file, $relatedLink, $tags) {
+		if (!empty($tags['title'])) {
+			$tagsArray = array_unique(\TYPO3\Flow\Utility\Arrays::trimExplode(',', strtolower($tags['title'])));
+			foreach ($tagsArray as $tag) {
+				$existTag = $this->tagService->findTagByName($tag);
+				if (!empty($existTag)) {
+					$newsTags = $news->getTags()->toArray();
+					if (!in_array($existTag, $newsTags)) {
+						$news->addTags($existTag);
+					}
+				} else {
+					$newTag = new \Lelesys\Plugin\News\Domain\Model\Tag();
+					$newTag->setTitle($tag);
+					$this->tagService->create($newTag);
+					$news->addTags($newTag);
+				}
+			}
+		}
 		$news->setUpdatedDate(new \DateTime());
 		$mediaPath = $media;
 		foreach ($mediaPath as $mediaSource) {
@@ -410,6 +449,19 @@ class NewsService {
 			}
 		}
 		return $listRelatedNews;
+	}
+
+	/**
+	 * removes a tags related to a news
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\News $news
+	 * @param \Lelesys\Plugin\News\Domain\Model\Tag $tag
+	 * @return void
+	 */
+	public function removeTag(\Lelesys\Plugin\News\Domain\Model\Tag $tag, \Lelesys\Plugin\News\Domain\Model\News $news) {
+		$news->removeTags($tag);
+		$this->newsRepository->update($news);
+		$this->persistenceManager->persistAll();
 	}
 
 	/**

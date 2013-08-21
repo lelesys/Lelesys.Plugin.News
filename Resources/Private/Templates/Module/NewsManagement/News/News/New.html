@@ -84,14 +84,7 @@
 							<div class="control-group">
 								<label for="tags">Tags</label>
 								<div class="controls">
-									<f:if condition="{tags}">
-										<f:then>
-											<f:form.select class="" options="{tags}" optionLabelField="title" id="tags" property="tags" multiple="true" size="7"></f:form.select>
-										</f:then>
-										<f:else>
-											<f:form.select disabled="disabled" class="" options="{tags}" optionLabelField="title" id="tags" property="tags" size="7"></f:form.select>
-										</f:else>
-									</f:if>
+									<f:form.textfield name="tags[title]" id="tags"/>
 								</div>
 							</div>
 						</fieldset>

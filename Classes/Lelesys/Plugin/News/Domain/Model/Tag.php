@@ -2,7 +2,7 @@
 
 namespace Lelesys\Plugin\News\Domain\Model;
 
-/*                                                                         *
+/* *
  * This script belongs to the package "Lelesys.Plugin.News".               *
  *                                                                         *
  * It is free software; you can redistribute it and/or modify it under     *
@@ -152,6 +152,15 @@ class Tag {
 	 */
 	public function setHidden($hidden) {
 		$this->hidden = $hidden;
+	}
+
+	/**
+	 * Returns uuid of this object
+	 *
+	 * @return string
+	 */
+	public function getUuid() {
+		return $this->Persistence_Object_Identifier;
 	}
 
 }
