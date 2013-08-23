@@ -22,15 +22,16 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Repository {
 	/**
 	 * Get news entries
 	 *
-	 * @param integer $limitNews
+	 * @param string $folderId Folder
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
-	public function getNewsEntries($limitNews = NULL) {
-		if (!empty($limitNews)) {
+	public function getNewsEntries($folderId = NULL) {
+		if (!empty($folderId)) {
 			$query = $this->createQuery();
-			return $query
+			return $query->matching(
+									$query->equals('folder', $folderId)
+							)
 							->setOrderings(array('dateTime' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING))
-							->setLimit($limitNews)
 							->execute();
 		} else {
 			$query = $this->createQuery();
@@ -45,15 +46,18 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Repository {
 	 *
 	 * @param integer $limitNews
 	 * @param \Lelesys\Plugin\News\Domain\Model\Category $category The category
+	 * @param \Lelesys\Plugin\News\Domain\Model\Folder $folder
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
-	public function getEnabledNewsByCategory($limitNews = NULL, \Lelesys\Plugin\News\Domain\Model\Category $category) {
-
+	public function getEnabledNewsByCategory($limitNews = NULL, \Lelesys\Plugin\News\Domain\Model\Category $category = NULL, \Lelesys\Plugin\News\Domain\Model\Folder $folder = NULL) {
+		if ($folder === NULL) {
+			$folder = 0;
+		}
 		if (!empty($limitNews)) {
 			$query = $this->createQuery();
 			return $query->matching(
 									$query->logicalAnd(
-											$query->equals('hidden', 0), $query->contains('categories', $category)
+											$query->equals('hidden', 0), $query->logicalOr($query->contains('categories', $category), $query->equals('folder', $folder))
 									)
 							)
 							->setOrderings(array('dateTime' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING))
@@ -63,7 +67,7 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Repository {
 			$query = $this->createQuery();
 			return $query->matching(
 									$query->logicalAnd(
-											$query->equals('hidden', 0), $query->contains('categories', $category)
+											$query->equals('hidden', 0), $query->logicalOr($query->contains('categories', $category), $query->equals('folder', $folder))
 									)
 							)
 							->setOrderings(array('dateTime' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING))

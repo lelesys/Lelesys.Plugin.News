@@ -2,7 +2,7 @@
 
 namespace Lelesys\Plugin\News\Controller;
 
-/*                                                                         *
+/* *
  * This script belongs to the package "Lelesys.Plugin.News".               *
  *                                                                         *
  * It is free software; you can redistribute it and/or modify it under     *
@@ -26,6 +26,12 @@ class CategoryController extends AbstractNewsController {
 	 * @var \Lelesys\Plugin\News\Domain\Service\CategoryService
 	 */
 	protected $categoryService;
+
+	/**
+	 * @Flow\Inject
+	 * @var \Lelesys\Plugin\News\Domain\Service\FolderService
+	 */
+	protected $folderService;
 
 	/**
 	 * Shows a list of categories
@@ -61,6 +67,7 @@ class CategoryController extends AbstractNewsController {
 	 * @return void
 	 */
 	public function newAction() {
+		$this->view->assign('folders', $this->folderService->listAll());
 		$this->view->assign('newsParentCategory', $this->categoryService->listAll());
 	}
 
@@ -87,6 +94,7 @@ class CategoryController extends AbstractNewsController {
 	 * @return void
 	 */
 	public function editAction(\Lelesys\Plugin\News\Domain\Model\Category $category) {
+		$this->view->assign('folders', $this->folderService->listAll());
 		$this->view->assign('newsParentCategory', $this->categoryService->listParentCategory($category));
 		$this->view->assign('category', $category);
 	}
@@ -162,8 +170,9 @@ class CategoryController extends AbstractNewsController {
 	 * @return void
 	 */
 	public function checkTitleAction($categoryTitle) {
-			$title = $this->categoryService->checkTitle($categoryTitle);
-			echo count($title); exit;
+		$title = $this->categoryService->checkTitle($categoryTitle);
+		echo count($title);
+		exit;
 	}
 
 }

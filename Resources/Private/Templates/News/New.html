@@ -57,6 +57,12 @@
 							</div>
 						</div>
 						<div class="control-group">
+							<label for="folder">Folder</label>
+							<div class="controls">
+								<f:form.select options="{folders}" optionLabelField="title" id="folders" prependOptionLabel="Select folder" property="folder" class="span5"></f:form.select>
+							</div>
+						</div>
+						<div class="control-group">
 							<label for="news-description">Description</label>
 							<div class="controls span10 nice-edit-size">
 								<f:form.textarea cols="43" rows="10" property="description" id="news-description" />
@@ -67,14 +73,14 @@
 						<div class="control-group">
 							<label for="categories">Categories</label>
 							<div class="controls">
-							<f:if condition="{newsCategories}">
-								<f:then>
-									<f:form.select class="span5" options="{newsCategories}" optionLabelField="title" id="categories" property="categories" multiple="true" size="7"></f:form.select>
-								</f:then>
-								<f:else>
-									<f:form.select disabled="disabled" class="span5" options="{newsCategories}" optionLabelField="title" id="categories" property="categories" size="7"></f:form.select>
-								</f:else>
-							</f:if>
+								<f:if condition="{newsCategories}">
+									<f:then>
+										<f:form.select class="span5" options="{newsCategories}" optionLabelField="title" id="categories" property="categories" multiple="true" size="7"></f:form.select>
+									</f:then>
+									<f:else>
+										<f:form.select disabled="disabled" class="span5" options="{newsCategories}" optionLabelField="title" id="categories" property="categories" size="7"></f:form.select>
+									</f:else>
+								</f:if>
 							</div>
 						</div>
 						<div class="control-group">
@@ -87,14 +93,14 @@
 							<label for="relatedNews">Related news</label>
 							<div class="controls">
 								<f:if condition="{related}">
-								<f:then>
-									<f:form.select class="span5" options="{related}" optionLabelField="title" id="relatedNews" property="relatedNews" multiple="true" size="7"></f:form.select>
-							</f:then>
-								<f:else>
-									<f:form.select disabled="disabled" class="span5" options="{related}" optionLabelField="title" id="relatedNews" property="relatedNews" size="7"></f:form.select>
-							</f:else>
-							</f:if>
-								</div>
+									<f:then>
+										<f:form.select class="span5" options="{related}" optionLabelField="title" id="relatedNews" property="relatedNews" multiple="true" size="7"></f:form.select>
+									</f:then>
+									<f:else>
+										<f:form.select disabled="disabled" class="span5" options="{related}" optionLabelField="title" id="relatedNews" property="relatedNews" size="7"></f:form.select>
+									</f:else>
+								</f:if>
+							</div>
 						</div>
 						<div class="control-group">
 							<label for="keywords">Keywords ( , )</label>

@@ -37,19 +37,12 @@ prototype(Lelesys.Plugin.News:AdminCategoryList) {
 	 argumentNamespace = 'adminCategoryList'
 }
 
-prototype(Lelesys.Plugin.News:TagList) < prototype(TYPO3.Neos:Plugin)
-prototype(Lelesys.Plugin.News:TagList) {
+prototype(Lelesys.Plugin.News:AdminFolderList) < prototype(TYPO3.Neos:Plugin)
+prototype(Lelesys.Plugin.News:AdminFolderList) {
      package = 'Lelesys.Plugin.News'
-     controller = 'Tag'
-     action = 'index'
-}
-
-prototype(Lelesys.Plugin.News:AdminTagList) < prototype(TYPO3.Neos:Plugin)
-prototype(Lelesys.Plugin.News:AdminTagList) {
-     package = 'Lelesys.Plugin.News'
-     controller = 'Tag'
+     controller = 'Folder'
      action = 'adminList'
-	 argumentNamespace = 'adminTagList'
+	 argumentNamespace = 'adminFolderList'
 }
 
 prototype(Lelesys.Plugin.News:SearchNews) < prototype(TYPO3.Neos:Plugin)

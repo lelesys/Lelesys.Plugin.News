@@ -63,11 +63,18 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 	protected $linkService;
 
 	/**
+	 * @Flow\Inject
+	 * @var \Lelesys\Plugin\News\Domain\Service\FolderService
+	 */
+	protected $folderService;
+
+	/**
 	 * Shows a list of news
 	 *
 	 * @return void
 	 */
 	public function indexAction() {
+		$this->view->assign('folders', $this->folderService->listAll());
 		$allNews = $this->newsService->adminNewsList();
 		$this->view->assign('allNews', $allNews);
 		$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
@@ -99,6 +106,7 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 	 * @return void
 	 */
 	public function newAction() {
+		$this->view->assign('folders', $this->folderService->listAll());
 		$this->view->assign('related', $this->newsService->listAll());
 		$this->view->assign('newsCategories', $this->categoryService->listAll());
 		$this->view->assign('tags', $this->tagService->listAll());
@@ -147,6 +155,7 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 	 * @return void
 	 */
 	public function editAction(\Lelesys\Plugin\News\Domain\Model\News $news) {
+		$this->view->assign('folders', $this->folderService->listAll());
 		$this->view->assign('relatedNews', $this->newsService->listRelatedNews($news));
 		$this->view->assign('newsCategories', $this->categoryService->listAll());
 		$this->view->assign('newsTags', $news->getTags());

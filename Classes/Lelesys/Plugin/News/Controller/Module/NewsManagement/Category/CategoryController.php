@@ -33,6 +33,12 @@ class CategoryController extends \TYPO3\Neos\Controller\Module\AbstractModuleCon
 	protected $newsService;
 
 	/**
+	 * @Flow\Inject
+	 * @var \Lelesys\Plugin\News\Domain\Service\FolderService
+	 */
+	protected $folderService;
+
+	/**
 	 * Shows a list of categories
 	 *
 	 * @return void
@@ -60,6 +66,7 @@ class CategoryController extends \TYPO3\Neos\Controller\Module\AbstractModuleCon
 	 * @return void
 	 */
 	public function newAction() {
+		$this->view->assign('folders', $this->folderService->listAll());
 		$this->view->assign('newsParentCategory', $this->categoryService->listAll());
 	}
 
@@ -86,6 +93,7 @@ class CategoryController extends \TYPO3\Neos\Controller\Module\AbstractModuleCon
 	 * @return void
 	 */
 	public function editAction(\Lelesys\Plugin\News\Domain\Model\Category $category) {
+		$this->view->assign('folders', $this->folderService->listAll());
 		$this->view->assign('newsParentCategory', $this->categoryService->listParentCategory($category));
 		$this->view->assign('category', $category);
 	}

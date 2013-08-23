@@ -60,6 +60,12 @@
 							</div>
 						</div>
 						<div class="control-group">
+							<label for="folder">Folder</label>
+							<div class="controls">
+								<f:form.select options="{folders}" optionLabelField="title" id="folders" prependOptionLabel="Select folder" property="folder" class="span5"></f:form.select>
+							</div>
+						</div>
+						<div class="control-group">
 							<label for="news-description">Description</label>
 							<div class="controls span10 nice-edit-size">
 								<f:form.textarea cols="43" rows="10" property="description" id="news-description" />

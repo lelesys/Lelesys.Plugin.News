@@ -23,7 +23,7 @@ class CategoryRepository extends \TYPO3\Flow\Persistence\Repository {
 	 * Function to see if category already exists
 	 *
 	 * @param string $title
-	 * @return \TYPO3\FLOW3\Persistence\QueryResultInterface The query result
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function findOneByTitle($title) {
 		$query = $this->createQuery();
@@ -37,7 +37,7 @@ class CategoryRepository extends \TYPO3\Flow\Persistence\Repository {
 	/**
 	 * Get latest categories
 	 *
-	 * @return \TYPO3\FLOW3\Persistence\QueryResultInterface The query result
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function getEnabledLatestCategories() {
 		$query = $this->createQuery();

@@ -2,7 +2,7 @@
 
 namespace Lelesys\Plugin\News\Domain\Model;
 
-/*                                                                         *
+/* *
  * This script belongs to the package "Lelesys.Plugin.News".               *
  *                                                                         *
  * It is free software; you can redistribute it and/or modify it under     *
@@ -87,6 +87,13 @@ class Category {
 	 * @ORM\ManyToMany(mappedBy="categories")
 	 */
 	protected $news;
+
+	/**
+	 * The folder
+	 * @var \Lelesys\Plugin\News\Domain\Model\Folder
+	 * @ORM\ManyToOne(inversedBy="categories")
+	 */
+	protected $folder;
 
 	/**
 	 * Get the Category's title
@@ -238,6 +245,25 @@ class Category {
 	 */
 	public function setNews(\Doctrine\Common\Collections\Collection $news) {
 		$this->news = $news;
+	}
+
+	/**
+	 * Get the News's folder
+	 *
+	 * @return \Lelesys\Plugin\News\Domain\Model\Folder The News's folder
+	 */
+	public function getFolder() {
+		return $this->folder;
+	}
+
+	/**
+	 * Sets this News's folder
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Folder $folder The News's folder
+	 * @return void
+	 */
+	public function setFolder(\Lelesys\Plugin\News\Domain\Model\Folder $folder = NULL) {
+		$this->folder = $folder;
 	}
 
 	/**

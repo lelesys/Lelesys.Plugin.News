@@ -174,6 +174,13 @@ class News {
 	 */
 	protected $comments;
 
+	/**
+	 * The folder
+	 * @var \Lelesys\Plugin\News\Domain\Model\Folder
+	 * @ORM\ManyToOne(inversedBy="news")
+	 */
+	protected $folder;
+
 	public function __construct() {
 		$this->relatedNews = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->relatedLinks = new \Doctrine\Common\Collections\ArrayCollection();
@@ -706,6 +713,25 @@ class News {
 	 */
 	public function setComments(\Doctrine\Common\Collections\Collection $comments) {
 		$this->comments = $comments;
+	}
+
+	/**
+	 * Get the News's folder
+	 *
+	 * @return \Lelesys\Plugin\News\Domain\Model\Folder The News's folder
+	 */
+	public function getFolder() {
+		return $this->folder;
+	}
+
+	/**
+	 * Sets this News's folder
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Folder $folder The News's folder
+	 * @return void
+	 */
+	public function setFolder(\Lelesys\Plugin\News\Domain\Model\Folder $folder = NULL) {
+		$this->folder = $folder;
 	}
 
 	/**

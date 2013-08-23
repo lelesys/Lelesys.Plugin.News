@@ -1,0 +1,23 @@
+<f:layout name="Default" />
+
+<f:section name="Title"></f:section>
+
+<f:section name="Content">
+	<div class="main-container">
+		<h2>Add Folder</h2>
+		<f:form action="create" name="newFolder">
+			<div class="control-group">
+				<label for="title">Title</label>
+				<div class="controls">
+					<f:form.textfield property="title" id="title" class="span3 title-folder"/>
+					<f:render partial="FormErrors" arguments="{for: 'newFolder.title'}" />
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="controls">
+					<f:form.submit class="btn" value="Create" />
+				</div>
+			</div>
+		</f:form>
+	</div>
+</f:section>

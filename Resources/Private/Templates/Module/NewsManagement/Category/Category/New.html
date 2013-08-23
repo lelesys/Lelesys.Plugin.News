@@ -30,6 +30,12 @@
 						<f:form.textarea rows="4" cols="8" property="description" id="description"/>
 					</div>
 				</div>
+				<div class="control-group">
+					<label for="folder">Folder</label>
+					<div class="controls">
+						<f:form.select options="{folders}" optionLabelField="title" id="folders" prependOptionLabel="Select folder" property="folder"></f:form.select>
+					</div>
+				</div>
 			</fieldset>
 		</div>
 		<div class="form-actions form-footer">

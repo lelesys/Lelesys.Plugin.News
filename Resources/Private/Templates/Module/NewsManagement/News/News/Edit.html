@@ -70,6 +70,12 @@
 									<f:form.textfield type="datetime" value="{news.archiveDate -> f:format.date(format: 'm/d/Y')}" property="archiveDate" id="archiveDate" class="datepicker "/>
 								</div>
 							</div>
+							<div class="control-group">
+								<label for="folder">Folder</label>
+								<div class="controls">
+									<f:form.select options="{folders}" optionLabelField="title" id="folders" prependOptionLabel="Select folder" property="folder"></f:form.select>
+								</div>
+							</div>
 						</fieldset>
 					</div>
 					<div class="tab-pane" id="tab2">

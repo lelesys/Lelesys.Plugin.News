@@ -21,7 +21,7 @@ class TagRepository extends \TYPO3\Flow\Persistence\Repository {
 	/**
 	 * Get  latest tags
 	 *
-	 * @return \TYPO3\FLOW3\Persistence\QueryResultInterface The query result
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function getEnabledLatestTags() {
 		$query = $this->createQuery();

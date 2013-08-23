@@ -51,3 +51,13 @@ TYPO3:
             description: 'The News module provides you with an overview of the news. You can edit, add and delete information of news.'
             icon: 'icon-archive'
             resource: 'Lelesys_Plugin_News_Module_NewsManagement_Comment'
+          folder:
+            label: 'Folder'
+            controller: '\Lelesys\Plugin\News\Controller\Module\NewsManagement\Folder\FolderController'
+            description: 'The News module provides you with an overview of the news. You can edit, add and delete information of news.'
+            icon: 'icon-archive'
+            resource: 'Lelesys_Plugin_News_Module_NewsManagement_Folder'
+            actions:
+              new:
+                label: 'Create Folder'
+                title: 'Create Folder'

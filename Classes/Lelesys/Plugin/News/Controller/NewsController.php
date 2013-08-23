@@ -76,6 +76,12 @@ class NewsController extends AbstractNewsController {
 	protected $nodeTypeManager;
 
 	/**
+	 * @Flow\Inject
+	 * @var \Lelesys\Plugin\News\Domain\Service\FolderService
+	 */
+	protected $folderService;
+
+	/**
 	 * Shows a list of news
 	 *
 	 * @return void
@@ -84,18 +90,20 @@ class NewsController extends AbstractNewsController {
 		$documentNode = $this->request->getInternalArgument('__documentNode');
 
 		$categoryId = NULL;
+		$folderId = NULL;
 
 		if ($documentNode->hasChildNodes('Lelesys.Plugin.News:CategoryNode')) {
-
 			$currentCategoryNodes = $documentNode->getChildNodes('Lelesys.Plugin.News:CategoryNode');
 			$currentCategory = $currentCategoryNodes[0];
 			$categoryId = $currentCategory->getProperty('categoryId');
+			$folderId = $currentCategory->getProperty('folderId');
 		}
 
 		if ($this->request->hasArgument('newsByCategory')) {
 			$categoryArgument = $this->request->getArgument('newsByCategory');
 
 			$categoryId = $categoryArgument['category'];
+			$folderId = $categoryArgument['folder'];
 
 			if ($documentNode->hasChildNodes('Lelesys.Plugin.News:CategoryNode')) {
 				$categoryNodes = $documentNode->getChildNodes('Lelesys.Plugin.News:CategoryNode');
@@ -104,21 +112,23 @@ class NewsController extends AbstractNewsController {
 				$categoryNode = $documentNode->createNode(uniqid('category'), $this->nodeTypeManager->getNodeType('Lelesys.Plugin.News:CategoryNode'));
 			}
 			$categoryNode->setProperty('categoryId', $categoryId);
+			$categoryNode->setProperty('folderId', $folderId);
 		}
-
-		if ($categoryId === NULL) {
+		if ((empty($categoryId)) && (empty($folderId))) {
 			$allNews = $this->newsService->listAll();
-			$this->view->assign('allNews', $allNews);
-			$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
+			$this->view->assign('allNews', $this->newsService->listAll());
 		} else {
+			$this->view->assign('folderId', $folderId);
 			$this->view->assign('categoryId', $categoryId);
 			$category = $this->categoryRepository->findByIdentifier($categoryId);
-			$allNews = $this->newsService->listAllByCategory($category);
+			$folder = $this->folderService->findById($folderId);
+			$allNews = $this->newsService->listAllByCategory($category, $folder);
 			$this->view->assign('allNews', $allNews);
-			$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
 		}
+		$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
 		// To show the list of news category
 		$this->view->assign('categories', $this->categoryService->listAll());
+		$this->view->assign('folders', $this->folderService->listAll());
 	}
 
 	/**
@@ -135,15 +145,16 @@ class NewsController extends AbstractNewsController {
 	/**
 	 * Shows a list of news for admin
 	 *
+	 * @param string $folderId Folder
 	 * @param integer $recordLimit
 	 * @return void
 	 */
-	public function adminListAction($recordLimit = NULL) {
+	public function adminListAction($folderId = NULL, $recordLimit = NULL) {
 		if ($recordLimit == NULL) {
 			$recordLimit = $this->settings['newsPerPageAdmin'];
 		}
 		$this->view->assign('recordLimit', $recordLimit);
-		$allNews = $this->newsService->adminNewsList();
+		$allNews = $this->newsService->adminNewsList($folderId);
 		$this->view->assign('allNews', $allNews);
 		$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
 	}
@@ -176,6 +187,7 @@ class NewsController extends AbstractNewsController {
 	 * @return void
 	 */
 	public function newAction() {
+		$this->view->assign('folders', $this->folderService->listAll());
 		$this->view->assign('related', $this->newsService->listAll());
 		$this->view->assign('newsCategories', $this->categoryService->listAll());
 		$this->view->assign('tags', $this->tagService->listAll());
@@ -224,6 +236,7 @@ class NewsController extends AbstractNewsController {
 	 * @return void
 	 */
 	public function editAction(\Lelesys\Plugin\News\Domain\Model\News $news) {
+		$this->view->assign('folders', $this->folderService->listAll());
 		$this->view->assign('relatedNews', $this->newsService->listRelatedNews($news));
 		$this->view->assign('newsCategories', $this->categoryService->listAll());
 		$this->view->assign('newsTags', $news->getTags());

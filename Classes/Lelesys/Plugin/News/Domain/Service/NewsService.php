@@ -63,6 +63,12 @@ class NewsService {
 	protected $fileService;
 
 	/**
+	 * @Flow\Inject
+	 * @var \Lelesys\Plugin\News\Domain\Service\FolderService
+	 */
+	protected $folderService;
+
+	/**
 	 * @var array
 	 */
 	protected $settings;
@@ -92,22 +98,23 @@ class NewsService {
 	/**
 	 * Shows a list of news
 	 *
+	 * @param string $folderId Folder
 	 * @return \Lelesys\Plugin\News\Domain\Model\News
 	 */
-	public function adminNewsList() {
-		$limitNews = $this->settings['limitAdminListNews'];
-		return $this->newsRepository->getNewsEntries($limitNews);
+	public function adminNewsList($folderId = NULL) {
+		return $this->newsRepository->getNewsEntries($folderId);
 	}
 
 	/**
 	 * Shows the list of news by category
 	 *
 	 * @param \Lelesys\Plugin\News\Domain\Model\Category $category The category
+	 * @param \Lelesys\Plugin\News\Domain\Model\Folder $folder
 	 * @return \Lelesys\Plugin\News\Domain\Model\News
 	 */
-	public function listAllByCategory(\Lelesys\Plugin\News\Domain\Model\Category $category) {
+	public function listAllByCategory(\Lelesys\Plugin\News\Domain\Model\Category $category = NULL, \Lelesys\Plugin\News\Domain\Model\Folder $folder = NULL) {
 		$limitNews = $this->settings['limitListNews'];
-		return $this->newsRepository->getEnabledNewsByCategory($limitNews, $category);
+		return $this->newsRepository->getEnabledNewsByCategory($limitNews, $category, $folder);
 	}
 
 	/**
@@ -264,11 +271,6 @@ class NewsService {
 		foreach ($filePath as $fileSource) {
 			if (!empty($fileSource['originalFileResource']['name'])) {
 				$file = $this->propertyMapper->convert($fileSource, 'Lelesys\Plugin\News\Domain\Model\File');
-				$extension = $file->getOriginalFileResource()->getFileExtension();
-
-				if ($extension == 'pdf' || $extension == 'PDF') {
-					$this->pdfToPng($file);
-				}
 				$this->fileService->create($file);
 				$newNews->addFiles($file);
 			}
@@ -292,23 +294,6 @@ class NewsService {
 			$newNews->setArchiveDate(new \DateTime());
 		}
 		$this->newsRepository->add($newNews);
-	}
-
-	/**
-	 * Converts the pdf to png view
-	 *
-	 * @param type $file
-	 */
-	public function pdfToPng($file) {
-		$PDF_TO_PNG = FLOW_PATH_DATA . 'Persistent/Resources/';
-		$myPdf = FLOW_PATH_DATA . 'Persistent/Resources/' . $file->getOriginalFileResource()->getResourcePointer();
-		$image = new \Imagick($myPdf);
-		$image->thumbnailimage(100, 100, FALSE);
-		$image->setResolution(500, 500);
-		$image->setImageFormat("png");
-		$path = $PDF_TO_PNG . $file->getOriginalFileResource()->getResourcePointer() . '.png';
-		$image->writeImage($path);
-		unlink($PDF_TO_PNG . $file->getOriginalFileResource()->getResourcePointer() . '.png');
 	}
 
 	/**

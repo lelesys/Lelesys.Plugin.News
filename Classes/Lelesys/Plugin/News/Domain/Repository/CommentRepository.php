@@ -22,7 +22,7 @@ class CommentRepository extends \TYPO3\Flow\Persistence\Repository {
 	/**
 	 * Get comment entries
 	 *
-	 * @return \TYPO3\FLOW3\Persistence\QueryResultInterface The query result
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function getCommentEntries() {
 		$query = $this->createQuery();

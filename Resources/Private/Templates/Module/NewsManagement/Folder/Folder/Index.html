@@ -1,0 +1,53 @@
+<f:layout name="DefaultBackend" />
+
+<f:section name="Content">
+	<div class="row neos-module-container indented">
+		<f:render partial="FlashMessage" arguments="{severityName: flashmessage}" />
+		<f:if condition="{folders}">
+			<f:then>
+				<f:widget.paginate objects="{folders}" as="foldersPagination" configuration="{itemsPerPage: 5}">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Folder title</th>
+							</tr>
+						</thead>
+						<tbody>
+						<f:for each="{foldersPagination}" as="folder">
+							<tr>
+								<td>{folder.title}</td>
+								<td>
+									<div class="pull-right">
+										<f:link.action action="show" class="btn neos-button" title="Click to view" arguments="{folder: folder}"><i class="icon-info-sign icon-white"></i></f:link.action>
+										<f:link.action class="btn neos-button" title="Click to edit" action="edit" arguments="{folder:folder}"><i class="icon-pencil icon-white"></i></f:link.action>
+										<f:link.action action="delete" class="btn btn-danger neos-button delete" title="Delete" arguments="{folder: folder}">
+											<i class="icon-trash icon-white"></i>
+										</f:link.action>
+										<f:form action="delete" name="deleteItem" id="deleteItem" style="display: none;">
+											<f:form.hidden value="DELETE" />
+										</f:form>
+										<script>
+											var deleteMessage = 'Are you sure you want to delete?';
+										</script>
+									</div>
+								</td>
+							</tr>
+						</f:for>
+						</tbody>
+					</table>
+				</f:widget.paginate>
+			</f:then>
+			<f:else>
+				<div class="clearfix"></div>
+				<p>No folder created yet.</p>
+			</f:else>
+		</f:if>
+	</div>
+	<div class="form-actions form-footer">
+		<div class="pull-right">
+			<f:link.action action="new" class="btn neos-button btn-primary" title="Create new folder"><i class="icon-plus-sign icon-plus-image"></i> &nbsp; Add Folder</f:link.action>
+		</div>
+	</div>
+	<script src="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/js/jquery-2.0.3.min.js')}" type="text/javascript"></script>
+	<script src="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/js/form-validation.js')}" type="text/javascript"></script>
+</f:section>

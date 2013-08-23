@@ -54,20 +54,11 @@
     inlineEditable: true
     icon: 'icon-puzzle-piece'
 
-'Lelesys.Plugin.News:TagList':
+'Lelesys.Plugin.News:AdminFolderList':
   superTypes:
     - 'TYPO3.Neos:Plugin'
   ui:
-    label: 'Tag List'
-    group: Plugins
-    inlineEditable: true
-    icon: 'icon-puzzle-piece'
-
-'Lelesys.Plugin.News:AdminTagList':
-  superTypes:
-    - 'TYPO3.Neos:Plugin'
-  ui:
-    label: 'Admin Tag List'
+    label: 'Admin Folder List'
     group: Plugins
     inlineEditable: true
     icon: 'icon-puzzle-piece'
@@ -103,4 +94,6 @@
   superTypes: ['TYPO3.Neos:Content']
   properties:
     categoryId:
+      type: 'string'
+    folderId:
       type: 'string'

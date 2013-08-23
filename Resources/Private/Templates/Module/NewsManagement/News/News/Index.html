@@ -5,7 +5,7 @@
 		<f:render partial="FlashMessage" arguments="{severityName: flashmessage}" />
 		<f:if condition="{allNews}">
 			<f:then>
-				<f:widget.paginate objects="{allNews}" as="newsPagination" configuration="{itemsPerPage: 2}">
+				<f:widget.paginate objects="{allNews}" as="newsPagination" configuration="{itemsPerPage: 3}">
 					<table class="table">
 						<thead>
 							<tr>

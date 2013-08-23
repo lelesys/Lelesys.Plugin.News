@@ -6,11 +6,24 @@
 	<div class="news-list-container container-fluid">
 		<div class="horizontal">
 			<h2>News List</h2>
+			<f:security.ifAccess resource="TYPO3_Neos_Backend_BackendController">
+				<f:then>
+					<f:if condition="{categories}">
+						<f:then>
+							<f:form action="index" controller="News" name="newsByCategory" id="newsByCategory">
+								<f:form.select options="{categories}" optionLabelField="title" value="{categoryId}" property="category" prependOptionLabel="Select category" id="category" name="category"  />
+								<f:form.select options="{folders}" optionLabelField="title" value="{folderId}" property="folder" prependOptionLabel="Select folder" id="folder" name="folder"  />
+								<f:form.submit class="btn" value="Update"/>
+							</f:form>
+						</f:then>
+					</f:if>
+				</f:then>
+			</f:security.ifAccess>
 			<f:render partial="FlashMessage" arguments="{severityName: flashmessage}" />
 		</div>
 		<f:if condition="{allNews}">
 			<f:then>
-				<f:widget.paginate objects="{allNews}" as="newsPagination" configuration="{itemsPerPage: 2}">
+				<f:widget.paginate objects="{allNews}" as="newsPagination" configuration="{itemsPerPage: 3}">
 					<f:for each="{newsPagination}" as="news">
 						<div class="clearfix">
 							<div class="clearfix">
