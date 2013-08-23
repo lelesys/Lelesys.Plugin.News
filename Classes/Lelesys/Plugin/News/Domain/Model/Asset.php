@@ -1,7 +1,8 @@
 <?php
+
 namespace Lelesys\Plugin\News\Domain\Model;
 
-/*                                                                         *
+/* *
  * This script belongs to the package "Lelesys.Plugin.News".               *
  *                                                                         *
  * It is free software; you can redistribute it and/or modify it under     *
@@ -49,6 +50,27 @@ class Asset {
 	 * @ORM\ManyToOne(cascade={"persist", "detach"})
 	 */
 	protected $originalResource;
+
+	/**
+	 * The resource
+	 * @var \TYPO3\Flow\Resource\Resource
+	 * @ORM\ManyToOne(cascade={"persist","detach"})
+	 */
+	protected $thumbnailResource;
+
+	/**
+	 * The resource
+	 * @var \TYPO3\Flow\Resource\Resource
+	 * @ORM\ManyToOne(cascade={"persist","detach"})
+	 */
+	protected $iconResource;
+
+	/**
+	 * The Carousel resource
+	 * @var \TYPO3\Flow\Resource\Resource
+	 * @ORM\ManyToOne(cascade={"persist","detach"})
+	 */
+	protected $carouselResource;
 
 	/**
 	 * The caption
@@ -162,6 +184,63 @@ class Asset {
 	 */
 	public function setOriginalResource($originalResource) {
 		$this->originalResource = $originalResource;
+	}
+
+	/**
+	 * Get the Asset's resource
+	 *
+	 * @return \Lelesys\Plugin\News\Domain\Model\TYPO3FlowResourceResource The Asset's resource
+	 */
+	public function getThumbnailResource() {
+		return $this->thumbnailResource;
+	}
+
+	/**
+	 * Sets this Digital asset's resource
+	 *
+	 * @param \TYPO3\Flow\Resource\Resource $thumbnailResource The Digital asset's resource
+	 * @return void
+	 */
+	public function setThumbnailResource($thumbnailResource) {
+		$this->thumbnailResource = $thumbnailResource;
+	}
+
+	/**
+	 * Get the Asset's resource
+	 *
+	 * @return \Lelesys\Plugin\News\Domain\Model\TYPO3FlowResourceResource The Asset's resource
+	 */
+	public function getIconResource() {
+		return $this->iconResource;
+	}
+
+	/**
+	 * Sets this Asset's resource
+	 *
+	 * @param \TYPO3\Flow\Resource\Resource $iconResource The Asset's resource
+	 * @return void
+	 */
+	public function setIconResource($iconResource) {
+		$this->iconResource = $iconResource;
+	}
+
+	/**
+	 * Get the Asset's carouselResource
+	 *
+	 * @return \Lelesys\Plugin\News\Domain\Model\TYPO3FlowResourceResource The Asset's carouselResource
+	 */
+	public function getCarouselResource() {
+		return $this->carouselResource;
+	}
+
+	/**
+	 * Sets this Asset's carouselResource
+	 *
+	 * @param \TYPO3\Flow\Resource\Resource $carouselResource The Asset's carouselResource
+	 * @return void
+	 */
+	public function setCarouselResource($carouselResource) {
+		$this->carouselResource = $carouselResource;
 	}
 
 	/**

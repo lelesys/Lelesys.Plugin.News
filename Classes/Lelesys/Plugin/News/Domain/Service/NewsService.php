@@ -262,6 +262,7 @@ class NewsService {
 		foreach ($mediaPath as $mediaSource) {
 			if (!empty($mediaSource['originalResource']['name'])) {
 				$media = $this->propertyMapper->convert($mediaSource, 'Lelesys\Plugin\News\Domain\Model\Asset');
+				$this->assetService->setThumbnailAndPrint($media);
 				$this->assetService->create($media);
 				$newNews->addAssets($media);
 			}

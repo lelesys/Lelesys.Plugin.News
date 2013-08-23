@@ -66,3 +66,10 @@ prototype(Lelesys.Plugin.News:DetailNews) {
      controller = 'News'
      action = 'show'
 }
+# News Search Result
+prototype(Lelesys.Plugin.News:SearchResult) < prototype(TYPO3.Neos:Plugin)
+prototype(Lelesys.Plugin.News:SearchResult) {
+     package = 'Lelesys.Plugin.News'
+     controller = 'News'
+     action = 'searchResult'
+}

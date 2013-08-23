@@ -13,6 +13,11 @@ Lelesys:
       limitListNews: ''
       # Set news item per page
       newsPerPageAdmin: '8'
+      # Set Digital asset width for Thumbail, carousel and icon size
+      digitalAsset:
+        carouselWidth: 400
+        thumbnailWidth: 200
+        iconWidth: 60
 
 # Backend modules configuration
 TYPO3:

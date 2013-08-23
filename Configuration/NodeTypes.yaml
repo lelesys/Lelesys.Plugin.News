@@ -89,6 +89,15 @@
     inlineEditable: true
     icon: 'icon-puzzle-piece'
 
+'Lelesys.Plugin.News:SearchResult':
+  superTypes:
+    - 'TYPO3.Neos:Plugin'
+  ui:
+    label: 'News Search Result'
+    group: Plugins
+    inlineEditable: true
+    icon: 'icon-puzzle-piece'
+
 # News Category node to set category identifier
 'Lelesys.Plugin.News:CategoryNode':
   superTypes: ['TYPO3.Neos:Content']

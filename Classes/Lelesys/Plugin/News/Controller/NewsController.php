@@ -409,10 +409,20 @@ class NewsController extends AbstractNewsController {
 	/**
 	 * Searches news by title
 	 *
+	 *
+	 *
+	 */
+	public function searchNewsAction() {
+
+	}
+
+	/**
+	 * Shows a list of news
+	 *
 	 * @param string $search
 	 * @return void
 	 */
-	public function searchNewsAction($search = NULL) {
+	public function searchResultAction($search = NULL) {
 		$this->view->assign('newsSearched', $this->newsService->searchResult($search));
 	}
 
