@@ -45,23 +45,23 @@ class TargetNodeAspect {
 	}
 
 	/**
-	 * @Flow\Before("method(TYPO3\Flow\Mvc\Routing\UriBuilder->build())")
+	 * @Flow\Around("method(TYPO3\Flow\Mvc\Routing\Router->resolve())")
 	 * @param \TYPO3\Flow\Aop\JoinPointInterface $joinPoint The current join point
-	 * @return void
+	 * @return mixed
 	 */
 	public function addTargetNodeToArguments(\TYPO3\Flow\Aop\JoinPointInterface $joinPoint) {
 		if (!isset($this->settings['targetNodeMappings']) || !is_array($this->settings['targetNodeMappings'])) {
-			return;
+			return $joinPoint->getAdviceChain()->proceed($joinPoint);
 		}
-		$uriBuilder = $joinPoint->getProxy();
-		$arguments = $joinPoint->getMethodArgument('arguments');
-
+		$arguments = $joinPoint->getMethodArgument('routeValues');
 		foreach ($this->settings['targetNodeMappings'] as $pluginNamespace => $pluginTargetNodeMappings) {
 			$pluginNamespace = '--' . $pluginNamespace;
+
 			if (!isset($arguments[$pluginNamespace]) || !is_array($arguments[$pluginNamespace])) {
 				continue;
 			}
 			$pluginArguments = $arguments[$pluginNamespace];
+
 			foreach ($pluginTargetNodeMappings as $pluginTargetNodeMapping) {
 				if (isset($pluginTargetNodeMapping['package'])
 						&& (!isset($pluginArguments['@package']) || strtolower($pluginArguments['@package']) !== strtolower($pluginTargetNodeMapping['package']))
@@ -78,28 +78,37 @@ class TargetNodeAspect {
 				) {
 					continue;
 				}
+				if (isset($pluginTargetNodeMapping['targetNamespace'])) {
+					unset($arguments[$pluginNamespace]);
+					$arguments['--' . $pluginTargetNodeMapping['targetNamespace']] = $pluginArguments;
+				}
 				$nodeIdentifier = $pluginTargetNodeMapping['targetNode'];
 
-				$contextProperties = array(
-					'workspaceName' => 'live'
-				);
-				$contentContext = $this->contextFactory->create($contextProperties);
-
-				$node = $this->nodeDataRepository->findOneByIdentifier($nodeIdentifier, $contentContext->getWorkspace());
-
+				$node = $this->nodeDataRepository->findOneByIdentifier($nodeIdentifier, $this->createContext()->getWorkspace());
 				if ($node === NULL) {
 					throw new \TYPO3\Flow\Exception('no node with identifier "' . $nodeIdentifier . '" found', 1334172725);
 				}
-
 				$arguments['node'] = $node->getContextPath();
 				$arguments['@package'] = 'TYPO3.Neos';
 				$arguments['@controller'] = 'Frontend\Node';
 				$arguments['@format'] = 'html';
 				$arguments['@action'] = 'show';
-				$uriBuilder->setArguments($arguments);
-				return;
+				$joinPoint->setMethodArgument('routeValues', $arguments);
+				return $joinPoint->getAdviceChain()->proceed($joinPoint);
 			}
 		}
+		return $joinPoint->getAdviceChain()->proceed($joinPoint);
+	}
+
+	/**
+	 * @return \TYPO3\TYPO3CR\Domain\Service\ContextInterface
+	 */
+	protected function createContext() {
+		return $this->contextFactory->create(array(
+			'workspaceName' => 'live',
+			'invisibleContentShown' => TRUE,
+			'inaccessibleContentShown' => TRUE
+		));
 	}
 
 }
