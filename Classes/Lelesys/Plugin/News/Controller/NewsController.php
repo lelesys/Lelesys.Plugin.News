@@ -160,6 +160,18 @@ class NewsController extends AbstractNewsController {
 	}
 
 	/**
+	 * Shows a list of news by category
+	 * @param \Lelesys\Plugin\News\Domain\Model\Category $category The category
+	 * @return void
+	 */
+	public function newsListByCategoryAction(\Lelesys\Plugin\News\Domain\Model\Category $category) {
+		$folder = NULL;
+		$allNews = $this->newsService->listAllByCategory($category, $folder);
+		$this->view->assign('allNews', $allNews);
+		$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
+	}
+
+	/**
 	 * Shows a single news object
 	 *
 	 * @param \Lelesys\Plugin\News\Domain\Model\News $news The news to show
@@ -420,9 +432,14 @@ class NewsController extends AbstractNewsController {
 	 * Shows a list of news
 	 *
 	 * @param string $search
+	 * @param integer $recordLimit
 	 * @return void
 	 */
-	public function searchResultAction($search = NULL) {
+	public function searchResultAction($search = NULL, $recordLimit = NULL) {
+		if ($recordLimit == NULL) {
+			$recordLimit = $this->settings['newsPerPageAdmin'];
+		}
+		$this->view->assign('recordLimit', $recordLimit);
 		$this->view->assign('newsSearched', $this->newsService->searchResult($search));
 	}
 

@@ -333,10 +333,12 @@ class NewsService {
 				$updateAsset->setCaption($mediaSource['caption']);
 				$updateAsset->setCopyRight($mediaSource['copyRight']);
 				$updateAsset->setHidden($mediaSource['hidden']);
+				$this->assetService->setThumbnailAndPrint($updateAsset);
 				$this->assetService->update($updateAsset);
 			} else {
 				if (!empty($mediaSource['originalResource']['name'])) {
 					$media = $this->propertyMapper->convert($mediaSource, 'Lelesys\Plugin\News\Domain\Model\Asset');
+					$this->assetService->setThumbnailAndPrint($media);
 					$this->assetService->create($media);
 					$news->addAssets($media);
 				}

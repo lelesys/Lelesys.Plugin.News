@@ -52,7 +52,7 @@ class CategoryController extends AbstractNewsController {
 	}
 
 	/**
-	 * Shows a single category object
+	 * Shows news list By Category
 	 *
 	 * @param \Lelesys\Plugin\News\Domain\Model\Category $category The category to show
 	 * @return void

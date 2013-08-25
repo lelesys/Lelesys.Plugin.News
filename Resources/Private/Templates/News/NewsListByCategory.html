@@ -1,0 +1,55 @@
+<f:layout name="Default" />
+
+<f:section name="Title"></f:section>
+
+<f:section name="Content">
+	<div class="news-list-container container-fluid">
+
+		<div class="horizontal">
+			<h2>News List</h2>
+		</div>
+		<f:if condition="{allNews}">
+			<f:then>
+				<f:widget.paginate objects="{allNews}" as="newsPagination" configuration="{itemsPerPage: 8}">
+					<f:for each="{newsPagination}" as="news">
+						<div class="clearfix">
+							<div class="clearfix">
+								<div class="title-link">
+									<f:link.action action="show" arguments="{news: news}">{news.title}</f:link.action>
+									<p class="date">Published on {news.dateTime -> f:format.date(format: 'j M y, h:i A')}</p>
+								</div>
+								<article>
+									<f:if condition="{news.assets}">
+										<f:then>
+											<div class="asset-img">
+												<f:for each="{news.assets}" as="asset" iteration="fooIterator">
+													{f:if(condition: fooIterator.isLast, then: '<img src="{f:uri.resource(resource: asset.thumbnailResource)}" class="thumbnail" />')}
+												</f:for>
+											</div>
+										</f:then>
+										<f:else>
+											<div class="asset-img">
+												<img src="{f:uri.resource(package:'SeeThroughWeb.Shop', path:'images/no-image.jpg')}" alt="image" width="100" />
+											</div>
+										</f:else>
+									</f:if>
+									<p><f:format.raw><b>{news.subTitle}</b></f:format.raw></p>
+									<div class="excerpt">
+										<p class="readmore"><f:link.action action="show" arguments="{news: news}" class="more-btn">Read more</f:link.action></p>
+									</div>
+								</article>
+							</div>
+
+						</div>
+					</f:for>
+				</f:widget.paginate>
+				<f:link.action action="adminList" controller="category">Back</f:link.action>
+			</f:then>
+			<f:else>
+				<div class="clearfix"></div>
+				<p>No news created yet.</p>
+				<f:link.action action="adminList" controller="category">Back</f:link.action>
+			</f:else>
+		</f:if>
+	</div>
+</f:section>
