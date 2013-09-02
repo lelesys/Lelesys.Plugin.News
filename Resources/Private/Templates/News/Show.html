@@ -1,3 +1,4 @@
+{namespace m=TYPO3\Media\ViewHelpers}
 <f:layout name="Default" />
 
 <f:section name="Title"></f:section>
@@ -7,7 +8,14 @@
 		<f:if condition="{news}">
 			<f:then>
 				<h2><f:link.action action="show" arguments="{news: news}">{news.title}</f:link.action></h2>
-				<p class="date"> <f:if condition="{news.authorName}">author name:&nbsp;{news.authorName}&nbsp;&nbsp;</f:if>Published on&nbsp;{news.dateTime -> f:format.date(format: 'j M y, h:i A')}</p>
+				<ul class="news-social-bookmark">
+					<li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={currentUri}"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/social-facebook-box-blue-icon.png')}" alt="social-facebook-box-blue-icon.png" width="22"/></a></li>
+					<li><a href="https://twitter.com/share" target="_blank"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/social-twitter-box-blue-icon.png')}" alt="social-twitter-box-blue-icon.png" width="22"/></a></li>
+					<li><a href="http://www.linkedin.com/shareArticle?mini=false&amp;url={currentUri}" target="_blank"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/social-linkedin-box-blue-icon.png')}" alt="social-linkedin-box-blue-icon.png" width="22"/></a></li>
+					<li><a href="https://plus.google.com/share?url={currentUri}" target="_blank"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/Google-plus-icon.png')}" alt="Google-plus-icon.png" width="22"/></a></li>
+					<li><a href="http://digg.com/submit?&amp;url={currentUri}" target="_blank"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/social-digg-box-white-icon.png')}" alt="social-digg-box-white-icon.png" width="22"/></a></li>
+				</ul>
+				<p class="date"> <f:if condition="{news.authorName}"><f:translate id="lelesys.plugin.news.authorName"></f:translate>&nbsp;{news.authorName}&nbsp;&nbsp;</f:if> <f:translate id="lelesys.plugin.news.publishedOn"></f:translate>&nbsp;{news.dateTime -> f:format.date(format: 'j M y, h:i A')}</p>
 				<div class="row-fluid">
 					<div class="news_content_left">
 						<f:if condition="{assets}">
@@ -16,8 +24,8 @@
 									<div class="carousel-inner">
 										<f:for each="{assets}" as="asset">
 											<div class="item">
-												<a href="{f:uri.resource(resource: asset.originalResource)}">
-													<img src="{f:uri.resource(resource: asset.originalResource)}" alt="image" width="500"/>
+												<a href="{f:uri.resource(resource: asset.resource)}">
+													<m:image image="{asset}" maximumWidth="500" maximumHeight="500" alt="sample" allowCropping="true" />
 												</a>
 											</div>
 										</f:for>
@@ -34,11 +42,42 @@
 							<p><f:format.raw>{news.description}</f:format.raw></p>
 						</div>
 					</div>
+					<a href="JavaScript:void(0);" id="rate-here">Give your Ratings</a>
+
+					<f:if condition="{news.avgRatings} == 1">
+						<div class="rate rate1"></div>
+					</f:if>
+					<f:if condition="{news.avgRatings} == 2">
+						<div class="rate rate2"></div>
+					</f:if>
+					<f:if condition="{news.avgRatings} == 3">
+						<div class="rate rate3"></div>
+					</f:if>
+					<f:if condition="{news.avgRatings} == 4">
+						<div class="rate rate4"></div>
+					</f:if>
+					<f:if condition="{news.avgRatings} == 5">
+						<div class="rate rate5"></div>
+					</f:if>
+					<f:if condition="{news.avgRatings} == 0">
+						<div class="rate"></div>
+					</f:if>
+					<f:form id="rate-recipe" action="create" name="newRating" controller="Rating">
+						<label for="points">Rate:</label>
+						<f:form.checkbox name="ratePoints[]" value="1" class="styled rate-points"/>
+						<f:form.checkbox name="ratePoints[]" value="2" class="styled rate-points"/>
+						<f:form.checkbox name="ratePoints[]" value="3" class="styled rate-points"/>
+						<f:form.checkbox name="ratePoints[]" value="4" class="styled rate-points"/>
+						<f:form.checkbox name="ratePoints[]" value="5" class="styled rate-points"/>
+						<f:form.hidden property="points" id="points" value=""/>
+						<f:form.hidden property="news" value="{news}" />
+						<f:form.submit value="Create" />
+					</f:form>
 					<div class="clearfix"></div>
 					<f:if condition="{relatedNews}">
 						<div class="news-rel relate-news">
 							<div class="rel_title">
-								<p>Related News</p>
+								<p><f:translate id="lelesys.plugin.news.relatedNews"></f:translate></p>
 								<ul>
 									<f:for each="{relatedNews}" as="newsRelated">
 										<li><f:link.action action="show" arguments="{news: newsRelated}">{newsRelated.title}</f:link.action></li>
@@ -50,7 +89,7 @@
 					<f:if condition="{relatedLinkData}">
 						<div class="news-rel relate-news-links">
 							<div class="rel_title">
-								<p>Related Links</p>
+								<p><f:translate id="lelesys.plugin.news.relatedLinks"></f:translate></p>
 								<ul>
 									<f:for each="{relatedLinkData}" as="linkData">
 										<li>
@@ -79,11 +118,11 @@
 					</f:if>
 					<f:if condition="{relatedFiles}">
 						<div class="news-rel news_listimg rel_title">
-							<p>Related Files</p>
+							<p><f:translate id="lelesys.plugin.news.relatedFiles"></f:translate></p>
 							<ul>
 								<f:for each="{relatedFiles}" as="file">
 									<li>
-									<f:link.action action="downloadFile" arguments="{file: file.originalFileResource}" controller="news">{file.originalFileResource.fileName}</f:link.action>
+									<f:link.action action="downloadFile" arguments="{file: file.resource}" controller="news">{file.resource.fileName}</f:link.action>
 									</li>
 								</f:for>
 							</ul>
@@ -95,7 +134,7 @@
 							<p>Category </p>
 							<ul>
 								<f:for each="{categories}" as="category">
-									<li><f:link.action action="show" arguments="{category: category}" controller="category">{category.title}</f:link.action></li>
+									<li><f:link.action action="index" arguments="{category: category}" controller="news">{category.title}</f:link.action></li>
 								</f:for>
 							</ul>
 						</div>
@@ -103,36 +142,36 @@
 
 					<div class="news-rel rel_title category_title">
 						<f:if condition="{comments}">
-							<p>Comments</p>
+							<p><f:translate id="lelesys.plugin.news.comments"></f:translate></p>
 							<ul>
 								<f:for each="{comments}" key="msgkey" as="comment">
 									<div>
 										<li>
 											{comment.message} <br>
-											<span class="date"> commented by:&nbsp;{comment.name}&nbsp;&nbsp;on&nbsp;{comment.CreatedDate -> f:format.date(format: 'j M y, h:i A')}</span>
+											<span class="date"> <f:translate id="lelesys.plugin.news.commentedBy"></f:translate>:&nbsp;{comment.name}&nbsp;&nbsp;on&nbsp;{comment.CreatedDate -> f:format.date(format: 'j M y, h:i A')}</span>
 										</li>
 									</div>
 								</f:for>
 							</ul>
 						</f:if>
-						<h2>Your Comment</h2>
+						<h2><f:translate id="lelesys.plugin.news.yourComment"></f:translate></h2>
 						<f:form action="create" controller="Comment" name="newComment" arguments="{news: news}">
 							<div class="control-group">
-								<label for="name">Name</label>
+								<label for="name"><f:translate id="lelesys.plugin.news.name"></f:translate></label>
 								<div class="controls">
 									<f:form.textfield property="name" id="name" class="span5"/>
 									<f:render partial="FormErrors" arguments="{for: 'newComment.name'}" />
 								</div>
 							</div>
 							<div class="control-group">
-								<label for="email">Email</label>
+								<label for="email"><f:translate id="lelesys.plugin.news.email"></f:translate></label>
 								<div class="controls">
 									<f:form.textfield property="email" id="email" class="span5"/>
 									<f:render partial="FormErrors" arguments="{for: 'newComment.email'}" />
 								</div>
 							</div>
 							<div class="control-group">
-								<label for="message">Message</label>
+								<label for="message"><f:translate id="lelesys.plugin.news.message"></f:translate></label>
 								<div class="controls">
 									<f:form.textarea rows="4" cols="5" property="message" id="message" class="span5"/>
 									<f:render partial="FormErrors" arguments="{for: 'newComment.message'}" />
@@ -144,12 +183,12 @@
 								</div>
 							</div>
 						</f:form>
-						<a href="javascript:history.back()"> Back </a>
+						<a href="javascript:history.back()"><f:translate id="lelesys.plugin.news.back"></f:translate></a>
 					</div>
 				</div>
 			</f:then>
 			<f:else>
-				<p>No news to display!!</p>
+				<p><f:translate id="lelesys.plugin.news.noNewsToDisplay"></f:translate></p>
 			</f:else>
 		</f:if>
 	</div>

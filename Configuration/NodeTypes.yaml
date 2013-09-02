@@ -6,6 +6,79 @@
     group: Plugins
     inlineEditable: true
     icon: 'icon-puzzle-piece'
+    inspector:
+      groups:
+        newsoption:
+          label: 'News Options'
+  properties:
+    limitNews:
+      type: string
+      defaultValue: '5'
+      ui:
+        label: 'Limit Number of News'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    itemsPerPage:
+      type: string
+      defaultValue: '10'
+      ui:
+        label: 'Add items per page'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    orderBy:
+      type: string
+      defaultValue: 'dateTime'
+      ui:
+        label: 'Select Order By'
+        inspector:
+          group: newsoption
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              dateTime:
+                label: 'DateTime'
+        reloadIfChanged: true
+    sortBy:
+      type: string
+      defaultValue: 'DESC'
+      ui:
+        label: 'Select Sort By'
+        inspector:
+          group: newsoption
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              ASC:
+                label: 'ASCENDING'
+              DESC:
+                label: 'DESCENDING'
+        reloadIfChanged: true
+    templatePath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Templates/News/Index.html'
+      ui:
+        label: 'Set Template Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    partialRootPath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Partials/'
+      ui:
+        label: 'Set Partial Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    layoutRootPath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Layouts/'
+      ui:
+        label: 'Set Layout Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
 
 'Lelesys.Plugin.News:LatestNews':
   superTypes:
@@ -18,25 +91,68 @@
     inspector:
       groups:
         newsoption:
-          label: News Options
+          label: 'News Options'
   properties:
     limitNews:
       type: string
-      defaultValue: '5'
+      defaultValue: '9'
       ui:
         label: 'Limit Number of News'
         inspector:
           group: newsoption
         reloadIfChanged: true
-
-'Lelesys.Plugin.News:AdminNewsList':
-  superTypes:
-    - 'TYPO3.Neos:Plugin'
-  ui:
-    label: 'Admin News List'
-    group: Plugins
-    inlineEditable: true
-    icon: 'icon-puzzle-piece'
+    templatePath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Templates/News/LatestNews.html'
+      ui:
+        label: 'Set Template Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    partialRootPath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Partials/'
+      ui:
+        label: 'Set Partial Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    layoutRootPath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Layouts/'
+      ui:
+        label: 'Set Layout Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    orderBy:
+      type: string
+      defaultValue: 'dateTime'
+      ui:
+        label: 'Select Order By'
+        inspector:
+          group: newsoption
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              dateTime:
+                label: 'DateTime'
+        reloadIfChanged: true
+    sortBy:
+      type: string
+      defaultValue: 'DESC'
+      ui:
+        label: 'Select Sort By'
+        inspector:
+          group: newsoption
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              ASC:
+                label: 'ASCENDING'
+              DESC:
+                label: 'DESCENDING'
+        reloadIfChanged: true
 
 'Lelesys.Plugin.News:CategoryList':
   superTypes:
@@ -45,23 +161,218 @@
     label: 'Category List'
     inlineEditable: true
     icon: 'icon-puzzle-piece'
+    inspector:
+      groups:
+        newsoption:
+          label: 'News Options'
+  properties:
+    itemsPerPage:
+      type: string
+      defaultValue: '10'
+      ui:
+        label: 'Add items per page'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    templatePath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Templates/Category/Index.html'
+      ui:
+        label: 'Set Template Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    partialRootPath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Partials/'
+      ui:
+        label: 'Set Partial Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    layoutRootPath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Layouts/'
+      ui:
+        label: 'Set Layout Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    orderBy:
+      type: string
+      defaultValue: createDate
+      ui:
+        label: 'Select Order By'
+        inspector:
+          group: newsoption
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              createDate:
+                label: 'Created Date'
+        reloadIfChanged: true
+    sortBy:
+      type: string
+      defaultValue: 'DESC'
+      ui:
+        label: 'Select Sort By'
+        inspector:
+          group: newsoption
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              ASC:
+                label: 'ASCENDING'
+              DESC:
+                label: 'DESCENDING'
+        reloadIfChanged: true
 
-'Lelesys.Plugin.News:AdminCategoryList':
+'Lelesys.Plugin.News:TagList':
   superTypes:
     - 'TYPO3.Neos:Plugin'
   ui:
-    label: 'Admin Category List'
+    label: 'Tag List'
     inlineEditable: true
     icon: 'icon-puzzle-piece'
+    inspector:
+      groups:
+        newsoption:
+          label: 'News Options'
+  properties:
+    itemsPerPage:
+      type: string
+      defaultValue: '10'
+      ui:
+        label: 'Add items per page'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    templatePath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Templates/Tag/Index.html'
+      ui:
+        label: 'Set Template Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    partialRootPath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Partials/'
+      ui:
+        label: 'Set Partial Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    layoutRootPath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Layouts/'
+      ui:
+        label: 'Set Layout Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    orderBy:
+      type: string
+      defaultValue: 'createDate'
+      ui:
+        label: 'Select Order By'
+        inspector:
+          group: newsoption
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              createDate:
+                label: 'Created Date'
+        reloadIfChanged: true
+    sortBy:
+      type: string
+      defaultValue: 'DESC'
+      ui:
+        label: 'Select Sort By'
+        inspector:
+          group: newsoption
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              ASC:
+                label: 'ASCENDING'
+              DESC:
+                label: 'DESCENDING'
+        reloadIfChanged: true
 
-'Lelesys.Plugin.News:AdminFolderList':
+'Lelesys.Plugin.News:FolderList':
   superTypes:
     - 'TYPO3.Neos:Plugin'
   ui:
-    label: 'Admin Folder List'
+    label: 'Folder List'
     group: Plugins
     inlineEditable: true
     icon: 'icon-puzzle-piece'
+    inspector:
+      groups:
+        newsoption:
+          label: 'News Options'
+  properties:
+    itemsPerPage:
+      type: string
+      defaultValue: '10'
+      ui:
+        label: 'Add items per page'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    templatePath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Templates/Folder/Index.html'
+      ui:
+        label: 'Set Template Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    partialRootPath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Partials/'
+      ui:
+        label: 'Set Partial Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    layoutRootPath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Layouts/'
+      ui:
+        label: 'Set Layout Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    orderBy:
+      type: string
+      defaultValue: 'dateTime'
+      ui:
+        label: 'Select Order By'
+        inspector:
+          group: newsoption
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              dateTime:
+                label: 'DateTime'
+        reloadIfChanged: true
+    sortBy:
+      type: string
+      defaultValue: 'DESC'
+      ui:
+        label: 'Select Sort By'
+        inspector:
+          group: newsoption
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              ASC:
+                label: 'ASCENDING'
+              DESC:
+                label: 'DESCENDING'
+        reloadIfChanged: true
 
 'Lelesys.Plugin.News:SearchNews':
   superTypes:
@@ -71,6 +382,35 @@
     group: Plugins
     inlineEditable: true
     icon: 'icon-puzzle-piece'
+    inspector:
+      groups:
+        newsoption:
+          label: 'News Options'
+  properties:
+    templatePath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Templates/News/SearchNews.html'
+      ui:
+        label: 'Set Template Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    partialRootPath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Partials/'
+      ui:
+        label: 'Set Partial Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    layoutRootPath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Layouts/'
+      ui:
+        label: 'Set Layout Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
 
 'Lelesys.Plugin.News:Archive':
   superTypes:
@@ -79,6 +419,35 @@
     label: 'Archive'
     inlineEditable: true
     icon: 'icon-puzzle-piece'
+    inspector:
+      groups:
+        newsoption:
+          label: 'News Options'
+  properties:
+    templatePath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Templates/News/Archive.html'
+      ui:
+        label: 'Set Template Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    partialRootPath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Partials/'
+      ui:
+        label: 'Set Partial Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    layoutRootPath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Layouts/'
+      ui:
+        label: 'Set Layout Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
 
 'Lelesys.Plugin.News:DetailNews':
   superTypes:
@@ -88,6 +457,35 @@
     group: Plugins
     inlineEditable: true
     icon: 'icon-puzzle-piece'
+    inspector:
+      groups:
+        newsoption:
+          label: 'News Options'
+  properties:
+    templatePath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Templates/News/Show.html'
+      ui:
+        label: 'Set Template Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    partialRootPath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Partials/'
+      ui:
+        label: 'Set Partial Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    layoutRootPath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Layouts/'
+      ui:
+        label: 'Set Layout Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
 
 'Lelesys.Plugin.News:SearchResult':
   superTypes:
@@ -97,12 +495,76 @@
     group: Plugins
     inlineEditable: true
     icon: 'icon-puzzle-piece'
-
-# News Category node to set category identifier
-'Lelesys.Plugin.News:CategoryNode':
-  superTypes: ['TYPO3.Neos:Content']
+    inspector:
+      groups:
+        newsoption:
+          label: 'News Options'
   properties:
-    categoryId:
-      type: 'string'
-    folderId:
-      type: 'string'
+    limitNews:
+      type: string
+      defaultValue: '5'
+      ui:
+        label: 'Limit Number of News'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    itemsPerPage:
+      type: string
+      defaultValue: '10'
+      ui:
+        label: 'Add items per page'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    templatePath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Templates/News/SearchResult.html'
+      ui:
+        label: 'Set Template Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    partialRootPath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Partials/'
+      ui:
+        label: 'Set Partial Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    layoutRootPath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Layouts/'
+      ui:
+        label: 'Set Layout Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    orderBy:
+      type: string
+      defaultValue: 'dateTime'
+      ui:
+        label: 'Select Order By'
+        inspector:
+          group: newsoption
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              dateTime:
+                label: 'dateTime'
+        reloadIfChanged: true
+    sortBy:
+      type: string
+      defaultValue: 'DESC'
+      ui:
+        label: 'Select Sort By'
+        inspector:
+          group: newsoption
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              ASC:
+                label: 'ASCENDING'
+              DESC:
+                label: 'DESCENDING'
+        reloadIfChanged: true

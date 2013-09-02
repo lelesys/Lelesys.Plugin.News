@@ -44,20 +44,7 @@ class CategoryController extends \TYPO3\Neos\Controller\Module\AbstractModuleCon
 	 * @return void
 	 */
 	public function indexAction() {
-		$this->view->assign('categories', $this->categoryService->AdminCategoryList());
-	}
-
-	/**
-	 * Shows a single category object
-	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\Category $category The category to show
-	 * @return void
-	 */
-	public function showAction(\Lelesys\Plugin\News\Domain\Model\Category $category) {
-		$this->view->assign('category', $category);
-		$categoryNews = $this->categoryService->getNewsByCategory($category);
-		$this->view->assign('categoryNews', $categoryNews);
-		$this->view->assign('assetsForNews', $this->newsService->assetsForNews($categoryNews));
+		$this->view->assign('categories', $this->categoryService->listAll());
 	}
 
 	/**

@@ -29,19 +29,11 @@ class TagService {
 	/**
 	 * Shows a list of tags
 	 *
-	 * @return \Lelesys\Plugin\News\Domain\Model\Tag
+	 * @param array $pluginArguments Plugin arguments
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
-	public function listAll() {
-		return $this->tagRepository->getEnabledLatestTags();
-	}
-
-	/**
-	 * Shows a list of tags
-	 *
-	 * @return \Lelesys\Plugin\News\Domain\Model\Tag
-	 */
-	public function adminTagList() {
-		return $this->tagRepository->findAll();
+	public function listAll($pluginArguments = NULL) {
+		return $this->tagRepository->listAll($pluginArguments);
 	}
 
 	/**
@@ -54,13 +46,14 @@ class TagService {
 		$newTag->setCreateDate(new \DateTime());
 		$newTag->setUpdatedDate(new \DateTime());
 		$this->tagRepository->add($newTag);
+		$this->emitTagCreated($newTag);
 	}
 
 	/**
 	 * Shows a single category object
 	 *
 	 * @param \Lelesys\Plugin\News\Domain\Model\Tag $tag The category to show
-	 * @return \Lelesys\Plugin\News\Domain\Model\News $enabledNews
+	 * @return array $enabledNews
 	 */
 	public function getNewsByTag(\Lelesys\Plugin\News\Domain\Model\Tag $tag) {
 		$enabledNews = array();
@@ -73,17 +66,6 @@ class TagService {
 	}
 
 	/**
-	 * Updates the given tag object
-	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\Tag $tag The tag to update
-	 * @return void
-	 */
-	public function update(\Lelesys\Plugin\News\Domain\Model\Tag $tag) {
-		$tag->setUpdatedDate(new \DateTime());
-		$this->tagRepository->update($tag);
-	}
-
-	/**
 	 * Removes the given tag object from the tag repository
 	 *
 	 * @param \Lelesys\Plugin\News\Domain\Model\Tag $tag The tag to delete
@@ -91,35 +73,14 @@ class TagService {
 	 */
 	public function delete(\Lelesys\Plugin\News\Domain\Model\Tag $tag) {
 		$this->tagRepository->remove($tag);
-	}
-
-	/**
-	 * hide's the Tag
-	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\Tag $tag
-	 * @return void
-	 */
-	public function hideTag(\Lelesys\Plugin\News\Domain\Model\Tag $tag) {
-		$tag->setHidden(1);
-		$this->tagRepository->update($tag);
-	}
-
-	/**
-	 * shows's the hidden Tag
-	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\Tag $tag
-	 * @return void
-	 */
-	public function showTag(\Lelesys\Plugin\News\Domain\Model\Tag $tag) {
-		$tag->setHidden(0);
-		$this->tagRepository->update($tag);
+		$this->emitTagDeleted($tag);
 	}
 
 	/**
 	 * returns an object of tag based on the name provided
 	 *
 	 * @param string $tagname
-	 * @return \Lelesys\Plugin\News\Domain\Model\Tag $tag
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function findTagByName($tagname) {
 		return $this->tagRepository->findOneByTitle($tagname);
@@ -129,10 +90,32 @@ class TagService {
 	 * return tag for given identifier
 	 *
 	 * @param string $identifier
-	 * @return \Lelesys\Plugin\News\Domain\Model\Tag $tag
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function findById($identifier) {
 		return $this->tagRepository->findByIdentifier($identifier);
+	}
+
+	/**
+	 * Signal for Tag created
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Tag $tag The Tag
+	 * @Flow\Signal
+	 * @return void
+	 */
+	protected function emitTagCreated(\Lelesys\Plugin\News\Domain\Model\Tag $tag) {
+
+	}
+
+	/**
+	 * Signal for Tag deleted
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Tag $tag The Tag
+	 * @Flow\Signal
+	 * @return void
+	 */
+	protected function emitTagDeleted(\Lelesys\Plugin\News\Domain\Model\Tag $tag) {
+
 	}
 
 }

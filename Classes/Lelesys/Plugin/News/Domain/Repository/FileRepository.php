@@ -1,7 +1,8 @@
 <?php
+
 namespace Lelesys\Plugin\News\Domain\Repository;
 
-/*                                                                         *
+/* *
  * This script belongs to the package "Lelesys.Plugin.News".               *
  *                                                                         *
  * It is free software; you can redistribute it and/or modify it under     *
@@ -18,7 +19,12 @@ use TYPO3\Flow\Annotations as Flow;
  */
 class FileRepository extends \TYPO3\Flow\Persistence\Repository {
 
-	// add customized methods here
+	/**
+	 *
+	 * @var array
+	 */
+	protected $defaultOrderings = array('createDate' => \TYPO3\Flow\Persistence\QueryInterface::ORDER_DESCENDING);
 
 }
+
 ?>

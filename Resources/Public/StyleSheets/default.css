@@ -38,6 +38,9 @@
 	float: left;
 	margin-right: 10px;
 }
+.news-social-bookmark li{
+	display: inline;
+}
 /************************ show view *********************/
 .rel_title p {
 	background-color: #373737;
@@ -132,6 +135,50 @@
 }
 .category-title-error {
 	width: 19.3%;
+}
+
+/************************rating*********************/
+.checkbox {
+	background: url("../images/pageRating.gif") no-repeat scroll -14px -5px transparent;
+    height: 20px;
+    margin-left: 2px;
+    margin-right: 4px;
+    padding: 0 17px 1px 0;
+    width: 30px;
+}
+
+.styled {
+	display: none;
+}
+
+.checked {
+	background-position: 0px -5px;
+}
+#rate-recipe {
+	display: none;
+	margin-top: 15px;
+}
+
+.rate {
+    background: url("../images/ratings.png") no-repeat scroll 0 0 transparent;
+    height: 28px;
+    width: 100px;
+	margin-top: 6px;
+}
+.rate1 {
+    background: url("../images/ratings.png") no-repeat scroll 0 -44px transparent;
+}
+.rate2 {
+    background: url("../images/ratings.png") no-repeat scroll 0 -88px transparent;
+}
+.rate3 {
+    background: url("../images/ratings.png") no-repeat scroll 0 -132px transparent;
+}
+.rate4 {
+    background: url("../images/ratings.png") no-repeat scroll 0 -176px transparent;
+}
+.rate5 {
+    background: url("../images/ratings.png") no-repeat scroll 0 -220px transparent;
 }
 
 /************** responsive css for news list view *******************/

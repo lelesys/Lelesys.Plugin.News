@@ -36,7 +36,7 @@ class AssetController extends AbstractNewsController {
 	public function createAction(\Lelesys\Plugin\News\Domain\Model\Asset $newAsset) {
 		try {
 			$this->assetService->create($newAsset);
-		} catch (Lelesys\NeoNews\Domain\Service\Exception $exception) {
+		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
 			$this->addFlashMessage('Cannot create asset at this time!!.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
@@ -60,7 +60,7 @@ class AssetController extends AbstractNewsController {
 	public function updateAction(\Lelesys\Plugin\News\Domain\Model\Asset $asset) {
 		try {
 			$this->assetService->update($asset);
-		} catch (Lelesys\NeoNews\Domain\Service\Exception $exception) {
+		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
 			$this->addFlashMessage('Cannot update asset at this time!!.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
@@ -74,7 +74,7 @@ class AssetController extends AbstractNewsController {
 	public function deleteAction(\Lelesys\Plugin\News\Domain\Model\Asset $asset) {
 		try {
 			$this->assetService->delete($asset);
-		} catch (Lelesys\NeoNews\Domain\Service\Exception $exception) {
+		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
 			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}

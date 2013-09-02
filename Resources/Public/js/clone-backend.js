@@ -197,31 +197,21 @@ function cloneAddFiles() {
 	div.find('.accordion-body').attr('id','collapse-file-'+newId);
 	div.find('.accordion-toggle').attr('href','#collapse-file-'+newId);
 	div.find('.accordion-toggle').text('Related Files #'+newId);
-	div.find('.show-hide-value').val(0).attr('name','moduleArguments[file]['+newId+'][hidden]');
-	div.find('.asset-toggle').attr('data-original-title', 'Hide').addClass('hide-asset file-clone-toggle').removeClass('show-asset');
-	div.find('.asset-toggle').children('i').addClass('icon-eye-close').removeClass('icon-eye-open');
 	var a = newId - 1;
-	div.find('#file-originalResource-'+a).attr({
-		'name': 'moduleArguments[file]['+newId+'][originalFileResource]',
-		'id': 'file-originalResource-'+newId
-	}).parent().prev('label').attr('for','file-originalResource-'+newId);
+	div.find('#file-resource-'+a).attr({
+		'name': 'moduleArguments[file]['+newId+'][resource]',
+		'id': 'file-resource-'+newId
+	}).parent().prev('label').attr('for','file-resource-'+newId);
 	div.find('#file-title-'+a).attr({
 		'name': 'moduleArguments[file]['+newId+'][title]',
 		'id': 'file-title-'+newId
 	}).parent().prev('label').attr('for','file-title-'+newId);
-	div.find('#file-description-'+a).attr({
-		'name': 'moduleArguments[file]['+newId+'][description]',
-		'id': 'file-description-'+newId
-	}).parent().prev('label').attr('for','file-description-'+newId);
-	div.find('#file-originalResource-'+newId).next('img').remove();
+	div.find('#file-resource-'+newId).next('img').remove();
 	div.find('#collapse-file-'+newId).removeClass('in').removeAttr("style");
 	div.find('.remove-file').remove();
 	div.find('.accordion-heading').append('<a class="pull-right remove-file tooltip-demo" rel="tooltip" title="Delete" onclick="deleteClone(this)"><i class="icon-trash"></i></a>');
 	jQuery('.add-more-files').before(div);
 	jQuery('.tooltip-demo').tooltip();
-	jQuery('.file-clone-toggle').click(function() {
-		hideShowTest(this);
-	});
 };
 
 function cloneAddMedia() {
@@ -235,30 +225,20 @@ function cloneAddMedia() {
 	div.find('.accordion-body').attr('id','collapse-media-'+newId);
 	div.find('.accordion-toggle').attr('href','#collapse-media-'+newId);
 	div.find('.accordion-toggle').text('Related Media #'+newId);
-	div.find('.show-hide-value').val(0).attr('name','moduleArguments[media]['+newId+'][hidden]');
-	div.find('.asset-toggle').attr('data-original-title', 'Hide').addClass('hide-asset asset-clone-toggle').removeClass('show-asset');
-	div.find('.asset-toggle').children('i').addClass('icon-eye-close').removeClass('icon-eye-open');
 	var a = newId - 1;
-	div.find('#originalResource-'+a).attr({
-		'name': 'moduleArguments[media]['+newId+'][originalResource]',
-		'id': 'originalResource-'+newId
-	}).parent().prev('label').attr('for','originalResource-'+newId);
+	div.find('#resource-'+a).attr({
+		'name': 'moduleArguments[media]['+newId+'][resource]',
+		'id': 'resource-'+newId
+	}).parent().prev('label').attr('for','resource-'+newId);
 	div.find('#caption-'+a).attr({
 		'name': 'moduleArguments[media]['+newId+'][caption]',
 		'id': 'caption-'+newId
 	}).parent().prev('label').attr('for','caption-'+newId);
-	div.find('#copyRight-'+a).attr({
-		'name': 'moduleArguments[media]['+newId+'][copyRight]',
-		'id': 'copyRight-'+newId
-	}).parent().prev('label').attr('for','copyRight-'+newId)
-	div.find('#originalResource-'+newId).next('img').remove();
+	div.find('#resource-'+newId).next('img').remove();
 	div.find('#collapse-media-'+newId).removeClass('in').removeAttr("style");
 	div.find('.remove-file').remove();
 	div.find('.accordion-heading').append('<a class="pull-right remove-file tooltip-demo" rel="tooltip" title="Delete" onclick="deleteClone(this)"><i class="icon-trash"></i></a>');
 	jQuery('.add-more-media').before(div);
-	jQuery('.asset-clone-toggle').click(function() {
-		hideShowTest(this);
-	});
 	jQuery('.tooltip-demo').tooltip();
 };
 

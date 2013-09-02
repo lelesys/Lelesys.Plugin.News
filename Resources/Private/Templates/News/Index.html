@@ -5,12 +5,12 @@
 <f:section name="Content">
 	<div class="news-list-container container-fluid">
 		<div class="horizontal">
-			<h2>News List</h2>
+			<h2><f:translate id="lelesys.plugin.news.newsList"></f:translate></h2>
 			<f:security.ifAccess resource="TYPO3_Neos_Backend_BackendController">
 				<f:then>
 					<f:if condition="{categories}">
 						<f:then>
-							<f:form action="index" controller="News" name="newsByCategory" id="newsByCategory">
+							<f:form action="index" controller="News" name="newsBySelection" id="newsBySelection">
 								<f:form.select options="{categories}" optionLabelField="title" value="{categoryId}" property="category" prependOptionLabel="Select category" id="category" name="category"  />
 								<f:form.select options="{folders}" optionLabelField="title" value="{folderId}" property="folder" prependOptionLabel="Select folder" id="folder" name="folder"  />
 								<f:form.submit class="btn" value="Update"/>
@@ -20,59 +20,98 @@
 				</f:then>
 			</f:security.ifAccess>
 			<f:render partial="FlashMessage" arguments="{severityName: flashmessage}" />
+			<f:security.ifHasRole role="Editor">
+				<f:link.action action="new"><i class="icon-plus-sign icon-plus-image"></i> &nbsp; <f:translate id="lelesys.plugin.news.addNews"></f:translate></f:link.action>
+			</f:security.ifHasRole>
 		</div>
 		<f:if condition="{allNews}">
 			<f:then>
-				<f:widget.paginate objects="{allNews}" as="newsPagination" configuration="{itemsPerPage: 3}">
+				<f:widget.paginate objects="{allNews}" as="newsPagination" configuration="{itemsPerPage: 10}">
 					<f:for each="{newsPagination}" as="news">
 						<div class="clearfix">
-							<div class="clearfix">
-								<div class="title-link">
-									<f:link.action action="show" arguments="{news: news}">{news.title}</f:link.action>
-									<p class="date">Published on {news.dateTime -> f:format.date(format: 'j M y, h:i A')}</p>
-								</div>
-								<article>
-									<f:if condition="{assetsForNews}">
-										<f:then>
-											<f:for each="{assetsForNews}" as="assets" key="newsId">
-												<f:if condition="{newsId} == {news.uuid}">
-													<div class="asset-img">
-														<f:for each="{assets}" as="asset" iteration="fooIterator">
-															{f:if(condition: fooIterator.isLast, then: '<img src="{f:uri.resource(resource: asset.originalResource)}" class="thumbnail" alt="image" width="100" />')}
-														</f:for>
-													</div>
-												</f:if>
-											</f:for>
-										</f:then>
-										<f:else>
-											<div class="asset-img">
-												<img src="{f:uri.resource(path:'images/no_photo.jpg')}" alt="image" width="100" />
-											</div>
-										</f:else>
-									</f:if>
-									<div>
-										<p>{news.subTitle}</p>
-										<p class="date"><f:link.action action="show" arguments="{news: news}">read more</f:link.action></p>
-									</div>
-								</article>
-							</div>
-							<f:if condition="{news.authorName}">
+							<f:security.ifHasRole role="Editor">
 								<f:then>
+									<f:render partial="NewsList" arguments="{news: news, assetsForNews: assetsForNews}" />
 									<div class="news_footer">
-										<span class="date">author name: &nbsp;{news.authorName}</span>
+										<f:if condition="{news.authorName}"><span class="date">author name: &nbsp;{news.authorName}</span></f:if>
+										<span><f:link.action action="edit" arguments="{news: news}" rel="tooltip" title="Edit" class="tooltip-demo"><i class="icon-pencil"></i><f:translate id="lelesys.plugin.news.edit"></f:translate></f:link.action></span>
+										<span>
+											<f:link.action action="delete" arguments="{news: news}" rel="tooltip" title="Delete" class="tooltip-demo delete"><i class="icon-trash"></i><f:translate id="lelesys.plugin.news.delete"></f:translate></f:link.action>
+											<f:form action="delete" name="deleteItem" id="deleteItem" style="display: none;">
+												<f:form.hidden value="DELETE" />
+											</f:form>
+											<script>
+												var deleteMessage = 'Are you sure you want to delete?';
+											</script>
+										</span>
+										<span>
+											<f:if condition="{news.hidden} == 1">
+												<f:then>
+													<f:link.action action="showNews" arguments="{news: news}" class="show-hide-item show-news tooltip-demo" rel="tooltip" title="Show"><i class="icon-eye-open"></i> <f:translate id="lelesys.plugin.news.show"></f:translate></f:link.action>
+													<f:form action="showNews" name="showItem" id="showHideItem" style="display: none;">
+														<f:form.hidden value="Show" />
+													</f:form>
+												</f:then>
+												<f:else>
+													<f:link.action action="hideNews" arguments="{news: news}" class="show-hide-item hide-news tooltip-demo" rel="tooltip" title="Hide"><i class="icon-eye-close"></i> <f:translate id="lelesys.plugin.news.hide"></f:translate></f:link.action>
+													<f:form action="hideNews" name="hideItem" id="showHideItem" style="display: none;">
+														<f:form.hidden value="Hide" />
+													</f:form>
+												</f:else>
+											</f:if>
+										</span>
 									</div>
 								</f:then>
 								<f:else>
-									<hr/>
+									<f:if condition="{news.hidden} != 1">
+										<f:then>
+											<f:render partial="NewsList" arguments="{news: news, assetsForNews: assetsForNews}" />
+											<ul class="news-social-bookmark">
+												<li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={baseUri}<f:uri.action action="show" arguments="{news: news}"></f:uri.action>"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/social-facebook-box-blue-icon.png')}" alt="social-facebook-box-blue-icon.png"  width="22"/></a></li>
+												<li><a target="_blank" href="https://twitter.com/share?url={baseUri}<f:uri.action action="show" arguments="{news: news}"></f:uri.action>"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/social-twitter-box-blue-icon.png')}" alt="social-twitter-box-blue-icon.png" width="22" /></a></li>
+												<li><a target="_blank" href="http://www.linkedin.com/shareArticle?mini=false&amp;url={baseUri}<f:uri.action action="show" arguments="{news: news}"></f:uri.action>"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/social-linkedin-box-blue-icon.png')}" alt="social-linkedin-box-blue-icon.png" width="22" /></a></li>
+												<li><a target="_blank" href="https://plus.google.com/share?url={baseUri}<f:uri.action action="show" arguments="{news: news}"></f:uri.action>"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/Google-plus-icon.png')}" alt="Google-plus-icon.png" width="22" /></a></li>
+												<li><a target="_blank" href="http://digg.com/submit?&amp;url={baseUri}<f:uri.action action="show" arguments="{news: news}"></f:uri.action>"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/social-digg-box-white-icon.png')}" alt="social-digg-box-white-icon.png" width="22" /></a></li>
+											</ul>
+											<f:if condition="{news.avgRatings} == 1">
+												<div class="rate rate1"></div>
+											</f:if>
+											<f:if condition="{news.avgRatings} == 2">
+												<div class="rate rate2"></div>
+											</f:if>
+											<f:if condition="{news.avgRatings} == 3">
+												<div class="rate rate3"></div>
+											</f:if>
+											<f:if condition="{news.avgRatings} == 4">
+												<div class="rate rate4"></div>
+											</f:if>
+											<f:if condition="{news.avgRatings} == 5">
+												<div class="rate rate5"></div>
+											</f:if>
+											<f:if condition="{news.avgRatings} == 0">
+												<div class="rate"></div>
+											</f:if>
+											<f:if condition="{news.authorName}">
+												<f:then>
+													<div class="news_footer">
+														<span class="date">author name: &nbsp;{news.authorName}</span>
+													</div>
+												</f:then>
+												<f:else>
+													<hr/>
+												</f:else>
+											</f:if>
+										</f:then>
+									</f:if>
 								</f:else>
-							</f:if>
+							</f:security.ifHasRole>
 						</div>
 					</f:for>
 				</f:widget.paginate>
 			</f:then>
 			<f:else>
 				<div class="clearfix"></div>
-				<p>No news created yet.</p>
+				<p><f:translate id="lelesys.plugin.news.noNewsCreatedYet"></f:translate></p>
 			</f:else>
 		</f:if>
 	</div>

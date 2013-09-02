@@ -39,26 +39,14 @@ class CategoryController extends AbstractNewsController {
 	 * @return void
 	 */
 	public function indexAction() {
-		$this->view->assign('categories', $this->categoryService->listAll());
-	}
-
-	/**
-	 * Shows a list of categories
-	 *
-	 * @return void
-	 */
-	public function adminListAction() {
-		$this->view->assign('categories', $this->categoryService->AdminCategoryList());
-	}
-
-	/**
-	 * Shows news list By Category
-	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\Category $category The category to show
-	 * @return void
-	 */
-	public function showAction(\Lelesys\Plugin\News\Domain\Model\Category $category) {
-		$this->view->assign('categoryNews', $this->categoryService->getNewsByCategory($category));
+		$pluginArguments = $this->request->getPluginArguments();
+		if (isset($pluginArguments['itemsPerPage'])) {
+			$itemsPerPage = (int) $pluginArguments['itemsPerPage'];
+		} else {
+			$itemsPerPage = '';
+		}
+		$this->view->assign('itemsPerPage', $itemsPerPage);
+		$this->view->assign('categories', $this->categoryService->listAll($pluginArguments));
 	}
 
 	/**
@@ -68,7 +56,7 @@ class CategoryController extends AbstractNewsController {
 	 */
 	public function newAction() {
 		$this->view->assign('folders', $this->folderService->listAll());
-		$this->view->assign('newsParentCategory', $this->categoryService->listAll());
+		$this->view->assign('newsParentCategory', $this->categoryService->getEnabledLatestCategories());
 	}
 
 	/**
@@ -81,8 +69,8 @@ class CategoryController extends AbstractNewsController {
 		try {
 			$this->categoryService->create($newCategory);
 			$this->addFlashMessage('Created a new category.', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
-			$this->redirect('adminList');
-		} catch (Lelesys\NeoNews\Domain\Service\Exception $exception) {
+			$this->redirect('index');
+		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
 			$this->addFlashMessage('Cannot create category at this time!!.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
@@ -109,8 +97,8 @@ class CategoryController extends AbstractNewsController {
 		try {
 			$this->categoryService->update($category);
 			$this->addFlashMessage('Updated the category.', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
-			$this->redirect('adminList');
-		} catch (Lelesys\NeoNews\Domain\Service\Exception $exception) {
+			$this->redirect('index');
+		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
 			$this->addFlashMessage('Cannot update category at this time!!.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
@@ -125,8 +113,8 @@ class CategoryController extends AbstractNewsController {
 		try {
 			$this->categoryService->delete($category);
 			$this->addFlashMessage('Deleted a category.', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
-			$this->redirect('adminList');
-		} catch (Lelesys\NeoNews\Domain\Service\Exception $exception) {
+			$this->redirect('index');
+		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
 			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
@@ -141,8 +129,8 @@ class CategoryController extends AbstractNewsController {
 		try {
 			$this->categoryService->hideCategory($category);
 			$this->addFlashMessage('Category is Hidden', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
-			$this->redirect('adminList');
-		} catch (Lelesys\NeoNews\Domain\Service\Exception $exception) {
+			$this->redirect('index');
+		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
 			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
@@ -157,8 +145,8 @@ class CategoryController extends AbstractNewsController {
 		try {
 			$this->categoryService->showCategory($category);
 			$this->addFlashMessage('Category is Visible', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
-			$this->redirect('adminList');
-		} catch (Lelesys\NeoNews\Domain\Service\Exception $exception) {
+			$this->redirect('index');
+		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
 			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}

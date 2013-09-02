@@ -25,14 +25,6 @@ class FolderController extends \TYPO3\Neos\Controller\Module\AbstractModuleContr
 	}
 
 	/**
-	 * @param \Lelesys\Plugin\News\Domain\Model\Folder $folder
-	 * @return void
-	 */
-	public function showAction(\Lelesys\Plugin\News\Domain\Model\Folder $folder) {
-		$this->view->assign('folder', $folder);
-	}
-
-	/**
 	 * @return void
 	 */
 	public function newAction() {

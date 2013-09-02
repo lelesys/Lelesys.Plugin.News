@@ -57,7 +57,7 @@ class AssetService {
 	/**
 	 * Shows a list of assets
 	 *
-	 * @return \Lelesys\Plugin\News\Domain\Model\Asset
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function listAll() {
 		return $this->assetRepository->findAll();
@@ -71,6 +71,7 @@ class AssetService {
 	 */
 	public function create(\Lelesys\Plugin\News\Domain\Model\Asset $newAsset) {
 		$this->assetRepository->add($newAsset);
+		$this->emitAssetCreated($newAsset);
 	}
 
 	/**
@@ -81,6 +82,7 @@ class AssetService {
 	 */
 	public function update(\Lelesys\Plugin\News\Domain\Model\Asset $asset) {
 		$this->assetRepository->update($asset);
+		$this->emitAssetUpdated($asset);
 	}
 
 	/**
@@ -91,13 +93,14 @@ class AssetService {
 	 */
 	public function delete(\Lelesys\Plugin\News\Domain\Model\Asset $asset) {
 		$this->assetRepository->remove($asset);
+		$this->emitAssetDeleted($asset);
 	}
 
 	/**
 	 * return asset for given identifier
 	 *
 	 * @param string $identifier
-	 * @return \Lelesys\Plugin\News\Domain\Model\Asset $asset
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function findById($identifier) {
 		$asset = $this->assetRepository->findByIdentifier($identifier);
@@ -233,6 +236,39 @@ class AssetService {
 		$height = $fileDimensions[1];
 		$aspectedWidth = ceil($aspectedHeight * $width) / $height;
 		return $aspectedWidth;
+	}
+
+	/**
+	 * Signal for Asset created
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Asset $asset The Asset
+	 * @Flow\Signal
+	 * @return void
+	 */
+	protected function emitAssetCreated(\Lelesys\Plugin\News\Domain\Model\Asset $asset) {
+
+	}
+
+	/**
+	 * Signal for Asset updated
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Asset $asset The Asset
+	 * @Flow\Signal
+	 * @return void
+	 */
+	protected function emitAssetUpdated(\Lelesys\Plugin\News\Domain\Model\Asset $asset) {
+
+	}
+
+	/**
+	 * Signal for Asset deleted
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Asset $asset The Asset
+	 * @Flow\Signal
+	 * @return void
+	 */
+	protected function emitAssetDeleted(\Lelesys\Plugin\News\Domain\Model\Asset $asset) {
+
 	}
 
 }

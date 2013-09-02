@@ -45,3 +45,4 @@ class Month extends FunctionNode {
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
 }
+?>

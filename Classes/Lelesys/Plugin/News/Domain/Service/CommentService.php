@@ -29,10 +29,10 @@ class CommentService {
 	/**
 	 * Shows a list of comments
 	 *
-	 * @return \Lelesys\Plugin\News\Domain\Model\Comment
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function listAll() {
-		return $this->commentRepository->getCommentEntries();
+		return $this->commentRepository->findAll();
 	}
 
 	/**
@@ -45,6 +45,7 @@ class CommentService {
 	public function create(\Lelesys\Plugin\News\Domain\Model\Comment $newComment, \Lelesys\Plugin\News\Domain\Model\News $news) {
 		$newComment->setNews($news);
 		$this->commentRepository->add($newComment);
+		$this->emitCommentCreated($newComment);
 	}
 
 	/**
@@ -55,13 +56,14 @@ class CommentService {
 	 */
 	public function delete(\Lelesys\Plugin\News\Domain\Model\Comment $comment) {
 		$this->commentRepository->remove($comment);
+		$this->emitCommentDeleted($comment);
 	}
 
 	/**
 	 * return asset for given identifier
 	 *
 	 * @param string $identifier
-	 * @return \Lelesys\Plugin\News\Domain\Model\Comment
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function findById($identifier) {
 		$comment = $this->commentRepository->findByIdentifier($identifier);
@@ -88,6 +90,28 @@ class CommentService {
 	public function publishComment(\Lelesys\Plugin\News\Domain\Model\Comment $comment) {
 		$comment->setSetHidden(0);
 		$this->commentRepository->update($comment);
+	}
+
+	/**
+	 * Signal for Comment created
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Comment $comment The Comment
+	 * @Flow\Signal
+	 * @return void
+	 */
+	protected function emitCommentCreated(\Lelesys\Plugin\News\Domain\Model\Comment $comment) {
+
+	}
+
+	/**
+	 * Signal for Comment deleted
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Comment $comment The Comment
+	 * @Flow\Signal
+	 * @return void
+	 */
+	protected function emitCommentDeleted(\Lelesys\Plugin\News\Domain\Model\Comment $comment) {
+
 	}
 
 }

@@ -1,0 +1,25 @@
+<f:layout name="Default" />
+
+<f:section name="Title">A list of ratings</f:section>
+
+<f:section name="Content">
+	<f:if condition="{ratings}">
+		<f:then>
+			<ul>
+				<f:for each="{ratings}" as="rating">
+					<li>
+						<f:link.action action="show" arguments="{rating: rating}">{rating.name}</f:link.action>
+						<f:link.action action="edit" arguments="{rating: rating}">Edit</f:link.action>
+						<f:form action="delete" arguments="{rating: rating}">
+							<f:form.submit value="Delete" />
+						</f:form>
+					</li>
+				</f:for>
+			</ul>
+		</f:then>
+		<f:else>
+			<p>No ratings created yet.</p>
+		</f:else>
+	</f:if>
+	<p><f:link.action action="new">Create a new rating</f:link.action></p>
+</f:section>

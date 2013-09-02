@@ -2,7 +2,7 @@
 
 namespace Lelesys\Plugin\News\Domain\Service;
 
-/*                                                                         *
+/* *
  * This script belongs to the package "Lelesys.Plugin.News".               *
  *                                                                         *
  * It is free software; you can redistribute it and/or modify it under     *
@@ -33,21 +33,22 @@ class CategoryService {
 	protected $persistenceManager;
 
 	/**
-	 * Shows a list of categories
+	 * Shows a list of categories for admin
 	 *
-	 * @return \Lelesys\Plugin\News\Domain\Model\Category
+	 * @param array $pluginArguments Plugin arguments
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
-	public function listAll() {
-		return $this->categoryRepository->getEnabledLatestCategories();
+	public function listAll($pluginArguments = NULL) {
+		return $this->categoryRepository->listAll($pluginArguments);
 	}
 
 	/**
 	 * Shows a list of categories for admin
 	 *
-	 * @return \Lelesys\Plugin\News\Domain\Model\Category
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
-	public function AdminCategoryList() {
-		return $this->categoryRepository->findAll();
+	public function getEnabledLatestCategories() {
+		return $this->categoryRepository->getEnabledLatestCategories();
 	}
 
 	/**
@@ -59,12 +60,11 @@ class CategoryService {
 	public function getNewsByCategory(\Lelesys\Plugin\News\Domain\Model\Category $category) {
 		$enabledNews = array();
 		foreach ($category->getNews() as $news) {
-			if($news->getHidden() !== TRUE) {
+			if ($news->getHidden() !== TRUE) {
 				$enabledNews[] = $news;
 			}
 		}
 		return $enabledNews;
-
 	}
 
 	/**
@@ -78,6 +78,7 @@ class CategoryService {
 		$newCategory->setUpdatedDate(new \DateTime());
 		$newCategory->setHidden(0);
 		$this->categoryRepository->add($newCategory);
+		$this->emitCategoryCreated($newCategory);
 	}
 
 	/**
@@ -89,6 +90,7 @@ class CategoryService {
 	public function update(\Lelesys\Plugin\News\Domain\Model\Category $category) {
 		$category->setUpdatedDate(new \DateTime());
 		$this->categoryRepository->update($category);
+		$this->emitCategoryUpdated($category);
 	}
 
 	/**
@@ -105,6 +107,7 @@ class CategoryService {
 			}
 		}
 		$this->categoryRepository->remove($category);
+		$this->emitCategoryDeleted($category);
 	}
 
 	/**
@@ -114,7 +117,7 @@ class CategoryService {
 	 * @return array $listCategory
 	 */
 	public function listParentCategory(\Lelesys\Plugin\News\Domain\Model\Category $category) {
-		$allCategory = $this->listAll();
+		$allCategory = $this->getEnabledLatestCategories();
 		$listCategory = array();
 		$children = array();
 		foreach ($category->getChildren() as $child) {
@@ -161,6 +164,39 @@ class CategoryService {
 	 */
 	public function checkTitle($title) {
 		return $this->categoryRepository->findOneByTitle(trim($title));
+	}
+
+	/**
+	 * Signal for category created
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Category $category The Category
+	 * @Flow\Signal
+	 * @return void
+	 */
+	protected function emitCategoryCreated(\Lelesys\Plugin\News\Domain\Model\Category $category) {
+
+	}
+
+	/**
+	 * Signal for category updated
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Category $category The Category
+	 * @Flow\Signal
+	 * @return void
+	 */
+	protected function emitCategoryUpdated(\Lelesys\Plugin\News\Domain\Model\Category $category) {
+
+	}
+
+	/**
+	 * Signal for category deleted
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Category $category The Category
+	 * @Flow\Signal
+	 * @return void
+	 */
+	protected function emitCategoryDeleted(\Lelesys\Plugin\News\Domain\Model\Category $category) {
+
 	}
 
 }

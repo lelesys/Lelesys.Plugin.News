@@ -5,23 +5,23 @@
 <f:section name="Content">
 	<div class="news-list-container container-fluid">
 		<div class="span9 horizontal">
-			<h2>Archive</h2>
+			<h2><f:translate id="lelesys.plugin.news.archive"></f:translate></h2>
 		</div>
-		<f:if condition="{archiveView}">
-			<f:then>
-				<div class="clearfix">
-				<div class="span9 clearfix">
-					<f:for each="{archiveView}" as="archiveYearDate" key="year">
-						<ul><b>{year}</b>
-							<f:for each="{archiveYearDate}" as="newsCount" key="month">
-								<li><f:link.action action="showArchiveNews" arguments="{year:year, month: month}">{month}</f:link.action> &nbsp;&nbsp;({newsCount})</li>
-							</f:for>
-						</ul>
-					</f:for>
-				</div>
-				</div>
-			</f:then>
-		</f:if>
+		<div class="clearfix">
+			<div class="span9 clearfix">
+				<f:if condition="{archiveView}">
+					<f:then>
+						<f:for each="{archiveView}" as="archiveYearDate" key="year">
+							<ul><b>{year}</b>
+								<f:for each="{archiveYearDate}" as="newsCount" key="month">
+									<li><f:link.action action="index" controller="news" arguments="{year:year, month: month}">{month-> f:format.date(format: 'F')}</f:link.action> &nbsp;&nbsp;({newsCount})</li>
+								</f:for>
+							</ul>
+						</f:for>
+					</f:then>
+					<f:else>No news created yet !!!</f:else>
+				</f:if>
+			</div>
+		</div>
 	</div>
-
 </f:section>

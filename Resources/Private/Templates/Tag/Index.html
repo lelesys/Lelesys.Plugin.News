@@ -4,24 +4,24 @@
 
 <f:section name="Content">
 	<div id="sub-nav" class="span7">
-		<h2>Tag List</h2>
+		<h2><f:translate id="lelesys.plugin.news.tagList"></f:translate></h2>
 		<f:render partial="FlashMessage" arguments="{severityName: flashmessage}" />
 	</div>
 	<div>
 		<f:if condition="{tags}">
 			<f:then>
 				<div class="span7">
-					<f:widget.paginate objects="{tags}" as="tagsPagination" configuration="{itemsPerPage: 5}">
+					<f:widget.paginate objects="{tags}" as="tagsPagination" configuration="{f:if(condition:'{itemsPerPage}', then: {itemsPerPage: itemsPerPage}, else: {itemsPerPage: 10})}">
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr>
-									<th>Tag name</th>
+									<th><f:translate id="lelesys.plugin.news.tagName"></f:translate></th>
 								</tr>
 							</thead>
 							<tbody>
 							<f:for each="{tagsPagination}" as="tag">
 								<tr>
-									<td><f:link.action action="show" arguments="{tag: tag}">{tag.title}</f:link.action></td>
+									<td><f:link.action action="index" controller="news" arguments="{tag: tag.uuid}">{tag.title}</f:link.action></td>
 								</tr>
 							</f:for>
 							</tbody>
@@ -31,7 +31,7 @@
 			</f:then>
 			<f:else>
 				<div class="clearfix"></div>
-				<p>No tags created yet.</p>
+				<p><f:translate id="lelesys.plugin.news.noTag"></f:translate></p>
 			</f:else>
 		</f:if>
 	</div>

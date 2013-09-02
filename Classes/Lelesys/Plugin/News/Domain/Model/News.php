@@ -121,14 +121,14 @@ class News {
 
 	/**
 	 * The assets
-	 * @var \Doctrine\Common\Collections\Collection<Lelesys\Plugin\News\Domain\Model\Asset>
+	 * @var \Doctrine\Common\Collections\Collection<\TYPO3\Media\Domain\Model\Image>
 	 * @ORM\ManyToMany
 	 */
 	protected $assets;
 
 	/**
 	 * The files
-	 * @var \Doctrine\Common\Collections\Collection<Lelesys\Plugin\News\Domain\Model\File>
+	 * @var \Doctrine\Common\Collections\Collection<\TYPO3\Media\Domain\Model\Document>
 	 * @ORM\ManyToMany
 	 */
 	protected $files;
@@ -143,6 +143,7 @@ class News {
 	/**
 	 * The end date
 	 * @var \DateTime
+	 * @ORM\Column(nullable=true)
 	 */
 	protected $endDate;
 
@@ -163,6 +164,7 @@ class News {
 	/**
 	 * The updated date
 	 * @var \DateTime
+	 * @ORM\Column(nullable=true)
 	 */
 	protected $updatedDate;
 
@@ -181,6 +183,20 @@ class News {
 	 */
 	protected $folder;
 
+	/**
+	 * The start date
+	 * @var \DateTime
+	 * @ORM\Column(nullable=true)
+	 */
+	protected $startDate;
+
+	/**
+	 * The ratings
+	 * @var \Doctrine\Common\Collections\Collection<Lelesys\Plugin\News\Domain\Model\Rating>
+	 * @ORM\OneToMany(mappedBy="news", cascade={"persist", "detach"})
+	 */
+	protected $ratings;
+
 	public function __construct() {
 		$this->relatedNews = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->relatedLinks = new \Doctrine\Common\Collections\ArrayCollection();
@@ -192,9 +208,6 @@ class News {
 		$this->setCreatedDate(new \DateTime());
 		$this->setHidden(0);
 		$this->setDeleted(0);
-		$this->setUpdatedDate(new \DateTime());
-		$this->setDateTime(new \DateTime());
-		$this->setEndDate(new \DateTime());
 		$this->setIsTopNews(0);
 	}
 
@@ -525,20 +538,20 @@ class News {
 	/**
 	 * Adds a News's assets
 	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\Asset $asset
+	 * @param \TYPO3\Media\Domain\Model\Image $asset
 	 * @return void
 	 */
-	public function addAssets(\Lelesys\Plugin\News\Domain\Model\Asset $asset) {
+	public function addAssets(\TYPO3\Media\Domain\Model\Image $asset) {
 		$this->assets->add($asset);
 	}
 
 	/**
 	 * Removes a News's assets
 	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\Asset $asset
+	 * @param \TYPO3\Media\Domain\Model\Image $asset
 	 * @return void
 	 */
-	public function removeAssets(\Lelesys\Plugin\News\Domain\Model\Asset $asset) {
+	public function removeAssets(\TYPO3\Media\Domain\Model\Image $asset) {
 		$this->assets->removeElement($asset);
 	}
 
@@ -564,20 +577,20 @@ class News {
 	/**
 	 * Adds a News's files
 	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\File $file
+	 * @param \TYPO3\Media\Domain\Model\Document $file
 	 * @return void
 	 */
-	public function addFiles(\Lelesys\Plugin\News\Domain\Model\File $file) {
+	public function addFiles(\TYPO3\Media\Domain\Model\Document $file) {
 		$this->files->add($file);
 	}
 
 	/**
 	 * Removes a News's files
 	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\File $asset
+	 * @param \TYPO3\Media\Domain\Model\Document $asset
 	 * @return void
 	 */
-	public function removeFiles(\Lelesys\Plugin\News\Domain\Model\File $file) {
+	public function removeFiles(\TYPO3\Media\Domain\Model\Document $file) {
 		$this->files->removeElement($file);
 	}
 
@@ -697,6 +710,25 @@ class News {
 	}
 
 	/**
+	 * Get the News's start date
+	 *
+	 * @return \DateTime The News's start date
+	 */
+	public function getStartDate() {
+		return $this->startDate;
+	}
+
+	/**
+	 * Sets this News's start date
+	 *
+	 * @param \DateTime $startDate The News's start date
+	 * @return void
+	 */
+	public function setStartDate($startDate) {
+		$this->startDate = $startDate;
+	}
+
+	/**
 	 * Get the News's comments
 	 *
 	 * @return \Doctrine\Common\Collections\Collection The News's comments
@@ -735,12 +767,49 @@ class News {
 	}
 
 	/**
+	 * Get the News ratings
+	 *
+	 * @return \Doctrine\Common\Collections\Collection The News ratings
+	 */
+	public function getRatings() {
+		return $this->ratings;
+	}
+
+	/**
+	 * Sets this News ratings
+	 *
+	 * @param \Doctrine\Common\Collections\Collection $ratings The News ratings
+	 * @return void
+	 */
+	public function setRatings(\Doctrine\Common\Collections\Collection $ratings) {
+		$this->ratings = $ratings;
+	}
+
+	/**
 	 * Returns uuid of this object
 	 *
 	 * @return string
 	 */
 	public function getUuid() {
 		return $this->Persistence_Object_Identifier;
+	}
+
+	/**
+	 * Returns the ratings
+	 *
+	 * @return integer $avgRating
+	 */
+	public function getAvgRatings() {
+		$avgRating = 0;
+		$totalPoints = 0;
+		$ratings = $this->getRatings();
+		if (count($ratings) !== 0) {
+			foreach ($ratings as $rating) {
+				$totalPoints = $totalPoints + $rating->getPoints();
+			}
+			$avgRating = round($totalPoints / count($ratings));
+		}
+		return $avgRating;
 	}
 
 }

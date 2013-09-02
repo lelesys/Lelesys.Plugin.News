@@ -5,59 +5,72 @@
 <f:section name="Content">
 	<div class="news-list-container container-fluid">
 		<div class="horizontal">
-			<h2>Latest News</h2>
+			<h2><f:translate id="lelesys.plugin.news.latestNews"></f:translate></h2>
+			<f:security.ifAccess resource="TYPO3_Neos_Backend_BackendController">
+				<f:then>
+					<f:if condition="{categories}">
+						<f:then>
+							<f:form action="latestNews" controller="News" name="newsBySelection" id="newsBySelection">
+								<f:form.select options="{categories}" optionLabelField="title" value="{categoryId}" property="category" prependOptionLabel="Select category" id="category" name="category"  />
+								<f:form.select options="{folders}" optionLabelField="title" value="{folderId}" property="folder" prependOptionLabel="Select folder" id="folder" name="folder"  />
+								<f:form.submit class="btn" value="Update"/>
+							</f:form>
+						</f:then>
+					</f:if>
+				</f:then>
+			</f:security.ifAccess>
 			<f:render partial="FlashMessage" arguments="{severityName: flashmessage}" />
 		</div>
 		<f:if condition="{allNews}">
 			<f:then>
 				<f:for each="{allNews}" as="news">
 					<div class="clearfix">
-						<div class="clearfix">
-							<div class="title-link">
-								<f:link.action action="show" arguments="{news: news}">{news.title}</f:link.action>
-								<p class="date">Published on {news.dateTime -> f:format.date(format: 'j M y, h:i A')}</p>
-							</div>
-							<article>
-								<f:if condition="{assetsForNews}">
+						<f:if condition="{news.hidden} != 1">
+							<f:then>
+								<f:render partial="NewsList" arguments="{news: news, assetsForNews: assetsForNews}" />
+								<ul class="news-social-bookmark">
+									<li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={baseUri}<f:uri.action action="show" arguments="{news: news}"></f:uri.action>"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/social-facebook-box-blue-icon.png')}" alt="social-facebook-box-blue-icon.png"  width="22"/></a></li>
+									<li><a target="_blank" href="https://twitter.com/share?url={baseUri}<f:uri.action action="show" arguments="{news: news}"></f:uri.action>"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/social-twitter-box-blue-icon.png')}" alt="social-twitter-box-blue-icon.png" width="22" /></a></li>
+									<li><a target="_blank" href="http://www.linkedin.com/shareArticle?mini=false&amp;url={baseUri}<f:uri.action action="show" arguments="{news: news}"></f:uri.action>"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/social-linkedin-box-blue-icon.png')}" alt="social-linkedin-box-blue-icon.png" width="22" /></a></li>
+									<li><a target="_blank" href="https://plus.google.com/share?url={baseUri}<f:uri.action action="show" arguments="{news: news}"></f:uri.action>"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/Google-plus-icon.png')}" alt="Google-plus-icon.png" width="22" /></a></li>
+									<li><a target="_blank" href="http://digg.com/submit?&amp;url={baseUri}<f:uri.action action="show" arguments="{news: news}"></f:uri.action>"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/social-digg-box-white-icon.png')}" alt="social-digg-box-white-icon.png" width="22" /></a></li>
+								</ul>
+								<f:if condition="{news.avgRatings} == 1">
+									<div class="rate rate1"></div>
+								</f:if>
+								<f:if condition="{news.avgRatings} == 2">
+									<div class="rate rate2"></div>
+								</f:if>
+								<f:if condition="{news.avgRatings} == 3">
+									<div class="rate rate3"></div>
+								</f:if>
+								<f:if condition="{news.avgRatings} == 4">
+									<div class="rate rate4"></div>
+								</f:if>
+								<f:if condition="{news.avgRatings} == 5">
+									<div class="rate rate5"></div>
+								</f:if>
+								<f:if condition="{news.avgRatings} == 0">
+									<div class="rate"></div>
+								</f:if>
+								<f:if condition="{news.authorName}">
 									<f:then>
-										<f:for each="{assetsForNews}" as="assets" key="newsId">
-											<f:if condition="{newsId} == {news.uuid}">
-												<div class="asset-img">
-													<f:for each="{assets}" as="asset" iteration="fooIterator">
-														{f:if(condition: fooIterator.isLast, then: '<img src="{f:uri.resource(resource: asset.originalResource)}" class="thumbnail" alt="image" width="100" />')}
-													</f:for>
-												</div>
-											</f:if>
-										</f:for>
+										<div class="news_footer">
+											<span class="date">author name: &nbsp;{news.authorName}</span>
+										</div>
 									</f:then>
 									<f:else>
-										<div class="asset-img">
-											<img src="{f:uri.resource(path:'images/no_photo.jpg')}" alt="image" width="100" />
-										</div>
+										<hr/>
 									</f:else>
 								</f:if>
-								<div>
-									<p>{news.subTitle}</p>
-									<p class="date"><f:link.action action="show" arguments="{news: news}">read more</f:link.action></p>
-								</div>
-							</article>
-						</div>
-						<f:if condition="{news.authorName}">
-							<f:then>
-								<div class="news_footer">
-									<span class="date">author name: &nbsp;{news.authorName}</span>
-								</div>
 							</f:then>
-							<f:else>
-								<hr/>
-							</f:else>
 						</f:if>
 					</div>
 				</f:for>
 			</f:then>
 			<f:else>
 				<div class="clearfix"></div>
-				<p>No news created yet.</p>
+				<p><f:translate id="lelesys.plugin.news.noNewsCreatedYet"></f:translate></p>
 			</f:else>
 		</f:if>
 	</div>

@@ -9,8 +9,8 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<th>Title</th>
-								<th>Published On</th>
+								<th><f:translate id="lelesys.plugin.news.title"></f:translate></th>
+								<th><f:translate id="lelesys.plugin.news.publishedOn"></f:translate></th>
 							</tr>
 						</thead>
 						<f:for each="{newsPagination}" as="news">
@@ -21,7 +21,7 @@
 									<f:for each="{assetsForNews}" as="assets" key="newsId">
 										<f:if condition="{newsId} == {news.uuid}">
 											<f:for each="{assets}" as="asset" iteration="fooIterator">
-												{f:if(condition: fooIterator.isLast, then: '<img src="{f:uri.resource(resource: asset.originalResource)}" alt="image" width="50" />')}
+												{f:if(condition: fooIterator.isLast, then: '<img src="{f:uri.resource(resource: asset.resource)}" alt="image" width="50" />')}
 											</f:for>
 										</f:if>
 									</f:for>
@@ -48,7 +48,7 @@
 										<f:form.hidden value="DELETE" />
 									</f:form>
 									<script>
-										var deleteMessage = 'Are you sure you want to delete?';
+										var deleteMessage = '<f:translate id="lelesys.plugin.news.confirmDelete"></f:translate>';
 									</script>
 									<f:if condition="{news.hidden} == 1">
 										<f:then>
@@ -72,7 +72,7 @@
 				</f:widget.paginate>
 			</f:then>
 			<f:else>
-				<p>No news created yet.</p>
+				<p><f:translate id="lelesys.plugin.news.noNewsCreatedYet"></f:translate></p>
 			</f:else>
 		</f:if>
 
@@ -81,7 +81,7 @@
 		<div class="pull-right">
 			<f:link.action action="new" class="btn neos-button btn-primary" title="Create news">
 				<i class="icon-user icon-white"></i>
-				Create News
+				<f:translate id="lelesys.plugin.news.createNews"></f:translate>
 			</f:link.action>
 		</div>
 	</div>

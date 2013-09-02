@@ -4,10 +4,10 @@
 
 <f:section name="Content">
 	<div class="main-container">
-		<h2>Add Tag</h2>
+		<h2><f:translate id="lelesys.plugin.news.addTag"></f:translate></h2>
 		<f:form action="create" name="newTag" >
 			<div class="control-group">
-				<label for="title">Title</label>
+				<label for="title"><f:translate id="lelesys.plugin.news.title"></f:translate></label>
 				<div class="controls">
 					<f:form.textfield property="title" id="title" class="span3 tagTitle"/>
 					<f:render partial="FormErrors" arguments="{for: 'newTag.title'}" />
@@ -15,7 +15,7 @@
 			</div>
 			<div class="control-group">
 				<div class="controls">
-					<f:form.submit class="btn create-tag" value="Create"/>
+					<f:form.submit class="btn create-tag" value='<f:translate id="lelesys.plugin.news.create"></f:translate>'/>
 				</div>
 			</div>
 		</f:form>

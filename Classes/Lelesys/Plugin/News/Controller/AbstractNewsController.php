@@ -2,7 +2,7 @@
 
 namespace Lelesys\Plugin\News\Controller;
 
-/*                                                                         *
+/* *
  * This script belongs to the package "Lelesys.Plugin.News".               *
  *                                                                         *
  * It is free software; you can redistribute it and/or modify it under     *
@@ -45,13 +45,26 @@ abstract class AbstractNewsController extends ActionController {
 	 * @api
 	 */
 	protected function initializeView(\TYPO3\Flow\Mvc\View\ViewInterface $view) {
+		$pluginArguments = $this->request->getPluginArguments();
 		// set the template paths from the Settings
 		// so that it can be changed per project
 		// do this only if it is a TemplateView to avoid FATAL errors
 		if ($view instanceof \TYPO3\Fluid\View\TemplateView) {
-			$view->setTemplateRootPath($this->settings['templateRootPath']);
-			$view->setPartialRootPath($this->settings['partialRootPath']);
-			$view->setLayoutRootPath($this->settings['layoutRootPath']);
+			if (!empty($pluginArguments['templatePath'])) {
+				$view->setTemplatePathAndFilename($pluginArguments['templatePath']);
+			} else {
+				$view->setTemplateRootPath($this->settings['templateRootPath']);
+			}
+			if (!empty($pluginArguments['partialRootPath'])) {
+				$view->setPartialRootPath($pluginArguments['partialRootPath']);
+			} else {
+				$view->setPartialRootPath($this->settings['partialRootPath']);
+			}
+			if (!empty($pluginArguments['layoutRootPath'])) {
+				$view->setLayoutRootPath($pluginArguments['layoutRootPath']);
+			} else {
+				$view->setLayoutRootPath($this->settings['layoutRootPath']);
+			}
 		}
 	}
 

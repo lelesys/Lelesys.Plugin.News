@@ -19,10 +19,13 @@ class FolderService {
 	protected $folderRepository;
 
 	/**
-	 * @return void
+	 * List of folders
+	 *
+	 * @param array $pluginArguments Plugin arguments
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
-	public function listAll() {
-		return $this->folderRepository->findAll();
+	public function listAll($pluginArguments = NULL) {
+		return $this->folderRepository->listAll($pluginArguments);
 	}
 
 	/**
@@ -31,6 +34,7 @@ class FolderService {
 	 */
 	public function add(\Lelesys\Plugin\News\Domain\Model\Folder $newFolder) {
 		$this->folderRepository->add($newFolder);
+		$this->emitFolderCreated($newFolder);
 	}
 
 	/**
@@ -39,6 +43,7 @@ class FolderService {
 	 */
 	public function update(\Lelesys\Plugin\News\Domain\Model\Folder $folder) {
 		$this->folderRepository->update($folder);
+		$this->emitFolderUpdated($folder);
 	}
 
 	/**
@@ -47,16 +52,50 @@ class FolderService {
 	 */
 	public function delete(\Lelesys\Plugin\News\Domain\Model\Folder $folder) {
 		$this->folderRepository->remove($folder);
+		$this->emitFolderDeleted($folder);
 	}
 
 	/**
 	 * return folder for given identifier
 	 *
 	 * @param string $identifier
-	 * @return \Lelesys\Plugin\News\Domain\Model\Folder
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function findById($identifier) {
 		return $this->folderRepository->findByIdentifier($identifier);
+	}
+
+	/**
+	 * Signal for Folder created
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Folder $folder The Folder
+	 * @Flow\Signal
+	 * @return void
+	 */
+	protected function emitFolderCreated(\Lelesys\Plugin\News\Domain\Model\Folder $folder) {
+
+	}
+
+	/**
+	 * Signal for Folder updated
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Folder $folder The Folder
+	 * @Flow\Signal
+	 * @return void
+	 */
+	protected function emitFolderUpdated(\Lelesys\Plugin\News\Domain\Model\Folder $folder) {
+
+	}
+
+	/**
+	 * Signal for Folder deleted
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Folder $folder The Folder
+	 * @Flow\Signal
+	 * @return void
+	 */
+	protected function emitFolderDeleted(\Lelesys\Plugin\News\Domain\Model\Folder $folder) {
+
 	}
 
 }

@@ -47,6 +47,8 @@ class Category {
 	 */
 	public function __construct() {
 		$this->children = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->setCreateDate(new \DateTime());
+		$this->setUpdatedDate(new \DateTime());
 	}
 
 	/**

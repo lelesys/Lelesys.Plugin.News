@@ -4,37 +4,13 @@
 
 <f:section name="Content">
 	<div class="news-list-container container-fluid">
-		<h2>Search Results</h2>
+		<h2><f:translate id="lelesys.plugin.news.searchResults"></f:translate></h2>
 		<f:if condition="{newsSearched}">
 			<f:then>
-				<f:widget.paginate objects="{newsSearched}" as="searchPagination" configuration="{itemsPerPage: 5}">
+				<f:widget.paginate objects="{newsSearched}" as="searchPagination" configuration="{f:if(condition:'{itemsPerPage}', then: {itemsPerPage: itemsPerPage}, else: {itemsPerPage: 10})}">
 					<f:for each="{searchPagination}" as="news">
 						<div class="clearfix">
-							<div class="clearfix">
-								<div class="title-link">
-									<f:link.action action="show" arguments="{news: news}">{news.title}</f:link.action>
-									<p class="date">Published on {news.dateTime -> f:format.date(format: 'j M y, h:i A')}</p>
-								</div>
-								<article>
-									<f:if condition="{news.assets}">
-										<f:then>
-											<div class="asset-img">
-												<f:for each="{news.assets}" as="asset" iteration="fooIterator">{f:if(condition: fooIterator.isLast, then: '<img src="{f:uri.resource(resource: asset.originalResource)}" class="thumbnail" alt="image" width="100" />')}
-												</f:for>
-											</div>
-										</f:then>
-										<f:else>
-											<div class="asset-img">
-												<img src="{f:uri.resource(path:'images/no_photo.jpg')}" alt="image" width="100" />
-											</div>
-										</f:else>
-									</f:if>
-									<div>
-										<p>{news.subTitle}</p>
-										<p class="date"><f:link.action action="show" arguments="{news: news}">read more</f:link.action></p>
-									</div>
-								</article>
-							</div>
+							<f:render partial="NewsList" arguments="{news: news, assetsForNews: assetsForNews}" />
 							<f:if condition="{news.authorName}">
 								<f:then>
 									<div class="news_footer">
@@ -50,7 +26,7 @@
 				</f:widget.paginate>
 			</f:then>
 			<f:else>
-				<p>No search results found.</p>
+				<p><f:translate id="lelesys.plugin.news.noSearchResultsFound"></f:translate></p>
 			</f:else>
 		</f:if>
 	</div>

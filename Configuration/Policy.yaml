@@ -1,3 +1,36 @@
+#                                                                        #
+# Security policy definition                                             #
+#                                                                        #
+# This file contains the security policy configuration for the           #
+# Lelesys.Plugin.News package                                         #
+
+# security access configuration for frontend
+roles:
+  'Editor': []
+  'Administrator': []
+
+resources:
+  methods:
+    'Editor_News': 'method(Lelesys\Plugin\News\Controller\Module\NewsManagement\News\NewsController->.*Action())'
+    'Editor_Category': 'method(Lelesys\Plugin\News\Controller\Module\NewsManagement\Category\CategoryController->.*Action())'
+    'Editor_Comment': 'method(Lelesys\Plugin\News\Controller\Module\NewsManagement\Comment\CommentController->.*Action())'
+    'Editor_Folder': 'method(Lelesys\Plugin\News\Controller\Module\NewsManagement\Folder\FolderController->.*Action())'
+    'Administrator_News': 'method(Lelesys\Plugin\News\Controller\Module\NewsManagement\News\NewsController->(index|latestNews|show|searchNews|searchResult|archive|showArchiveNews|downloadFile)Action())'
+    'Administrator_Category': 'method(Lelesys\Plugin\News\Controller\Module\NewsManagement\Category\CategoryController->(index|showCategory)Action())'
+
+acls:
+  'Editor':
+    methods:
+       'Editor_News': GRANT
+       'Editor_Category': GRANT
+       'Editor_Comment': GRANT
+       'Editor_Folder': GRANT
+  'Administrator':
+    methods:
+       'Administrator_News': GRANT
+       'Administrator_Category': GRANT
+
+# security access configuration for backend modules
 resources:
   methods:
     'Lelesys_Plugin_News_Module_NewsManagement': 'method(Lelesys\Plugin\News\Controller\Module\NewsManagementController->.*Action())'
@@ -5,11 +38,12 @@ resources:
     'Lelesys_Plugin_News_Module_NewsManagement_Category': 'method(Lelesys\Plugin\News\Controller\Module\NewsManagement\Category\CategoryController->.*Action())'
     'Lelesys_Plugin_News_Module_NewsManagement_Comment': 'method(Lelesys\Plugin\News\Controller\Module\NewsManagement\Comment\CommentController->.*Action())'
     'Lelesys_Plugin_News_Module_NewsManagement_Folder': 'method(Lelesys\Plugin\News\Controller\Module\NewsManagement\Folder\FolderController->.*Action())'
+
 acls:
    'TYPO3.Neos:Editor':
-    methods:
-      'Lelesys_Plugin_News_Module_NewsManagement': GRANT
-      'Lelesys_Plugin_News_Module_NewsManagement_News': GRANT
-      'Lelesys_Plugin_News_Module_NewsManagement_Category': GRANT
-      'Lelesys_Plugin_News_Module_NewsManagement_Comment': GRANT
-      'Lelesys_Plugin_News_Module_NewsManagement_Folder': GRANT
+     methods:
+       'Lelesys_Plugin_News_Module_NewsManagement': GRANT
+       'Lelesys_Plugin_News_Module_NewsManagement_News': GRANT
+       'Lelesys_Plugin_News_Module_NewsManagement_Category': GRANT
+       'Lelesys_Plugin_News_Module_NewsManagement_Comment': GRANT
+       'Lelesys_Plugin_News_Module_NewsManagement_Folder': GRANT

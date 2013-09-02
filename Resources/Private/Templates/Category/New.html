@@ -4,42 +4,42 @@
 
 <f:section name="Content">
 	<div class="main-container">
-		<h2>Add Category</h2>
+		<h2><f:translate id="lelesys.plugin.news.addCategory"></f:translate></h2>
 		<f:form action="create" name="newCategory" id="news-category-form" enctype="multipart/form-data">
 			<div class="control-group">
-				<label for="title">Title</label>
+				<label for="title"><f:translate id="lelesys.plugin.news.title"></f:translate></label>
 				<div class="controls">
 					<f:form.textfield property="title" id="title" class="span3 title-category"/>
 					<f:render partial="FormErrors" arguments="{for: 'newCategory.title'}" />
 				</div>
 			</div>
 			<div class="control-group">
-				<label for="image">Image</label>
+				<label for="image"><f:translate id="lelesys.plugin.news.image"></f:translate></label>
 				<div class="controls">
 					<f:form.upload property="image" id="image" class="img span3"/>
 				</div>
 			</div>
 			<div class="control-group">
-				<label for="parentcategory">Parent Category</label>
+				<label for="parentcategory"><f:translate id="lelesys.plugin.news.parentCategory"></f:translate></label>
 				<div class="controls">
-					<f:form.select options="{newsParentCategory}" optionLabelField="title" prependOptionLabel="select category" id="parentCategory" property="parentCategory" class="span3"></f:form.select>
+					<f:form.select options="{newsParentCategory}" optionLabelField="title" prependOptionLabel='<f:translate id="lelesys.plugin.news.selectCategory"></f:translate>' id="parentCategory" property="parentCategory" class="span3"></f:form.select>
 				</div>
 			</div>
 			<div class="control-group">
-				<label for="description">Description</label>
+				<label for="description"><f:translate id="lelesys.plugin.news.description"></f:translate></label>
 				<div class="controls">
 					<f:form.textarea rows="4" cols="8" property="description" id="description" class="span3"/>
 				</div>
 			</div>
 			<div class="control-group">
-				<label for="folder">Folder</label>
+				<label for="folder"><f:translate id="lelesys.plugin.news.folder"></f:translate></label>
 				<div class="controls">
-					<f:form.select options="{folders}" optionLabelField="title" id="folders" prependOptionLabel="Select folder" property="folder" class="span3"></f:form.select>
+					<f:form.select options="{folders}" optionLabelField="title" id="folders" prependOptionLabel='<f:translate id="lelesys.plugin.news.selectFolder"></f:translate>' property="folder" class="span3"></f:form.select>
 				</div>
 			</div>
 			<div class="control-group">
 				<div class="controls">
-					<input type="button" class="btn createCategory" value="Create"/>
+					<input type="button" class="btn createCategory" value='<f:translate id="lelesys.plugin.news.create"></f:translate>'/>
 				</div>
 			</div>
 		</f:form>

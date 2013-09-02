@@ -71,11 +71,12 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 	/**
 	 * Shows a list of news
 	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Category $category
+	 * @param \Lelesys\Plugin\News\Domain\Model\Folder $folder
 	 * @return void
 	 */
-	public function indexAction() {
-		$this->view->assign('folders', $this->folderService->listAll());
-		$allNews = $this->newsService->adminNewsList();
+	public function indexAction(\Lelesys\Plugin\News\Domain\Model\Category $category = NULL, \Lelesys\Plugin\News\Domain\Model\Folder $folder = NULL) {
+		$allNews = $this->newsService->listAllNewsAdmin($category, $folder);
 		$this->view->assign('allNews', $allNews);
 		$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
 	}
@@ -107,8 +108,8 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 	 */
 	public function newAction() {
 		$this->view->assign('folders', $this->folderService->listAll());
-		$this->view->assign('related', $this->newsService->listAll());
-		$this->view->assign('newsCategories', $this->categoryService->listAll());
+		$this->view->assign('related', $this->newsService->getEnabledNews());
+		$this->view->assign('newsCategories', $this->categoryService->getEnabledLatestCategories());
 		$this->view->assign('tags', $this->tagService->listAll());
 	}
 
@@ -123,6 +124,14 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 						'TYPO3\Flow\Property\TypeConverter\DateTimeConverter', \TYPO3\Flow\Property\TypeConverter\DateTimeConverter::CONFIGURATION_DATE_FORMAT, 'm/d/Y'
 		);
 		$this->arguments['newNews']->getPropertyMappingConfiguration()->forProperty('archiveDate')
+				->setTypeConverterOption(
+						'TYPO3\Flow\Property\TypeConverter\DateTimeConverter', \TYPO3\Flow\Property\TypeConverter\DateTimeConverter::CONFIGURATION_DATE_FORMAT, 'm/d/Y'
+		);
+		$this->arguments['newNews']->getPropertyMappingConfiguration()->forProperty('startDate')
+				->setTypeConverterOption(
+						'TYPO3\Flow\Property\TypeConverter\DateTimeConverter', \TYPO3\Flow\Property\TypeConverter\DateTimeConverter::CONFIGURATION_DATE_FORMAT, 'm/d/Y'
+		);
+		$this->arguments['newNews']->getPropertyMappingConfiguration()->forProperty('endDate')
 				->setTypeConverterOption(
 						'TYPO3\Flow\Property\TypeConverter\DateTimeConverter', \TYPO3\Flow\Property\TypeConverter\DateTimeConverter::CONFIGURATION_DATE_FORMAT, 'm/d/Y'
 		);
@@ -157,7 +166,7 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 	public function editAction(\Lelesys\Plugin\News\Domain\Model\News $news) {
 		$this->view->assign('folders', $this->folderService->listAll());
 		$this->view->assign('relatedNews', $this->newsService->listRelatedNews($news));
-		$this->view->assign('newsCategories', $this->categoryService->listAll());
+		$this->view->assign('newsCategories', $this->categoryService->getEnabledLatestCategories());
 		$this->view->assign('newsTags', $news->getTags());
 		$this->view->assign('news', $news);
 		$this->view->assign('media', $news->getAssets());
@@ -176,6 +185,14 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 						'TYPO3\Flow\Property\TypeConverter\DateTimeConverter', \TYPO3\Flow\Property\TypeConverter\DateTimeConverter::CONFIGURATION_DATE_FORMAT, 'm/d/Y'
 		);
 		$this->arguments['news']->getPropertyMappingConfiguration()->forProperty('archiveDate')
+				->setTypeConverterOption(
+						'TYPO3\Flow\Property\TypeConverter\DateTimeConverter', \TYPO3\Flow\Property\TypeConverter\DateTimeConverter::CONFIGURATION_DATE_FORMAT, 'm/d/Y'
+		);
+		$this->arguments['news']->getPropertyMappingConfiguration()->forProperty('startDate')
+				->setTypeConverterOption(
+						'TYPO3\Flow\Property\TypeConverter\DateTimeConverter', \TYPO3\Flow\Property\TypeConverter\DateTimeConverter::CONFIGURATION_DATE_FORMAT, 'm/d/Y'
+		);
+		$this->arguments['news']->getPropertyMappingConfiguration()->forProperty('endDate')
 				->setTypeConverterOption(
 						'TYPO3\Flow\Property\TypeConverter\DateTimeConverter', \TYPO3\Flow\Property\TypeConverter\DateTimeConverter::CONFIGURATION_DATE_FORMAT, 'm/d/Y'
 		);
@@ -240,14 +257,13 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 	 * Removes the asset of news
 	 *
 	 * @param string $newsId
-	 * @param string $assetId
+	 * @param \TYPO3\Media\Domain\Model\Image $assetId
 	 * @return void
 	 */
 	public function removeAssetAction($newsId, $assetId) {
 		try {
-			$asset = $this->assetService->findById($assetId);
 			$news = $this->newsService->findById($newsId);
-			$this->newsService->removeAsset($asset, $news);
+			$this->newsService->removeAsset($assetId, $news);
 			echo json_encode(1);
 			exit;
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
@@ -278,14 +294,13 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 	 * Removes the asset of news
 	 *
 	 * @param string $newsId
-	 * @param string $fileId
+	 * @param \TYPO3\Media\Domain\Model\Document $fileId
 	 * @return void
 	 */
 	public function removeRelatedFileAction($newsId, $fileId) {
 		try {
-			$file = $this->fileService->findById($fileId);
 			$news = $this->newsService->findById($newsId);
-			$this->newsService->removeRelatedFile($file, $news);
+			$this->newsService->removeRelatedFile($fileId, $news);
 			echo json_encode(1);
 			exit;
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {

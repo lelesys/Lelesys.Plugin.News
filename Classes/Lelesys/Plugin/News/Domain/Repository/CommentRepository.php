@@ -20,16 +20,11 @@ use TYPO3\Flow\Annotations as Flow;
 class CommentRepository extends \TYPO3\Flow\Persistence\Repository {
 
 	/**
-	 * Get comment entries
 	 *
-	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
+	 * @var array
 	 */
-	public function getCommentEntries() {
-		$query = $this->createQuery();
-		return $query
-						->setOrderings(array('createdDate' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING))
-						->execute();
-	}
+	protected $defaultOrderings = array('createdDate' => \TYPO3\Flow\Persistence\QueryInterface::ORDER_DESCENDING);
 
 }
+
 ?>

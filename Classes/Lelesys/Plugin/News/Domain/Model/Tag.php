@@ -57,6 +57,7 @@ class Tag {
 	 */
 	public function __construct() {
 		$this->setHidden(0);
+		$this->setCreateDate(new \DateTime());
 	}
 
 	/**

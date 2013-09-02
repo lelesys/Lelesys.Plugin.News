@@ -23,6 +23,16 @@ class Folder {
 	protected $title;
 
 	/**
+	 * The date time
+	 * @var \DateTime
+	 */
+	protected $dateTime;
+
+	public function __construct() {
+		$this->setDateTime(new \DateTime());
+	}
+
+	/**
 	 * The News
 	 * @var \Doctrine\Common\Collections\Collection<\Lelesys\Plugin\News\Domain\Model\News>
 	 * @ORM\OneToMany(mappedBy="folder" , cascade={"persist", "remove"})
@@ -37,6 +47,15 @@ class Folder {
 	protected $categories;
 
 	/**
+	 * Returns uuid of this object
+	 *
+	 * @return string
+	 */
+	public function getUuid() {
+		return $this->Persistence_Object_Identifier;
+	}
+
+	/**
 	 * @return string
 	 */
 	public function getTitle() {
@@ -49,6 +68,25 @@ class Folder {
 	 */
 	public function setTitle($title) {
 		$this->title = $title;
+	}
+
+	/**
+	 * Get the News's created date
+	 *
+	 * @return \DateTime The News's created date
+	 */
+	public function getDateTime() {
+		return $this->dateTime;
+	}
+
+	/**
+	 * Sets this News's created date
+	 *
+	 * @param \DateTime $dateTime The News's created date
+	 * @return void
+	 */
+	public function setDateTime($dateTime) {
+		$this->dateTime = $dateTime;
 	}
 
 	/**

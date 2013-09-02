@@ -13,6 +13,7 @@ namespace Lelesys\Plugin\News\Controller;
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Mvc\Controller\ActionController;
 use \Lelesys\Plugin\News\Domain\Model\News;
+use TYPO3\Flow\Mvc\Routing\UriBuilder;
 
 /**
  * News controller for the Lelesys.Plugin.News package
@@ -82,53 +83,63 @@ class NewsController extends AbstractNewsController {
 	protected $folderService;
 
 	/**
+	 * @var \TYPO3\Flow\Core\Bootstrap
+	 * @Flow\Inject
+	 */
+	protected $bootstrap;
+
+	/**
 	 * Shows a list of news
 	 *
+	 * @param array $category
+	 * @param string $folder
+	 * @param string $tag
+	 * @param integer $year
+	 * @param string $month
 	 * @return void
 	 */
-	public function indexAction() {
-		$documentNode = $this->request->getInternalArgument('__documentNode');
-
-		$categoryId = NULL;
-		$folderId = NULL;
-
-		if ($documentNode->hasChildNodes('Lelesys.Plugin.News:CategoryNode')) {
-			$currentCategoryNodes = $documentNode->getChildNodes('Lelesys.Plugin.News:CategoryNode');
-			$currentCategory = $currentCategoryNodes[0];
-			$categoryId = $currentCategory->getProperty('categoryId');
-			$folderId = $currentCategory->getProperty('folderId');
+	public function indexAction($category = NULL, $folder = NULL, $tag = NULL, $year = NULL, $month = NULL) {
+		if (!empty($category)) {
+			$category = $category['__identity'];
 		}
-
-		if ($this->request->hasArgument('newsByCategory')) {
-			$categoryArgument = $this->request->getArgument('newsByCategory');
-
-			$categoryId = $categoryArgument['category'];
-			$folderId = $categoryArgument['folder'];
-
-			if ($documentNode->hasChildNodes('Lelesys.Plugin.News:CategoryNode')) {
-				$categoryNodes = $documentNode->getChildNodes('Lelesys.Plugin.News:CategoryNode');
-				$categoryNode = $categoryNodes[0];
-			} else {
-				$categoryNode = $documentNode->createNode(uniqid('category'), $this->nodeTypeManager->getNodeType('Lelesys.Plugin.News:CategoryNode'));
-			}
-			$categoryNode->setProperty('categoryId', $categoryId);
-			$categoryNode->setProperty('folderId', $folderId);
-		}
-		if ((empty($categoryId)) && (empty($folderId))) {
-			$allNews = $this->newsService->listAll();
-			$this->view->assign('allNews', $this->newsService->listAll());
+		$currentNode = $this->request->getInternalArgument('__node');
+		$pluginArguments = $this->request->getPluginArguments();
+		if (isset($pluginArguments['itemsPerPage'])) {
+			$itemsPerPage = (int) $pluginArguments['itemsPerPage'];
 		} else {
-			$this->view->assign('folderId', $folderId);
-			$this->view->assign('categoryId', $categoryId);
-			$category = $this->categoryRepository->findByIdentifier($categoryId);
-			$folder = $this->folderService->findById($folderId);
-			$allNews = $this->newsService->listAllByCategory($category, $folder);
-			$this->view->assign('allNews', $allNews);
+			$itemsPerPage = '';
 		}
+		if ($month !== NULL) {
+			$allNews = $this->newsService->archiveNewsList($year, $month, $pluginArguments);
+		} else {
+			if ($this->request->hasArgument('newsBySelection')) {
+				$nodeArgument = $this->request->getArgument('newsBySelection');
+				$currentNode->setProperty('categoryId', $nodeArgument['category']);
+				$currentNode->setProperty('folderId', $nodeArgument['folder']);
+			}
+			if (($category === NULL) && ($folder === NULL)) {
+				$categoryId = $currentNode->getProperty('categoryId');
+				$folderId = $currentNode->getProperty('folderId');
+
+				$this->view->assign('folderId', $folderId);
+				$this->view->assign('categoryId', $categoryId);
+				if ($categoryId !== NULL) {
+					$category = $categoryId;
+				}
+				if ($folderId !== NULL) {
+					$folder = $folderId;
+				}
+			}
+			$allNews = $this->newsService->listAllBySelection($category, $folder, $pluginArguments, $tag);
+		}
+		$this->view->assign('allNews', $allNews);
 		$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
 		// To show the list of news category
-		$this->view->assign('categories', $this->categoryService->listAll());
+		$this->view->assign('month', $month);
+		$this->view->assign('itemsPerPage', $itemsPerPage);
+		$this->view->assign('categories', $this->categoryService->getEnabledLatestCategories());
 		$this->view->assign('folders', $this->folderService->listAll());
+		$this->view->assign('baseUri', $this->bootstrap->getActiveRequestHandler()->getHttpRequest()->getBaseUri());
 	}
 
 	/**
@@ -137,26 +148,33 @@ class NewsController extends AbstractNewsController {
 	 * @return void
 	 */
 	public function latestNewsAction() {
-		$allNews = $this->newsService->latestNews();
-		$this->view->assign('allNews', $allNews);
-		$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
-	}
-
-	/**
-	 * Shows a list of news for admin
-	 *
-	 * @param string $folderId Folder
-	 * @param integer $recordLimit
-	 * @return void
-	 */
-	public function adminListAction($folderId = NULL, $recordLimit = NULL) {
-		if ($recordLimit == NULL) {
-			$recordLimit = $this->settings['newsPerPageAdmin'];
+		$currentNode = $this->request->getInternalArgument('__node');
+		$pluginArguments = $this->request->getPluginArguments();
+		if ($this->request->hasArgument('newsBySelection')) {
+			$nodeArgument = $this->request->getArgument('newsBySelection');
+			$currentNode->setProperty('categoryId', $nodeArgument['category']);
+			$currentNode->setProperty('folderId', $nodeArgument['folder']);
 		}
-		$this->view->assign('recordLimit', $recordLimit);
-		$allNews = $this->newsService->adminNewsList($folderId);
+		$categoryId = $currentNode->getProperty('categoryId');
+		$folderId = $currentNode->getProperty('folderId');
+
+		$this->view->assign('folderId', $folderId);
+		$this->view->assign('categoryId', $categoryId);
+		$category = NULL;
+		$folder = NULL;
+		if ($categoryId !== NULL) {
+			$category = $categoryId;
+		}
+		if ($folderId !== NULL) {
+			$folder = $folderId;
+		}
+
+		$allNews = $this->newsService->listAllBySelection($category, $folder, $pluginArguments);
+		$this->view->assign('categories', $this->categoryService->getEnabledLatestCategories());
+		$this->view->assign('folders', $this->folderService->listAll());
 		$this->view->assign('allNews', $allNews);
 		$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
+		$this->view->assign('baseUri', $this->bootstrap->getActiveRequestHandler()->getHttpRequest()->getBaseUri());
 	}
 
 	/**
@@ -180,8 +198,6 @@ class NewsController extends AbstractNewsController {
 	public function showAction(\Lelesys\Plugin\News\Domain\Model\News $news = NULL) {
 		if ($news !== NULL) {
 			$related = $this->newsService->related($news);
-			$argumentNamespace = $this->request->getArgumentNamespace();
-			$this->view->assign('argumentNamespace', $argumentNamespace);
 			$this->view->assign('assets', $related['assets']);
 			$this->view->assign('comments', $related['comments']);
 			$this->view->assign('relatedFiles', $related['files']);
@@ -190,6 +206,7 @@ class NewsController extends AbstractNewsController {
 			$this->view->assign('categories', $related['categories']);
 			$this->view->assign('tags', $news->getTags());
 			$this->view->assign('news', $news);
+			$this->view->assign('currentUri', $this->bootstrap->getActiveRequestHandler()->getHttpRequest()->getUri());
 		}
 	}
 
@@ -200,8 +217,8 @@ class NewsController extends AbstractNewsController {
 	 */
 	public function newAction() {
 		$this->view->assign('folders', $this->folderService->listAll());
-		$this->view->assign('related', $this->newsService->listAll());
-		$this->view->assign('newsCategories', $this->categoryService->listAll());
+		$this->view->assign('relatedNews', $this->newsService->getEnabledNews());
+		$this->view->assign('newsCategories', $this->categoryService->getEnabledLatestCategories());
 		$this->view->assign('tags', $this->tagService->listAll());
 	}
 
@@ -216,6 +233,14 @@ class NewsController extends AbstractNewsController {
 						'TYPO3\Flow\Property\TypeConverter\DateTimeConverter', \TYPO3\Flow\Property\TypeConverter\DateTimeConverter::CONFIGURATION_DATE_FORMAT, 'm/d/Y'
 		);
 		$this->arguments['newNews']->getPropertyMappingConfiguration()->forProperty('archiveDate')
+				->setTypeConverterOption(
+						'TYPO3\Flow\Property\TypeConverter\DateTimeConverter', \TYPO3\Flow\Property\TypeConverter\DateTimeConverter::CONFIGURATION_DATE_FORMAT, 'm/d/Y'
+		);
+		$this->arguments['newNews']->getPropertyMappingConfiguration()->forProperty('startDate')
+				->setTypeConverterOption(
+						'TYPO3\Flow\Property\TypeConverter\DateTimeConverter', \TYPO3\Flow\Property\TypeConverter\DateTimeConverter::CONFIGURATION_DATE_FORMAT, 'm/d/Y'
+		);
+		$this->arguments['newNews']->getPropertyMappingConfiguration()->forProperty('endDate')
 				->setTypeConverterOption(
 						'TYPO3\Flow\Property\TypeConverter\DateTimeConverter', \TYPO3\Flow\Property\TypeConverter\DateTimeConverter::CONFIGURATION_DATE_FORMAT, 'm/d/Y'
 		);
@@ -235,7 +260,7 @@ class NewsController extends AbstractNewsController {
 		try {
 			$this->newsService->create($newNews, $media, $file, $relatedLink, $tags);
 			$this->addFlashMessage('Created a new news.', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
-			$this->redirect('adminList');
+			$this->redirect('index');
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
 			$this->addFlashMessage('Cannot create news at this time!!.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
@@ -250,7 +275,7 @@ class NewsController extends AbstractNewsController {
 	public function editAction(\Lelesys\Plugin\News\Domain\Model\News $news) {
 		$this->view->assign('folders', $this->folderService->listAll());
 		$this->view->assign('relatedNews', $this->newsService->listRelatedNews($news));
-		$this->view->assign('newsCategories', $this->categoryService->listAll());
+		$this->view->assign('newsCategories', $this->categoryService->getEnabledLatestCategories());
 		$this->view->assign('newsTags', $news->getTags());
 		$this->view->assign('news', $news);
 		$this->view->assign('media', $news->getAssets());
@@ -265,6 +290,14 @@ class NewsController extends AbstractNewsController {
 	 */
 	public function initializeUpdateAction() {
 		$this->arguments['news']->getPropertyMappingConfiguration()->forProperty('dateTime')
+				->setTypeConverterOption(
+						'TYPO3\Flow\Property\TypeConverter\DateTimeConverter', \TYPO3\Flow\Property\TypeConverter\DateTimeConverter::CONFIGURATION_DATE_FORMAT, 'm/d/Y'
+		);
+		$this->arguments['news']->getPropertyMappingConfiguration()->forProperty('startDate')
+				->setTypeConverterOption(
+						'TYPO3\Flow\Property\TypeConverter\DateTimeConverter', \TYPO3\Flow\Property\TypeConverter\DateTimeConverter::CONFIGURATION_DATE_FORMAT, 'm/d/Y'
+		);
+		$this->arguments['news']->getPropertyMappingConfiguration()->forProperty('endDate')
 				->setTypeConverterOption(
 						'TYPO3\Flow\Property\TypeConverter\DateTimeConverter', \TYPO3\Flow\Property\TypeConverter\DateTimeConverter::CONFIGURATION_DATE_FORMAT, 'm/d/Y'
 		);
@@ -288,7 +321,7 @@ class NewsController extends AbstractNewsController {
 		try {
 			$this->newsService->update($news, $media, $file, $relatedLink, $tags);
 			$this->addFlashMessage('Updated the news.', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
-			$this->redirect('adminList');
+			$this->redirect('index');
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
 			$this->addFlashMessage('Cannot update news at this time!!.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
@@ -304,7 +337,7 @@ class NewsController extends AbstractNewsController {
 		try {
 			$this->newsService->delete($news);
 			$this->addFlashMessage('Deleted a news.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
-			$this->redirect('adminList');
+			$this->redirect('index');
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
 			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
@@ -314,14 +347,13 @@ class NewsController extends AbstractNewsController {
 	 * Removes the asset of news
 	 *
 	 * @param string $newsId
-	 * @param string $assetId
+	 * @param \TYPO3\Media\Domain\Model\Image $assetId
 	 * @return void
 	 */
 	public function removeAssetAction($newsId, $assetId) {
 		try {
-			$asset = $this->assetService->findById($assetId);
 			$news = $this->newsService->findById($newsId);
-			$this->newsService->removeAsset($asset, $news);
+			$this->newsService->removeAsset($assetId, $news);
 			echo json_encode(1);
 			exit;
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
@@ -371,14 +403,13 @@ class NewsController extends AbstractNewsController {
 	 * Removes the asset of news
 	 *
 	 * @param string $newsId
-	 * @param string $fileId
+	 * @param \TYPO3\Media\Domain\Model\Document $fileId
 	 * @return void
 	 */
 	public function removeRelatedFileAction($newsId, $fileId) {
 		try {
-			$file = $this->fileService->findById($fileId);
 			$news = $this->newsService->findById($newsId);
-			$this->newsService->removeRelatedFile($file, $news);
+			$this->newsService->removeRelatedFile($fileId, $news);
 			echo json_encode(1);
 			exit;
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
@@ -396,7 +427,7 @@ class NewsController extends AbstractNewsController {
 		try {
 			$this->newsService->hideNews($news);
 			$this->addFlashMessage('News is Hidden', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
-			$this->redirect('adminList');
+			$this->redirect('index');
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
 			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
@@ -412,7 +443,7 @@ class NewsController extends AbstractNewsController {
 		try {
 			$this->newsService->showNews($news);
 			$this->addFlashMessage('News is Visible', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
-			$this->redirect('adminList');
+			$this->redirect('index');
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
 			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
@@ -435,12 +466,17 @@ class NewsController extends AbstractNewsController {
 	 * @param integer $recordLimit
 	 * @return void
 	 */
-	public function searchResultAction($search = NULL, $recordLimit = NULL) {
-		if ($recordLimit == NULL) {
-			$recordLimit = $this->settings['newsPerPageAdmin'];
+	public function searchResultAction($search = NULL) {
+		$pluginArguments = $this->request->getPluginArguments();
+		if (isset($pluginArguments['itemsPerPage'])) {
+			$itemsPerPage = (int) $pluginArguments['itemsPerPage'];
+		} else {
+			$itemsPerPage = '';
 		}
-		$this->view->assign('recordLimit', $recordLimit);
-		$this->view->assign('newsSearched', $this->newsService->searchResult($search));
+		$allNews = $this->newsService->searchResult($search, $pluginArguments);
+		$this->view->assign('itemsPerPage', $itemsPerPage);
+		$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
+		$this->view->assign('newsSearched', $allNews);
 	}
 
 	/**
@@ -450,17 +486,6 @@ class NewsController extends AbstractNewsController {
 	 */
 	public function archiveAction() {
 		$this->view->assign('archiveView', $this->newsService->archiveDateView());
-	}
-
-	/**
-	 * Shows list of news as per month
-	 *
-	 * @param integer $year
-	 * @param string $month
-	 * @return void
-	 */
-	public function showArchiveNewsAction($year, $month) {
-		$this->view->assign('archiveNewsList', $this->newsService->archiveNewsList($year, $month));
 	}
 
 	/**

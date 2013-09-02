@@ -2,7 +2,7 @@
 
 namespace Lelesys\Plugin\News\Domain\Service;
 
-/*                                                                         *
+/* *
  * This script belongs to the package "Lelesys.Plugin.News".               *
  *                                                                         *
  * It is free software; you can redistribute it and/or modify it under     *
@@ -35,7 +35,7 @@ class LinkService {
 	/**
 	 * Shows a list of links
 	 *
-	 * @return \Lelesys\Plugin\News\Domain\Model\Link
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function listAll() {
 		return $this->linkRepository->findAll();
@@ -49,6 +49,7 @@ class LinkService {
 	 */
 	public function create(\Lelesys\Plugin\News\Domain\Model\Link $newLink) {
 		$this->linkRepository->add($newLink);
+		$this->emitLinkCreated($newLink);
 	}
 
 	/**
@@ -59,6 +60,7 @@ class LinkService {
 	 */
 	public function update(\Lelesys\Plugin\News\Domain\Model\Link $link) {
 		$this->linkRepository->update($link);
+		$this->emitLinkUpdated($link);
 	}
 
 	/**
@@ -69,17 +71,51 @@ class LinkService {
 	 */
 	public function delete(\Lelesys\Plugin\News\Domain\Model\Link $link) {
 		$this->linkRepository->remove($link);
+		$this->emitLinkDeleted($link);
 	}
 
 	/**
 	 * return asset for given identifier
 	 *
 	 * @param string $identifier
-	 * @return \Lelesys\Plugin\News\Domain\Model\Link
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function findById($identifier) {
 		$asset = $this->linkRepository->findByIdentifier($identifier);
 		return $asset;
+	}
+
+	/**
+	 * Signal for Link created
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Link $link The Link
+	 * @Flow\Signal
+	 * @return void
+	 */
+	protected function emitLinkCreated(\Lelesys\Plugin\News\Domain\Model\Link $link) {
+
+	}
+
+	/**
+	 * Signal for Link updated
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Link $link The Link
+	 * @Flow\Signal
+	 * @return void
+	 */
+	protected function emitLinkUpdated(\Lelesys\Plugin\News\Domain\Model\Link $link) {
+
+	}
+
+	/**
+	 * Signal for Link deleted
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Link $link The Link
+	 * @Flow\Signal
+	 * @return void
+	 */
+	protected function emitLinkDeleted(\Lelesys\Plugin\News\Domain\Model\Link $link) {
+
 	}
 
 }

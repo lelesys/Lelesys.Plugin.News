@@ -2,7 +2,7 @@
 
 namespace Lelesys\Plugin\News\Domain\Service;
 
-/*                                                                         *
+/* *
  * This script belongs to the package "Lelesys.Plugin.News".               *
  *                                                                         *
  * It is free software; you can redistribute it and/or modify it under     *
@@ -35,7 +35,7 @@ class FileService {
 	/**
 	 * Shows a list of files
 	 *
-	 * @return \Lelesys\Plugin\News\Domain\Model\File
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function listAll() {
 		return $this->fileRepository->findAll();
@@ -49,6 +49,7 @@ class FileService {
 	 */
 	public function create(\Lelesys\Plugin\News\Domain\Model\File $newFile) {
 		$this->fileRepository->add($newFile);
+		$this->emitFileCreated($newFile);
 	}
 
 	/**
@@ -59,6 +60,7 @@ class FileService {
 	 */
 	public function update(\Lelesys\Plugin\News\Domain\Model\File $file) {
 		$this->fileRepository->update($file);
+		$this->emitFileUpdated($file);
 	}
 
 	/**
@@ -69,17 +71,51 @@ class FileService {
 	 */
 	public function delete(\Lelesys\Plugin\News\Domain\Model\File $file) {
 		$this->fileRepository->remove($file);
+		$this->emitFileDeleted($file);
 	}
 
 	/**
 	 * return asset for given identifier
 	 *
 	 * @param string $identifier
-	 * @return \Lelesys\Plugin\News\Domain\Model\File $asset
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function findById($identifier) {
 		$asset = $this->fileRepository->findByIdentifier($identifier);
 		return $asset;
+	}
+
+	/**
+	 * Signal for File created
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\File $file The File
+	 * @Flow\Signal
+	 * @return void
+	 */
+	protected function emitFileCreated(\Lelesys\Plugin\News\Domain\Model\File $file) {
+
+	}
+
+	/**
+	 * Signal for File updated
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\File $file The File
+	 * @Flow\Signal
+	 * @return void
+	 */
+	protected function emitFileUpdated(\Lelesys\Plugin\News\Domain\Model\File $file) {
+
+	}
+
+	/**
+	 * Signal for File deleted
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\File $file The File
+	 * @Flow\Signal
+	 * @return void
+	 */
+	protected function emitFileDeleted(\Lelesys\Plugin\News\Domain\Model\File $file) {
+
 	}
 
 }

@@ -12,6 +12,7 @@ namespace Lelesys\Plugin\News\Domain\Service;
 
 use TYPO3\Flow\Annotations as Flow;
 use \Lelesys\Plugin\News\Domain\Model\News;
+use \TYPO3\Media\Domain\Model\Image;
 
 /**
  * News controller for the Lelesys.Plugin.News package
@@ -25,6 +26,18 @@ class NewsService {
 	 * @var \Lelesys\Plugin\News\Domain\Repository\NewsRepository
 	 */
 	protected $newsRepository;
+
+	/**
+	 * @Flow\Inject
+	 * @var \TYPO3\Media\Domain\Repository\ImageRepository
+	 */
+	protected $imageRepository;
+
+	/**
+	 * @Flow\Inject
+	 * @var \TYPO3\Media\Domain\Repository\AssetRepository
+	 */
+	protected $assetRepository;
 
 	/**
 	 * @Flow\Inject
@@ -96,13 +109,16 @@ class NewsService {
 	protected $persistenceManager;
 
 	/**
-	 * Shows a list of news
+	 * Shows the list of news by category
 	 *
-	 * @param string $folderId Folder
-	 * @return \Lelesys\Plugin\News\Domain\Model\News
+	 * @param string $category The category
+	 * @param string $folder
+	 * @param string $tag
+	 * @param array $pluginArguments
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
-	public function adminNewsList($folderId = NULL) {
-		return $this->newsRepository->getNewsEntries($folderId);
+	public function listAllBySelection($category = NULL, $folder = NULL, $pluginArguments = array(), $tag = NULL) {
+		return $this->newsRepository->getEnabledNewsBySelection($category, $folder, $pluginArguments, $tag);
 	}
 
 	/**
@@ -110,21 +126,12 @@ class NewsService {
 	 *
 	 * @param \Lelesys\Plugin\News\Domain\Model\Category $category The category
 	 * @param \Lelesys\Plugin\News\Domain\Model\Folder $folder
-	 * @return \Lelesys\Plugin\News\Domain\Model\News
+	 * @param \Lelesys\Plugin\News\Domain\Model\Tag $tag
+	 * @param array $pluginArguments
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
-	public function listAllByCategory(\Lelesys\Plugin\News\Domain\Model\Category $category = NULL, \Lelesys\Plugin\News\Domain\Model\Folder $folder = NULL) {
-		$limitNews = $this->settings['limitListNews'];
-		return $this->newsRepository->getEnabledNewsByCategory($limitNews, $category, $folder);
-	}
-
-	/**
-	 * Shows a list of news
-	 *
-	 * @return \Lelesys\Plugin\News\Domain\Model\News
-	 */
-	public function listAll() {
-		$limitNews = $this->settings['limitListNews'];
-		return $this->newsRepository->getEnabledNews($limitNews);
+	public function listAllNewsAdmin(\Lelesys\Plugin\News\Domain\Model\Category $category = NULL, \Lelesys\Plugin\News\Domain\Model\Folder $folder = NULL) {
+		return $this->newsRepository->getNewsAdmin($category, $folder);
 	}
 
 	/**
@@ -137,9 +144,7 @@ class NewsService {
 		$related = array();
 		$assets = array();
 		foreach ($news->getAssets() as $singleAsset) {
-			if ($singleAsset->getHidden() !== TRUE) {
-				$assets[] = $singleAsset;
-			}
+			$assets[] = $singleAsset;
 		}
 		$comments = array();
 		foreach ($news->getComments() as $singleComment) {
@@ -161,9 +166,7 @@ class NewsService {
 		}
 		$relatedFiles = array();
 		foreach ($news->getFiles() as $singleFile) {
-			if ($singleFile->getHidden() !== TRUE) {
-				$relatedFiles[] = $singleFile;
-			}
+			$relatedFiles[] = $singleFile;
 		}
 		$related['assets'] = $assets;
 		$related['comments'] = $comments;
@@ -185,9 +188,7 @@ class NewsService {
 			$assets = $news->getAssets();
 			if (count($assets) > 0) {
 				foreach ($assets as $asset) {
-					if ($asset->getHidden() !== TRUE) {
-						$newsAssets[$news->getUuid()][] = $asset;
-					}
+					$newsAssets[$news->getUuid()][] = $asset;
 				}
 			}
 		}
@@ -224,16 +225,6 @@ class NewsService {
 	}
 
 	/**
-	 * Shows Latest News
-	 *
-	 * @return \Lelesys\Plugin\News\Domain\Model\News
-	 */
-	public function latestNews() {
-		$limitNews = $this->settings['limitLatestNews'];
-		return $this->newsRepository->getEnabledNews($limitNews);
-	}
-
-	/**
 	 * Adds the given new news object to the news repository
 	 *
 	 * @param \Lelesys\Plugin\News\Domain\Model\News $newNews A new news to add
@@ -260,19 +251,21 @@ class NewsService {
 		}
 		$mediaPath = $media;
 		foreach ($mediaPath as $mediaSource) {
-			if (!empty($mediaSource['originalResource']['name'])) {
-				$media = $this->propertyMapper->convert($mediaSource, 'Lelesys\Plugin\News\Domain\Model\Asset');
-				$this->assetService->setThumbnailAndPrint($media);
-				$this->assetService->create($media);
+			if (!empty($mediaSource['resource']['name'])) {
+				$resource = $this->propertyMapper->convert($mediaSource['resource'], 'TYPO3\Flow\Resource\Resource');
+				$media = new \TYPO3\Media\Domain\Model\Image($resource);
+				$media->setCaption($mediaSource['caption']);
+				$this->imageRepository->add($media);
 				$newNews->addAssets($media);
 			}
 		}
 		$filePath = $file;
 		$fileName = array();
 		foreach ($filePath as $fileSource) {
-			if (!empty($fileSource['originalFileResource']['name'])) {
-				$file = $this->propertyMapper->convert($fileSource, 'Lelesys\Plugin\News\Domain\Model\File');
-				$this->fileService->create($file);
+			if (!empty($fileSource['resource']['name'])) {
+				$resource = $this->propertyMapper->convert($fileSource['resource'], 'TYPO3\Flow\Resource\Resource');
+				$file = new \TYPO3\Media\Domain\Model\Document($resource);
+				$this->assetRepository->add($file);
 				$newNews->addFiles($file);
 			}
 			$resourceFile = $newNews->getFiles();
@@ -291,10 +284,8 @@ class NewsService {
 				$newNews->addRelatedLinks($newLink);
 			}
 		}
-		if ($newNews->getArchiveDate() === NULL) {
-			$newNews->setArchiveDate(new \DateTime());
-		}
 		$this->newsRepository->add($newNews);
+		$this->emitNewsCreated($newNews);
 	}
 
 	/**
@@ -328,18 +319,16 @@ class NewsService {
 		$news->setUpdatedDate(new \DateTime());
 		$mediaPath = $media;
 		foreach ($mediaPath as $mediaSource) {
-			if (isset($mediaSource['uuid'])) {
-				$updateAsset = $this->assetService->findById($mediaSource['uuid']);
+			if (!empty($mediaSource['uuid'])) {
+				$updateAsset = $this->propertyMapper->convert($mediaSource['uuid']['__identity'], '\TYPO3\Media\Domain\Model\Image');
 				$updateAsset->setCaption($mediaSource['caption']);
-				$updateAsset->setCopyRight($mediaSource['copyRight']);
-				$updateAsset->setHidden($mediaSource['hidden']);
-				$this->assetService->setThumbnailAndPrint($updateAsset);
-				$this->assetService->update($updateAsset);
+				$this->imageRepository->update($updateAsset);
 			} else {
-				if (!empty($mediaSource['originalResource']['name'])) {
-					$media = $this->propertyMapper->convert($mediaSource, 'Lelesys\Plugin\News\Domain\Model\Asset');
-					$this->assetService->setThumbnailAndPrint($media);
-					$this->assetService->create($media);
+				if (!empty($mediaSource['resource']['name'])) {
+					$resource = $this->propertyMapper->convert($mediaSource['resource'], 'TYPO3\Flow\Resource\Resource');
+					$media = new \TYPO3\Media\Domain\Model\Image($resource);
+					$media->setCaption($mediaSource['caption']);
+					$this->imageRepository->add($media);
 					$news->addAssets($media);
 				}
 			}
@@ -347,15 +336,14 @@ class NewsService {
 		$filePath = $file;
 		foreach ($filePath as $fileSource) {
 			if (isset($fileSource['uuid'])) {
-				$updateFile = $this->fileService->findById($fileSource['uuid']);
+				$updateFile = $this->propertyMapper->convert($fileSource['uuid']['__identity'], '\TYPO3\Media\Domain\Model\Document');
 				$updateFile->setTitle($fileSource['title']);
-				$updateFile->setDescription($fileSource['description']);
-				$updateFile->setHidden($fileSource['hidden']);
-				$this->fileService->update($updateFile);
+				$this->assetRepository->update($updateFile);
 			} else {
-				if (!empty($fileSource['originalFileResource']['name'])) {
-					$file = $this->propertyMapper->convert($fileSource, 'Lelesys\Plugin\News\Domain\Model\File');
-					$this->fileService->create($file);
+				if (!empty($fileSource['resource']['name'])) {
+					$resource = $this->propertyMapper->convert($fileSource['resource'], 'TYPO3\Flow\Resource\Resource');
+					$file = new \TYPO3\Media\Domain\Model\Document($resource);
+					$this->assetRepository->add($file);
 					$news->addFiles($file);
 				}
 			}
@@ -381,10 +369,8 @@ class NewsService {
 				}
 			}
 		}
-		if ($news->getArchiveDate() === NULL) {
-			$news->setArchiveDate(new \DateTime());
-		}
 		$this->newsRepository->update($news);
+		$this->emitNewsUpdated($news);
 	}
 
 	/**
@@ -395,6 +381,7 @@ class NewsService {
 	 */
 	public function delete(\Lelesys\Plugin\News\Domain\Model\News $news) {
 		$this->newsRepository->remove($news);
+		$this->emitNewsDeleted($news);
 	}
 
 	/**
@@ -402,16 +389,11 @@ class NewsService {
 	 *
 	 * @param integer $year
 	 * @param string $month
-	 * @return \Lelesys\Plugin\News\Domain\Model\News
+	 * @param array $pluginArguments
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
-	public function archiveNewsList($year, $month) {
-		$nmonth = date('m', strtotime($month));
-		$dql = 'SELECT n'
-				. ' FROM  Lelesys\Plugin\News\Domain\Model\News n'
-				. ' WHERE n.hidden = 0 AND YEAR(n.archiveDate) = ' . $year . ' AND MONTH(n.archiveDate)=' . $nmonth
-				. 'ORDER BY n.dateTime DESC';
-		$result = $this->doctrintService->runDql($dql, \Doctrine\ORM\Query::HYDRATE_OBJECT);
-		return $result;
+	public function archiveNewsList($year, $month, $pluginArguments) {
+		return $this->newsRepository->archiveNewsList($year, $month, $pluginArguments);
 	}
 
 	/**
@@ -420,12 +402,7 @@ class NewsService {
 	 * @return array $archiveDate
 	 */
 	public function archiveDateView() {
-		$dql = 'SELECT YEAR(n.archiveDate) year, MONTH(n.archiveDate) month, COUNT(n) cnt'
-				. ' FROM  Lelesys\Plugin\News\Domain\Model\News n'
-				. ' WHERE n.hidden = 0'
-				. ' GROUP BY year, month ORDER BY year DESC';
-
-		$result = $this->doctrintService->runDql($dql, \Doctrine\ORM\Query::HYDRATE_ARRAY);
+		$result = $this->newsRepository->archiveDateView();
 		$archiveDate = array();
 		foreach ($result as $archive) {
 			$archiveDate[$archive['year']][date("F", strtotime(date("d-" . $archive['month'] . "-y")))] = $archive['cnt'];
@@ -440,7 +417,7 @@ class NewsService {
 	 * @return array $listRelatedNews
 	 */
 	public function listRelatedNews(\Lelesys\Plugin\News\Domain\Model\News $news) {
-		$allRelatedNews = $this->listAll();
+		$allRelatedNews = $this->newsRepository->getEnabledNews();
 		$listRelatedNews = array();
 		foreach ($allRelatedNews as $singleNews) {
 			if ($news != $singleNews) {
@@ -467,10 +444,10 @@ class NewsService {
 	 * removes a asset related to a news
 	 *
 	 * @param \Lelesys\Plugin\News\Domain\Model\News $news
-	 * @param \Lelesys\Plugin\News\Domain\Model\Asset $asset
+	 * @param \TYPO3\Media\Domain\Model\Image $asset
 	 * @return void
 	 */
-	public function removeAsset(\Lelesys\Plugin\News\Domain\Model\Asset $asset, \Lelesys\Plugin\News\Domain\Model\News $news) {
+	public function removeAsset(\TYPO3\Media\Domain\Model\Image $asset, \Lelesys\Plugin\News\Domain\Model\News $news) {
 		$news->removeAssets($asset);
 		$this->newsRepository->update($news);
 		$this->persistenceManager->persistAll();
@@ -493,10 +470,10 @@ class NewsService {
 	 * removes a asset related link of the news
 	 *
 	 * @param \Lelesys\Plugin\News\Domain\Model\News $news
-	 * @param \Lelesys\Plugin\News\Domain\Model\File $file
+	 * @param \TYPO3\Media\Domain\Model\Document $file
 	 * @return void
 	 */
-	public function removeRelatedFile(\Lelesys\Plugin\News\Domain\Model\File $File, \Lelesys\Plugin\News\Domain\Model\News $news) {
+	public function removeRelatedFile(\TYPO3\Media\Domain\Model\Document $File, \Lelesys\Plugin\News\Domain\Model\News $news) {
 		$news->removeFiles($File);
 		$this->newsRepository->update($news);
 		$this->persistenceManager->persistAll();
@@ -528,11 +505,12 @@ class NewsService {
 	 * Searches news by title
 	 *
 	 * @param string $searchval
-	 * @return \Lelesys\Plugin\News\Domain\Model\News
+	 * @param array $pluginArguments
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
-	public function searchResult($searchval) {
+	public function searchResult($searchval, $pluginArguments) {
 		if ($searchval !== NULL) {
-			return $this->newsRepository->searchAll($searchval);
+			return $this->newsRepository->searchAll($searchval, $pluginArguments);
 		}
 	}
 
@@ -540,11 +518,29 @@ class NewsService {
 	 * return news for given identifier
 	 *
 	 * @param string $identifier
-	 * @return \Lelesys\Plugin\News\Domain\Model\News $news
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function findById($identifier) {
 		$news = $this->newsRepository->findByIdentifier($identifier);
 		return $news;
+	}
+
+	/**
+	 * return news for given identifier
+	 *
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
+	 */
+	public function listAll() {
+		return $this->newsRepository->getEnabledNewsBySelection();
+	}
+
+	/**
+	 * return news for given identifier
+	 *
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
+	 */
+	public function getEnabledNews() {
+		return $this->newsRepository->getEnabledNews();
 	}
 
 	/**
@@ -568,6 +564,39 @@ class NewsService {
 		ob_clean();
 		flush();
 		readfile($filePath);
+	}
+
+	/**
+	 * Signal for news created
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\News $news The News
+	 * @Flow\Signal
+	 * @return void
+	 */
+	protected function emitNewsCreated(\Lelesys\Plugin\News\Domain\Model\News $news) {
+
+	}
+
+	/**
+	 * Signal for news updated
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\News $news The News
+	 * @Flow\Signal
+	 * @return void
+	 */
+	protected function emitNewsUpdated(\Lelesys\Plugin\News\Domain\Model\News $news) {
+
+	}
+
+	/**
+	 * Signal for news deleted
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\News $news The News
+	 * @Flow\Signal
+	 * @return void
+	 */
+	protected function emitNewsDeleted(\Lelesys\Plugin\News\Domain\Model\News $news) {
+
 	}
 
 }

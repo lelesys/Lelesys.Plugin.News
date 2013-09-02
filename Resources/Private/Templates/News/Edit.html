@@ -3,70 +3,76 @@
 <f:section name="Content">
 	<div class="main-container">
 		<div class="span7">
-			<h2>Edit News</h2>
+			<h2><f:translate id="lelesys.plugin.news.editNews"></f:translate></h2>
 			<f:render partial="FlashMessage" arguments="{severityName: flashmessage}" />
 		</div>
 		<f:form action="update" object="{news}" name="news" enctype="multipart/form-data">
 			<div class="tabbable tab tab-size">
 				<ul class="nav nav-tabs">
-					<li class="active"><a href="#tab1" data-toggle="tab">General</a></li>
-					<li><a href="#tab2" data-toggle="tab">Options</a></li>
-					<li><a href="#tab3" data-toggle="tab">Relations</a></li>
+					<li class="active"><a href="#tab1" data-toggle="tab"><f:translate id="lelesys.plugin.news.general"></f:translate></a></li>
+					<li><a href="#tab2" data-toggle="tab"><f:translate id="lelesys.plugin.news.options"></f:translate></a></li>
+					<li><a href="#tab3" data-toggle="tab"><f:translate id="lelesys.plugin.news.relations"></f:translate></a></li>
 				</ul>
 				<div class="tab-content">
 					<div class="tab-pane active" id="tab1">
 						<div class="control-group">
-							<label for="title">Title</label>
+							<label for="title"><f:translate id="lelesys.plugin.news.title"></f:translate></label>
 							<div class="controls">
 								<f:form.textfield class="span5" property="title" id="title" />
 								<f:render partial="FormErrors" arguments="{for: 'newNews.title'}" />
 							</div>
 						</div>
 						<div class="control-group">
-							<label for="subTitle">Sub title</label>
+							<label for="subTitle"><f:translate id="lelesys.plugin.news.subTitle"></f:translate></label>
 							<div class="controls">
 								<f:form.textarea class="span5" rows="4" cols="5" property="subTitle" id="subTitle" />
 							</div>
 						</div>
 						<div class="control-group">
-							<label for="alternativeTitle">Alternative title</label>
+							<label for="alternativeTitle"><f:translate id="lelesys.plugin.news.alternativeTitle"></f:translate></label>
 							<div class="controls">
 								<f:form.textfield class="span5" property="alternativeTitle" id="alternativeTitle" />
 							</div>
 						</div>
 						<div class="control-group">
-							<label for="authorName">Author name</label>
+							<label for="authorName"><f:translate id="lelesys.plugin.news.authorName"></f:translate></label>
 							<div class="controls">
 								<f:form.textfield class="span5" property="authorName" id="authorName" />
 							</div>
 						</div>
 						<div class="control-group">
-							<label for="authorEmail">Author email</label>
+							<label for="authorEmail"><f:translate id="lelesys.plugin.news.authorEmail"></f:translate></label>
 							<div class="controls">
 								<f:form.textfield class="span5" property="authorEmail" id="authorEmail" />
 								<f:render partial="FormErrors" arguments="{for: 'newNews.authorEmail'}" />
 							</div>
 						</div>
 						<div class="control-group">
-							<label for="dateTime">Date time</label>
+							<label for="dateTime"><f:translate id="lelesys.plugin.news.dateTime"></f:translate></label>
 							<div class="controls">
 								<f:form.textfield type="datetime" value="{news.dateTime -> f:format.date(format: 'm/d/Y')}" property="dateTime" id="dateTime" class="datepicker span5"/>
 							</div>
 						</div>
 						<div class="control-group">
-							<label for="archiveDate">Archive date</label>
+							<label for="startDate"><f:translate id="lelesys.plugin.news.startDate"></f:translate></label>
 							<div class="controls">
-								<f:form.textfield type="datetime" value="{news.archiveDate -> f:format.date(format: 'm/d/Y')}" property="archiveDate" id="archiveDate" class="datepicker span5"/>
+								<f:form.textfield type="datetime" value="{news.startDate -> f:format.date(format: 'm/d/Y')}" property="startDate" id="startDate" class="datepicker span5"/>
 							</div>
 						</div>
 						<div class="control-group">
-							<label for="folder">Folder</label>
+							<label for="endDate"><f:translate id="lelesys.plugin.news.endDate"></f:translate></label>
+							<div class="controls">
+								<f:form.textfield type="datetime" value="{news.endDate -> f:format.date(format: 'm/d/Y')}" property="endDate" id="endDate" class="datepicker span5"/>
+							</div>
+						</div>
+						<div class="control-group">
+							<label for="folder"><f:translate id="lelesys.plugin.news.folder"></f:translate></label>
 							<div class="controls">
 								<f:form.select options="{folders}" optionLabelField="title" id="folders" prependOptionLabel="Select folder" property="folder" class="span5"></f:form.select>
 							</div>
 						</div>
 						<div class="control-group">
-							<label for="news-description">Description</label>
+							<label for="news-description"><f:translate id="lelesys.plugin.news.description"></f:translate></label>
 							<div class="controls span10 nice-edit-size">
 								<f:form.textarea cols="43" rows="10" property="description" id="news-description" />
 							</div>
@@ -74,7 +80,7 @@
 					</div>
 					<div class="tab-pane" id="tab2">
 						<div class="control-group">
-							<label for="categories">Categories</label>
+							<label for="categories"><f:translate id="lelesys.plugin.news.categories"></f:translate></label>
 							<div class="controls">
 								<f:if condition="{newsCategories}">
 									<f:then>
@@ -87,7 +93,7 @@
 							</div>
 						</div>
 						<div class="control-group">
-							<label for="tags">Tags</label>
+							<label for="tags"><f:translate id="lelesys.plugin.news.tags"></f:translate></label>
 							<f:if condition="{newsTags}">
 								<f:then>
 									<f:for each="{newsTags}" as="tag">
@@ -107,7 +113,7 @@
 							</div>
 						</div>
 						<div class="control-group">
-							<label for="relatedNews">Related news</label>
+							<label for="relatedNews"><f:translate id="lelesys.plugin.news.relatedNews"></f:translate></label>
 							<div class="controls">
 								<f:if condition="{relatedNews}">
 									<f:then>
@@ -120,7 +126,7 @@
 							</div>
 						</div>
 						<div class="control-group">
-							<label for="keywords">Keywords ( , )</label>
+							<label for="keywords"><f:translate id="lelesys.plugin.news.keywords"> ( , )</f:translate></label>
 							<div class="controls">
 								<f:form.textarea class="span5" rows="4" cols="5" property="keywords" id="keywords" />
 							</div>
@@ -128,34 +134,26 @@
 					</div>
 					<f:form.hidden value="{news.uuid}" class="news-id" />
 					<div class="tab-pane" id="tab3">
-						<label>Media Element</label>
+						<label><f:translate id="lelesys.plugin.news.mediaElement"></f:translate></label>
 						<div class="accordion" id="accordionOne">
 							<div class="accordion-group" style="display: none;">
 								<div class="accordion-heading">
 									<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionOne" href="#collapse-media-0">
 										Related Media #0
 									</a>
-									<f:form.hidden class="show-hide-value" value="0" name="media[0][hidden]" />
-									<f:link.external uri="javascript:void(0)" class="asset-toggle hide-asset pull-right hide-show-file tooltip-demo" rel="tooltip" title="Hide"><i class="icon-eye-close"></i> </f:link.external>
 								</div>
 								<div id="collapse-media-0" class="accordion-body collapse in">
 									<div class="accordion-inner">
 										<div class="control-group">
-											<label class="control-label" for="originalResource-0">Image</label>
+											<label class="control-label" for="resource-0"><f:translate id="lelesys.plugin.news.image"></f:translate></label>
 											<div class="controls">
-												<f:form.upload name="media[0][originalResource]" id="originalResource-0" />
+												<f:form.upload name="media[0][resource]" id="resource-0" />
 											</div>
 										</div>
 										<div class="control-group">
-											<label class="control-label" for="caption-0">Caption</label>
+											<label class="control-label" for="caption-0"><f:translate id="lelesys.plugin.news.caption"></f:translate></label>
 											<div class="controls">
 												<f:form.textfield class="span5" name="media[0][caption]" id="caption-0" />
-											</div>
-										</div>
-										<div class="control-group">
-											<label class="control-label" for="copyRight-0">Copy right</label>
-											<div class="controls">
-												<f:form.textfield class="span5" name="media[0][copyRight]" id="copyRight-0" />
 											</div>
 										</div>
 									</div>
@@ -165,77 +163,53 @@
 								<div class="accordion-group">
 									<div class="accordion-heading">
 										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionOne" href="#collapse-media-{indexIteration.cycle}">
-											{asset.originalResource.fileName}
+											{asset.resource.fileName}
 										</a>
 										<div class="loader pull-right remove-file" style="display: none; margin-right: 50px;  margin-top: -26px;"><img src="{f:uri.resource(path: 'images/ajax-loader.gif')}"/></div>
 										<f:link.external uri="javascript:void(0)" class="pull-right remove-file remove-media tooltip-demo" rel="tooltip" title="Delete"><i class="icon-trash"></i></f:link.external>
-										<f:if condition="{asset.hidden} == 1">
-											<f:then>
-												<f:form.hidden class="show-hide-value" value="1" name="media[{indexIteration.cycle}][hidden]" />
-												<f:link.external uri="javascript:void(0)" class="asset-toggle show-asset pull-right hide-show-file tooltip-demo" rel="tooltip" title="Show"><i class="icon-eye-open"></i></f:link.external>
-											</f:then>
-											<f:else>
-												<f:form.hidden class="show-hide-value" value="0" name="media[{indexIteration.cycle}][hidden]" />
-												<f:link.external uri="javascript:void(0)" class="asset-toggle hide-asset pull-right hide-show-file tooltip-demo" rel="tooltip" title="Hide"><i class="icon-eye-close"></i> </f:link.external>
-											</f:else>
-										</f:if>
 									</div>
 									<div id="collapse-media-{indexIteration.cycle}" class="accordion-body collapse">
 										<div class="accordion-inner">
 											<div class="control-group">
-												<label class="control-label" for="originalResource">Image</label>
+												<label class="control-label" for="resource"><f:translate id="lelesys.plugin.news.image"></f:translate></label>
 												<div class="controls">
-													<f:form.upload style="display: none;" name="media[{indexIteration.cycle}][originalResource]" id="originalResource-{indexIteration.cycle}" />
-													<img class="thumbnail" src="{f:uri.resource(resource: asset.originalResource)}" alt="{asset.caption}" width="100"/>
+													<f:form.upload style="display: none;" name="media[{indexIteration.cycle}][resource]" id="resource-{indexIteration.cycle}" />
+													<img class="thumbnail" src="{f:uri.resource(resource: asset.resource)}" alt="{asset.caption}" width="100"/>
 												</div>
 											</div>
 											<div class="control-group">
-												<label class="control-label" for="caption">Caption</label>
+												<label class="control-label" for="caption"><f:translate id="lelesys.plugin.news.caption"></f:translate></label>
 												<div class="controls">
 													<f:form.textfield value="{asset.caption}" class="span5" name="media[{indexIteration.cycle}][caption]" id="caption-{indexIteration.cycle}" />
 												</div>
-											</div>
-											<div class="control-group">
-												<label class="control-label" for="copyRight">Copy right</label>
-												<div class="controls">
-													<f:form.textfield value="{asset.copyRight}" class="span5" name="media[{indexIteration.cycle}][copyRight]" id="copyRight-{indexIteration.cycle}" />
-													<f:form.hidden value="{asset.uuid}" class="asset-id" name="media[{indexIteration.cycle}][uuid]" />
-												</div>
+												<f:form.hidden value="{asset}" class="asset-id" name="media[{indexIteration.cycle}][uuid]" />
 											</div>
 										</div>
 									</div>
 								</div>
 							</f:for>
-							<f:link.external uri="javascript:void(0)" class="add-more-media">Add more Media</f:link.external>
+							<f:link.external uri="javascript:void(0)" class="add-more-media"><f:translate id="lelesys.plugin.news.addMoreMedia"></f:translate></f:link.external>
 						</div>
-						<label>Related Files</label>
+						<label><f:translate id="lelesys.plugin.news.relatedFiles"></f:translate></label>
 						<div class="accordion" id="accordionTwo">
 							<div class="accordion-group" style="display: none;">
 								<div class="accordion-heading">
 									<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionTwo" href="#collapse-file-0">
 										Related File #0
 									</a>
-									<f:form.hidden class="show-hide-value" value="0" name="file[0][hidden]" />
-									<f:link.external uri="javascript:void(0)" class="asset-toggle hide-asset pull-right hide-show-file tooltip-demo" rel="tooltip" title="Hide"><i class="icon-eye-close"></i> </f:link.external>
 								</div>
 								<div id="collapse-file-0" class="accordion-body collapse in">
 									<div class="accordion-inner">
 										<div class="control-group">
-											<label class="control-label" for="file-originalResource-0">File</label>
+											<label class="control-label" for="file-resource-0"><f:translate id="lelesys.plugin.news.file"></f:translate></label>
 											<div class="controls">
-												<f:form.upload name="file[0][originalFileResource]" id="file-originalResource-0" />
+												<f:form.upload name="file[0][resource]" id="file-resource-0" />
 											</div>
 										</div>
 										<div class="control-group">
-											<label class="control-label" for="file-title-0">Title</label>
+											<label class="control-label" for="file-title-0"><f:translate id="lelesys.plugin.news.title"></f:translate></label>
 											<div class="controls">
 												<f:form.textfield class="span5" name="file[0][title]" id="file-title-0" />
-											</div>
-										</div>
-										<div class="control-group">
-											<label class="control-label" for="file-description-0">Description</label>
-											<div class="controls">
-												<f:form.textarea rows="4" cols="5" class="span5" name="file[0][description]" id="file-description-0" />
 											</div>
 										</div>
 									</div>
@@ -245,50 +219,34 @@
 								<div class="accordion-group">
 									<div class="accordion-heading">
 										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionTwo" href="#collapse-file-{indexIteration.cycle}">
-											{file.originalFileResource.fileName}
+											{file.resource.fileName}
 										</a>
 										<div class="loader pull-right remove-file" style="display: none; margin-right: 50px;  margin-top: -26px;"><img src="{f:uri.resource(path: 'images/ajax-loader.gif')}"/></div>
 										<f:link.external uri="javascript:void(0)" class="pull-right remove-file delete-file tooltip-demo" rel="tooltip" title="Delete"><i class="icon-trash"></i></f:link.external>
-										<f:if condition="{file.hidden} == 1">
-											<f:then>
-												<f:form.hidden class="show-hide-value" value="1" name="file[{indexIteration.cycle}][hidden]" />
-												<f:link.external uri="javascript:void(0)" class="asset-toggle show-asset tooltip-demo pull-right hide-show-file" rel="tooltip" title="Show"><i class="icon-eye-open"></i></f:link.external>
-											</f:then>
-											<f:else>
-												<f:form.hidden class="show-hide-value" value="0" name="file[{indexIteration.cycle}][hidden]" />
-												<f:link.external uri="javascript:void(0)" class="asset-toggle hide-asset tooltip-demo pull-right hide-show-file" rel="tooltip" title="Hide"><i class="icon-eye-close"></i> </f:link.external>
-											</f:else>
-										</f:if>
 									</div>
 									<div id="collapse-file-{indexIteration.cycle}" class="accordion-body collapse">
 										<div class="accordion-inner">
 											<div class="control-group">
-												<label class="control-label" for="file-originalResource">File</label>
+												<label class="control-label" for="file-resource"><f:translate id="lelesys.plugin.news.file"></f:translate></label>
 												<div class="controls">
-													<f:form.upload style="display: none;" name="file[{indexIteration.cycle}][originalFileResource]" id="file-originalResource-{indexIteration.cycle}" />
-													<img class="thumbnail" src="{f:uri.resource(resource: file.originalFileResource)}" alt="{file.title}" width="100"/>
+													<f:form.upload style="display: none;" name="file[{indexIteration.cycle}][resource]" id="file-resource-{indexIteration.cycle}" />
+													<f:link.action action="downloadFile" arguments="{file: file.resource}" controller="news">{file.resource.fileName}</f:link.action>
 												</div>
 											</div>
 											<div class="control-group">
-												<label class="control-label" for="file-title">Title</label>
+												<label class="control-label" for="file-title"><f:translate id="lelesys.plugin.news.title"></f:translate></label>
 												<div class="controls">
-													<f:form.textfield value="{file.title}" class="span5" name="file[{indexIteration.cycle}][title]" id="file-title-{indexIteration.cycle}" />
-												</div>
-											</div>
-											<div class="control-group">
-												<label class="control-label" for="file-description">Description</label>
-												<div class="controls">
-													<f:form.textarea rows="4" cols="5" class="span5" value="{file.description}" name="file[{indexIteration.cycle}][description]" id="file-description-{indexIteration.cycle}" />
-													<f:form.hidden value="{file.uuid}" class="file-id" name="file[{indexIteration.cycle}][uuid]" />
+													<f:form.textfield value="{file.title}" class="span5" name="file[{indexIteration.cycle}][title]" id="file-title-{resource.cycle}" />
+													<f:form.hidden value="{file}" class="file-id" name="file[{indexIteration.cycle}][uuid]" />
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</f:for>
-							<f:link.external uri="javascript:void(0)" class="add-more-files">Add more Files</f:link.external>
+							<f:link.external uri="javascript:void(0)" class="add-more-files"><f:translate id="lelesys.plugin.news.addMoreFiles"></f:translate></f:link.external>
 						</div>
-						<label>Related Links</label>
+						<label><f:translate id="lelesys.plugin.news.relatedLinks"></f:translate></label>
 						<div class="accordion" id="collapseThree">
 							<div class="accordion-group" style="display: none;">
 								<div class="accordion-heading">
@@ -301,19 +259,19 @@
 								<div id="collapse-link-0" class="accordion-body collapse in">
 									<div class="accordion-inner">
 										<div class="control-group">
-											<label class="control-label" for="relatedLinks-0">Uri</label>
+											<label class="control-label" for="relatedLinks-0"><f:translate id="lelesys.plugin.news.uri"></f:translate></label>
 											<div class="controls">
 												<f:form.textfield class="span5 text-added"  name="relatedLink[0][relatedUri]" id="relatedLinks-0" />
 											</div>
 										</div>
 										<div class="control-group">
-											<label class="control-label" for="relatedLinks-title-0">Title</label>
+											<label class="control-label" for="relatedLinks-title-0"><f:translate id="lelesys.plugin.news.title"></f:translate></label>
 											<div class="controls">
 												<f:form.textfield class="span5"  name="relatedLink[0][relatedUriTitle]" id="relatedLinks-title-0" />
 											</div>
 										</div>
 										<div class="control-group">
-											<label class="control-label" for="relatedLinks-description-0">Description</label>
+											<label class="control-label" for="relatedLinks-description-0"><f:translate id="lelesys.plugin.news.description"></f:translate></label>
 											<div class="controls">
 												<f:form.textarea class="span5" rows="4" cols="5" name="relatedLink[0][relatedUriDescription]" id="relatedLinks-description-0" />
 											</div>
@@ -343,19 +301,19 @@
 									<div id="collapse-link-{indexIteration.cycle}" class="accordion-body collapse">
 										<div class="accordion-inner">
 											<div class="control-group">
-												<label class="control-label" for="relatedLinks-1">Uri</label>
+												<label class="control-label" for="relatedLinks-1"><f:translate id="lelesys.plugin.news.uri"></f:translate></label>
 												<div class="controls">
 													<f:form.textfield class="span5 text-added" value="{link.uri}" name="relatedLink[{indexIteration.cycle}][relatedUri]" id="relatedLinks-{indexIteration.cycle}" />
 												</div>
 											</div>
 											<div class="control-group">
-												<label class="control-label" for="relatedLinks-title-1">Title</label>
+												<label class="control-label" for="relatedLinks-title-1"><f:translate id="lelesys.plugin.news.title"></f:translate></label>
 												<div class="controls">
 													<f:form.textfield class="span5" value="{link.title}" name="relatedLink[{indexIteration.cycle}][relatedUriTitle]" id="relatedLinks-title-{indexIteration.cycle}" />
 												</div>
 											</div>
 											<div class="control-group">
-												<label class="control-label" for="relatedLinks-description-{indexIteration.cycle}">Description</label>
+												<label class="control-label" for="relatedLinks-description-{indexIteration.cycle}"><f:translate id="lelesys.plugin.news.description"></f:translate></label>
 												<div class="controls">
 													<f:form.textarea class="span5" value="{link.description}" rows="4" cols="5" name="relatedLink[{indexIteration.cycle}][relatedUriDescription]" id="relatedLinks-description-{indexIteration.cycle}" />
 													<f:form.hidden value="{link.uuid}" class="link-id" name="relatedLink[{indexIteration.cycle}][uuid]" />
@@ -365,7 +323,7 @@
 									</div>
 								</div>
 							</f:for>
-							<f:link.external uri="javascript:void(0)" class="add-more-related-link">Add more Related Links</f:link.external>
+							<f:link.external uri="javascript:void(0)" class="add-more-related-link"><f:translate id="lelesys.plugin.news.addMoreRelatedLinks"></f:translate></f:link.external>
 						</div>
 					</div>
 				</div>

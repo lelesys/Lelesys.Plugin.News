@@ -1,3 +1,4 @@
+{namespace m=TYPO3\Media\ViewHelpers}
 {namespace neos=TYPO3\Neos\ViewHelpers}
 <f:layout name="DefaultBackend" />
 
@@ -8,9 +9,9 @@
 			<br />
 			<p class="date">
 			<f:if condition="{news.authorName}">
-				Author name:&nbsp;{news.authorName}&nbsp;&nbsp;
+				<f:translate id="lelesys.plugin.news.authorName"></f:translate>:&nbsp;{news.authorName}&nbsp;&nbsp;
 			</f:if>
-			Published on: &nbsp;{news.dateTime -> f:format.date(format: 'j M y, h:i A')}
+			<f:translate id="lelesys.plugin.news.publishedOn"></f:translate>: &nbsp;{news.dateTime -> f:format.date(format: 'j M y, h:i A')}
 			</p>
 			<f:if condition="{assets}">
 				<f:then>
@@ -19,8 +20,8 @@
 						<div class="carousel-inner">
 							<f:for each="{assets}" as="asset">
 								<div class="item">
-									<a href="{f:uri.resource(resource: asset.originalResource)}">
-										<img src="{f:uri.resource(resource: asset.originalResource)}" alt="image" width="500"/>
+									<a href="{f:uri.resource(resource: asset.resource)}">
+										<m:image image="{asset}" maximumWidth="500" maximumHeight="500" alt="sample" allowCropping="true" />
 									</a>
 								</div>
 							</f:for>
@@ -39,10 +40,10 @@
 			<br />
 			<f:if condition="{categories}">
 				<div class="news-rel rel_title category_title">
-					<label>Category </label>
+					<label><f:translate id="lelesys.plugin.news.category"></f:translate> </label>
 					<ul>
 						<f:for each="{categories}" as="category">
-							<li><neos:link.module action="show" path="newsmanagement/category" arguments="{category: category}">{category.title}</neos:link.module></li>
+							<li><neos:link.module action="index" path="newsmanagement/news" arguments="{category: category}">{category.title}</neos:link.module></li>
 						</f:for>
 					</ul>
 				</div>
@@ -50,7 +51,7 @@
 			</f:if>
 			<f:if condition="{relatedNews}">
 				<div class="news-rel rel_title relate-news">
-					<label>Related News</label>
+					<label><f:translate id="lelesys.plugin.news.relatedNews"></f:translate></label>
 					<ul>
 						<f:for each="{relatedNews}" as="newsRelated">
 							<li><f:link.action action="show" arguments="{news: newsRelated}">{newsRelated.title}</f:link.action></li>
@@ -61,7 +62,7 @@
 			</f:if>
 			<f:if condition="{relatedLinkData}">
 				<div class="news-rel rel_title relate-news-links">
-					<label>Related Links</label>
+					<label><f:translate id="lelesys.plugin.news.relatedLinks"></f:translate></label>
 					<ul>
 						<f:for each="{relatedLinkData}" as="linkData">
 							<li>
@@ -90,11 +91,11 @@
 			</f:if>
 			<f:if condition="{relatedFiles}">
 				<div class="news-rel news_listimg rel_title">
-					<label>Related Files</label>
+					<label><f:translate id="lelesys.plugin.news.relatedFiles"></f:translate></label>
 					<ul>
 						<f:for each="{relatedFiles}" as="file">
 							<li>
-							<f:link.action action="downloadFile" arguments="{file: file.originalFileResource}" controller="news">{file.originalFileResource.fileName}</f:link.action>
+							<f:link.action action="downloadFile" arguments="{file: file.resource}" controller="news">{file.resource.fileName}</f:link.action>
 							</li>
 						</f:for>
 					</ul>
@@ -104,22 +105,22 @@
 	</div>
 	<div class="form-actions form-footer">
 		<div class="pull-left">
-			<a href="javascript:history.back()" class="btn neos-button"> Back </a>
+			<a href="javascript:history.back()" class="btn neos-button"> <f:translate id="lelesys.plugin.news.back"></f:translate> </a>
 		</div>
 		<div class="pull-right">
 			<f:link.action action="edit" arguments="{news: news}" class="btn neos-button" title="Click to edit">
 				<i class="icon-pencil icon-white"></i>
-				Edit
+				<f:translate id="lelesys.plugin.news.edit"></f:translate>
 			</f:link.action>
 			<f:link.action action="delete" arguments="{news: news}" class="btn neos-button delete" title="Click to delete">
 				<i class="icon-trash icon-white"></i>
-				Delete
+				<f:translate id="lelesys.plugin.news.delete"></f:translate>
 			</f:link.action>
 			<f:form action="delete" name="deleteItem" id="deleteItem" style="display: none;">
 				<f:form.hidden value="DELETE" />
 			</f:form>
 			<script>
-				var deleteMessage = 'Are you sure you want to delete?';
+				var deleteMessage = '<f:translate id="lelesys.plugin.news.confirmDelete"></f:translate>';
 			</script>
 		</div>
 	</div>

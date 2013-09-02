@@ -9,9 +9,9 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<th>Comment title</th>
-								<th> Related News</th>
-								<th>State</th>
+								<th><f:translate id="lelesys.plugin.news.commentTitle"></f:translate></th>
+								<th><f:translate id="lelesys.plugin.news.relatedNews"></f:translate></th>
+								<th><f:translate id="lelesys.plugin.news.state"></f:translate></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -24,10 +24,10 @@
 								<td>
 							<f:if condition="{comment.setHidden} == 1">
 								<f:then>
-									<span class="badge badge-important">Inactive</span>
+									<span class="badge badge-important"><f:translate id="lelesys.plugin.news.inActive"></f:translate></span>
 								</f:then>
 								<f:else>
-									<span class="badge badge-success">Active</span>
+									<span class="badge badge-success"><f:translate id="lelesys.plugin.news.active"></f:translate></span>
 								</f:else>
 							</f:if>
 							</td>
@@ -66,7 +66,7 @@
 			</f:then>
 			<f:else>
 				<div class="clearfix"></div>
-				<p>No comments created yet.</p>
+				<p><f:translate id="lelesys.plugin.news.noComment"></f:translate></p>
 			</f:else>
 		</f:if>
 	</div>

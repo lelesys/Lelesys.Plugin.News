@@ -1,0 +1,30 @@
+<div class="clearfix">
+	<div class="title-link">
+		<f:link.action action="show" arguments="{news: news}">{news.title}</f:link.action>
+		<p class="date"><f:translate id="lelesys.plugin.news.publishedOn"></f:translate> {news.dateTime -> f:format.date(format: 'j M y, h:i A')}</p>
+	</div>
+	<article>
+		<f:if condition="{assetsForNews}">
+			<f:then>
+				<f:for each="{assetsForNews}" as="assets" key="newsId">
+					<f:if condition="{newsId} == {news.uuid}">
+						<div class="asset-img">
+							<f:for each="{assets}" as="asset" iteration="fooIterator">
+								{f:if(condition: fooIterator.isLast, then: '<img src="{f:uri.resource(resource: asset.resource)}" class="thumbnail" alt="image" width="100" />')}
+							</f:for>
+						</div>
+					</f:if>
+				</f:for>
+			</f:then>
+			<f:else>
+				<div class="asset-img">
+					<img src="{f:uri.resource(path:'images/no_photo.jpg')}" alt="image" width="100" />
+				</div>
+			</f:else>
+		</f:if>
+		<div>
+			<p>{news.subTitle}</p>
+			<p class="date"><f:link.action action="show" arguments="{news: news}"><f:translate id="lelesys.plugin.news.readMore"></f:translate></f:link.action></p>
+		</div>
+	</article>
+</div>

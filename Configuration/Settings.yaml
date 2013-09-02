@@ -1,23 +1,66 @@
 Lelesys:
   Plugin:
     News:
-      # Default template paths. DO NOT remove these lines
       templateRootPath: 'resource://Lelesys.Plugin.News/Private/Templates/'
       partialRootPath: 'resource://Lelesys.Plugin.News/Private/Partials/'
       layoutRootPath: 'resource://Lelesys.Plugin.News/Private/Layouts/'
+      # Default template paths. DO NOT remove these lines
       paginateTemplatePath: 'resource://Lelesys.Plugin.News/Private/Templates/ViewHelpers/Widget/Paginate/Index.html'
-      # Set Lastest News Limit
-      limitLatestNews: ''
-      # Set List News Limit
-      limitAdminListNews: ''
-      limitListNews: ''
-      # Set news item per page
-      newsPerPageAdmin: '8'
       # Set Digital asset width for Thumbail, carousel and icon size
       digitalAsset:
         carouselWidth: 400
         thumbnailWidth: 200
         iconWidth: 60
+        # Node Mapping
+      targetNodeMappings:
+         # From News list to News Detail
+        'newsList':
+          - package: Lelesys.Plugin.News
+            controller: News
+            action: show
+            targetNode: 05bd8b46-04bc-4ce1-af3c-8d5c8f0ce2e1
+            targetNamespace: 'newsDetail'
+
+        # From News latest to News Detail
+        'newsLatest':
+            # News Detail
+          - package: Lelesys.Plugin.News
+            controller: News
+            action: show
+            targetNode: 05bd8b46-04bc-4ce1-af3c-8d5c8f0ce2e1
+            targetNamespace: 'newsDetail'
+
+        # From Tag list to News list
+        'tagList':
+          - package: Lelesys.Plugin.News
+            controller: News
+            action: index
+            targetNode: df340dc6-2df8-2bbf-46dd-df4aa9193193
+            targetNamespace: 'newsList'
+
+        # From Category list to News list
+        'categoryList':
+          - package: Lelesys.Plugin.News
+            controller: News
+            action: index
+            targetNode: df340dc6-2df8-2bbf-46dd-df4aa9193193
+            targetNamespace: 'newsList'
+
+        # From Archive list to News list
+        'archiveList':
+          - package: Lelesys.Plugin.News
+            controller: News
+            action: index
+            targetNode: df340dc6-2df8-2bbf-46dd-df4aa9193193
+            targetNamespace: 'newsList'
+
+        # From Tag list to News list
+        'folderList':
+          - package: Lelesys.Plugin.News
+            controller: News
+            action: index
+            targetNode: df340dc6-2df8-2bbf-46dd-df4aa9193193
+            targetNamespace: 'newsList'
 
 # Backend modules configuration
 TYPO3:
