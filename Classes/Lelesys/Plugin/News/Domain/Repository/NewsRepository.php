@@ -61,6 +61,7 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function getEnabledNewsBySelection($category = NULL, $folder = NULL, $pluginArguments = array(), $tag = NULL) {
+		$limitNews = (int) $pluginArguments['limitNews'];
 		$emConfig = $this->entityManager->getConfiguration();
 		$emConfig->addCustomDatetimeFunction('DATEDIFF', 'Lelesys\Plugin\News\Doctrine\Query\Mysql\DateDiff');
 		$query = $this->createQuery();
@@ -103,7 +104,9 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 					$newsConstraints
 			);
 		}
-
+		if (!empty($limitNews)) {
+			$queryBuilder->setMaxResults($limitNews);
+		}
 		if (!empty($pluginArguments['orderBy'])) {
 			if ($pluginArguments['sortBy'] === 'DESC') {
 				$queryBuilder->orderBy('n.dateTime', 'DESC');

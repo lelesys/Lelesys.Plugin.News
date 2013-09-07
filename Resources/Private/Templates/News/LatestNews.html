@@ -8,15 +8,11 @@
 			<h2><f:translate id="lelesys.plugin.news.latestNews"></f:translate></h2>
 			<f:security.ifAccess resource="TYPO3_Neos_Backend_BackendController">
 				<f:then>
-					<f:if condition="{categories}">
-						<f:then>
-							<f:form action="latestNews" controller="News" name="newsBySelection" id="newsBySelection">
-								<f:form.select options="{categories}" optionLabelField="title" value="{categoryId}" property="category" prependOptionLabel="Select category" id="category" name="category"  />
-								<f:form.select options="{folders}" optionLabelField="title" value="{folderId}" property="folder" prependOptionLabel="Select folder" id="folder" name="folder"  />
-								<f:form.submit class="btn" value="Update"/>
-							</f:form>
-						</f:then>
-					</f:if>
+					<f:form action="latestNews" controller="News" name="newsBySelection" id="newsBySelection">
+						<f:form.select options="{categories}" optionLabelField="title" value="{categoryId}" property="category" prependOptionLabel="Select category" id="category" name="category"  />
+						<f:form.select options="{folders}" optionLabelField="title" value="{folderId}" property="folder" prependOptionLabel="Select folder" id="folder" name="folder"  />
+						<f:form.submit class="btn" value="Update"/>
+					</f:form>
 				</f:then>
 			</f:security.ifAccess>
 			<f:render partial="FlashMessage" arguments="{severityName: flashmessage}" />

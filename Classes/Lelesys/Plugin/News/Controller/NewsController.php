@@ -91,7 +91,7 @@ class NewsController extends AbstractNewsController {
 	/**
 	 * Shows a list of news
 	 *
-	 * @param array $category
+	 * @param string $category
 	 * @param string $folder
 	 * @param string $tag
 	 * @param integer $year
@@ -99,9 +99,6 @@ class NewsController extends AbstractNewsController {
 	 * @return void
 	 */
 	public function indexAction($category = NULL, $folder = NULL, $tag = NULL, $year = NULL, $month = NULL) {
-		if (!empty($category)) {
-			$category = $category['__identity'];
-		}
 		$currentNode = $this->request->getInternalArgument('__node');
 		$pluginArguments = $this->request->getPluginArguments();
 		if (isset($pluginArguments['itemsPerPage'])) {
@@ -175,18 +172,6 @@ class NewsController extends AbstractNewsController {
 		$this->view->assign('allNews', $allNews);
 		$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
 		$this->view->assign('baseUri', $this->bootstrap->getActiveRequestHandler()->getHttpRequest()->getBaseUri());
-	}
-
-	/**
-	 * Shows a list of news by category
-	 * @param \Lelesys\Plugin\News\Domain\Model\Category $category The category
-	 * @return void
-	 */
-	public function newsListByCategoryAction(\Lelesys\Plugin\News\Domain\Model\Category $category) {
-		$folder = NULL;
-		$allNews = $this->newsService->listAllByCategory($category, $folder);
-		$this->view->assign('allNews', $allNews);
-		$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
 	}
 
 	/**

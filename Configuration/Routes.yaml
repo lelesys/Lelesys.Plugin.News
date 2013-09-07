@@ -21,129 +21,14 @@
   appendExceedingArguments: TRUE
 
 -
-  name: 'Edit News'
-  uriPattern: '{node}/edit/{--newsList.news}.{@format}'
-  defaults:
-    '@package': 'TYPO3.Neos'
-    '@controller': 'Frontend\Node'
-    '@format': 'html'
-    '@action': 'show'
-    '--newsList':
-      '@package': 'Lelesys.Plugin.News'
-      '@controller': 'News'
-      '@action': 'edit'
-      '@format': 'html'
-  routeParts:
-    node:
-      handler: TYPO3\Neos\Routing\FrontendNodeRoutePartHandler
-    '--newsList.news':
-      objectType: 'Lelesys\Plugin\News\Domain\Model\News'
-      uriPattern: '{title}'
-  appendExceedingArguments: TRUE
-
--
-  name: 'List News'
-  uriPattern: '{node}/list.{@format}'
-  defaults:
-    '@package': 'TYPO3.Neos'
-    '@controller': 'Frontend\Node'
-    '@format': 'html'
-    '@action': 'show'
-    '--newsList':
-      '@package': 'Lelesys.Plugin.News'
-      '@controller': 'News'
-      '@action': 'index'
-      '@format': 'html'
-  routeParts:
-    node:
-      handler: TYPO3\Neos\Routing\FrontendNodeRoutePartHandler
-  appendExceedingArguments: TRUE
-
--
-  name: 'Create News'
-  uriPattern: '{node}/new.{@format}'
-  defaults:
-    '@package': 'TYPO3.Neos'
-    '@controller': 'Frontend\Node'
-    '@format': 'html'
-    '@action': 'show'
-    '--newsList':
-      '@package': 'Lelesys.Plugin.News'
-      '@controller': 'News'
-      '@action': 'new'
-      '@format': 'html'
-  routeParts:
-    node:
-      handler: TYPO3\Neos\Routing\FrontendNodeRoutePartHandler
-  appendExceedingArguments: TRUE
-
-# category
--
-  name: 'Create Category'
-  uriPattern: '{node}/newcategory.{@format}'
-  defaults:
-    '@package': 'TYPO3.Neos'
-    '@controller': 'Frontend\Node'
-    '@format': 'html'
-    '@action': 'show'
-    '--categoryList':
-      '@package': 'Lelesys.Plugin.News'
-      '@controller': 'Category'
-      '@action': 'new'
-      '@format': 'html'
-  routeParts:
-    node:
-      handler: TYPO3\Neos\Routing\FrontendNodeRoutePartHandler
-  appendExceedingArguments: TRUE
-
--
-  name: 'List Category'
-  uriPattern: '{node}/listcategory.{@format}'
-  defaults:
-    '@package': 'TYPO3.Neos'
-    '@controller': 'Frontend\Node'
-    '@format': 'html'
-    '@action': 'show'
-    '--categoryList':
-      '@package': 'Lelesys.Plugin.News'
-      '@controller': 'Category'
-      '@action': 'index'
-      '@format': 'html'
-  routeParts:
-    node:
-      handler: TYPO3\Neos\Routing\FrontendNodeRoutePartHandler
-  appendExceedingArguments: TRUE
-
--
-  name: 'Edit Category'
-  uriPattern: '{node}/editcategory/{--categoryList.category}.{@format}'
-  defaults:
-    '@package': 'TYPO3.Neos'
-    '@controller': 'Frontend\Node'
-    '@format': 'html'
-    '@action': 'show'
-    '--categoryList':
-      '@package': 'Lelesys.Plugin.News'
-      '@controller': 'Category'
-      '@action': 'edit'
-      '@format': 'html'
-  routeParts:
-    node:
-      handler: TYPO3\Neos\Routing\FrontendNodeRoutePartHandler
-    '--categoryList.category':
-      objectType: 'Lelesys\Plugin\News\Domain\Model\Category'
-      uriPattern: '{title}'
-  appendExceedingArguments: TRUE
-
--
   name: 'Show Category News'
-  uriPattern: '{node}/category/{--categoryList.category}.{@format}'
+  uriPattern: '{node}/category/{--newsList.category}.{@format}'
   defaults:
     '@package': 'TYPO3.Neos'
     '@controller': 'Frontend\Node'
     '@format': 'html'
     '@action': 'show'
-    '--categoryList':
+    '--newsList':
       '@package': 'Lelesys.Plugin.News'
       '@controller': 'News'
       '@action': 'index'
@@ -151,77 +36,17 @@
   routeParts:
     node:
       handler: TYPO3\Neos\Routing\FrontendNodeRoutePartHandler
-    '--categoryList.category':
-      objectType: 'Lelesys\Plugin\News\Domain\Model\Category'
-      uriPattern: '{title}'
-  appendExceedingArguments: TRUE
-
--
-  name: 'Create Folder'
-  uriPattern: '{node}/newfolder.{@format}'
-  defaults:
-    '@package': 'TYPO3.Neos'
-    '@controller': 'Frontend\Node'
-    '@format': 'html'
-    '@action': 'show'
-    '--folderList':
-      '@package': 'Lelesys.Plugin.News'
-      '@controller': 'Folder'
-      '@action': 'new'
-      '@format': 'html'
-  routeParts:
-    node:
-      handler: TYPO3\Neos\Routing\FrontendNodeRoutePartHandler
-  appendExceedingArguments: TRUE
-
--
-  name: 'List Folder'
-  uriPattern: '{node}/listfolder.{@format}'
-  defaults:
-    '@package': 'TYPO3.Neos'
-    '@controller': 'Frontend\Node'
-    '@format': 'html'
-    '@action': 'show'
-    '--folderList':
-      '@package': 'Lelesys.Plugin.News'
-      '@controller': 'Folder'
-      '@action': 'index'
-      '@format': 'html'
-  routeParts:
-    node:
-      handler: TYPO3\Neos\Routing\FrontendNodeRoutePartHandler
-  appendExceedingArguments: TRUE
-
--
-  name: 'Edit Folder'
-  uriPattern: '{node}/editfolder/{--folderList.folder}.{@format}'
-  defaults:
-    '@package': 'TYPO3.Neos'
-    '@controller': 'Frontend\Node'
-    '@format': 'html'
-    '@action': 'show'
-    '--folderList':
-      '@package': 'Lelesys.Plugin.News'
-      '@controller': 'Folder'
-      '@action': 'edit'
-      '@format': 'html'
-  routeParts:
-    node:
-      handler: TYPO3\Neos\Routing\FrontendNodeRoutePartHandler
-    '--folderList.folder':
-      objectType: 'Lelesys\Plugin\News\Domain\Model\Folder'
-      uriPattern: '{title}'
   appendExceedingArguments: TRUE
 
 -
   name: 'Show Folder News'
-  uriPattern: '{node}/folder/{--folderList.tag}.{@format}'
+  uriPattern: '{node}/folder/{--newsList.folder}.{@format}'
   defaults:
     '@package': 'TYPO3.Neos'
     '@controller': 'Frontend\Node'
     '@format': 'html'
     '@action': 'show'
-    '--folderList':
+    '--newsList':
       '@package': 'Lelesys.Plugin.News'
       '@controller': 'News'
       '@action': 'index'
@@ -229,43 +54,18 @@
   routeParts:
     node:
       handler: TYPO3\Neos\Routing\FrontendNodeRoutePartHandler
-    '--folderList.tag':
-      objectType: 'Lelesys\Plugin\News\Domain\Model\Folder'
-      uriPattern: '{title}'
-  appendExceedingArguments: TRUE
-
- # News search
--
-  name: 'News Search'
-  uriPattern: '{node}/searchnews/{--newsSearch.news}.{@format}'
-  defaults:
-    '@package': 'TYPO3.Neos'
-    '@controller': 'Frontend\Node'
-    '@format': 'html'
-    '@action': 'show'
-    '--newsSearch':
-      '@package': 'Lelesys.Plugin.News'
-      '@controller': 'News'
-      '@action': 'show'
-      '@format': 'html'
-  routeParts:
-    node:
-      handler: TYPO3\Neos\Routing\FrontendNodeRoutePartHandler
-    '--newsSearch.news':
-      objectType: 'Lelesys\Plugin\News\Domain\Model\News'
-      uriPattern: '{title}'
   appendExceedingArguments: TRUE
 
 # tag
 -
   name: 'Show Tag News'
-  uriPattern: '{node}/tag/{--tagList.tag}.{@format}'
+  uriPattern: '{node}/tag/{--newsList.tag}.{@format}'
   defaults:
     '@package': 'TYPO3.Neos'
     '@controller': 'Frontend\Node'
     '@format': 'html'
     '@action': 'show'
-    '--tagList':
+    '--newsList':
       '@package': 'Lelesys.Plugin.News'
       '@controller': 'News'
       '@action': 'index'
@@ -273,21 +73,18 @@
   routeParts:
     node:
       handler: TYPO3\Neos\Routing\FrontendNodeRoutePartHandler
-    '--tagList.tag':
-      objectType: 'Lelesys\Plugin\News\Domain\Model\Tag'
-      uriPattern: '{title}'
   appendExceedingArguments: TRUE
 
-# Archive
+# archive
 -
-  name: 'Archive News'
-  uriPattern: '{node}/archive/{--archiveList.year}/{--archiveList.month}.{@format}'
+  name: 'Show Archive News'
+  uriPattern: '{node}/archive/{--newsList.year}/{--newsList.month}.{@format}'
   defaults:
     '@package': 'TYPO3.Neos'
     '@controller': 'Frontend\Node'
     '@format': 'html'
     '@action': 'show'
-    '--archiveList':
+    '--newsList':
       '@package': 'Lelesys.Plugin.News'
       '@controller': 'News'
       '@action': 'index'
