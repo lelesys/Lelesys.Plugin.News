@@ -129,13 +129,6 @@ class NewsController extends AbstractNewsController {
 			}
 			$allNews = $this->newsService->listAllBySelection($category, $folder, $pluginArguments, $tag);
 		}
-		$comments = array();
-		foreach ($news->getComments() as $singleComment) {
-			if ($singleComment->getSetHidden() !== TRUE) {
-				$comments[] = $singleComment;
-			}
-		}
-		$this->view->assign('commets', $comments);
 		$this->view->assign('allNews', $allNews);
 		$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
 		// To show the list of news category
@@ -172,7 +165,6 @@ class NewsController extends AbstractNewsController {
 		if ($folderId !== NULL) {
 			$folder = $folderId;
 		}
-
 		$allNews = $this->newsService->listAllBySelection($category, $folder, $pluginArguments);
 		$this->view->assign('categories', $this->categoryService->getEnabledLatestCategories());
 		$this->view->assign('folders', $this->folderService->listAll());
