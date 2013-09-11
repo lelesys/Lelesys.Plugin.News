@@ -129,6 +129,13 @@ class NewsController extends AbstractNewsController {
 			}
 			$allNews = $this->newsService->listAllBySelection($category, $folder, $pluginArguments, $tag);
 		}
+		$comments = array();
+		foreach ($news->getComments() as $singleComment) {
+			if ($singleComment->getSetHidden() !== TRUE) {
+				$comments[] = $singleComment;
+			}
+		}
+		$this->view->assign('commets', $comments);
 		$this->view->assign('allNews', $allNews);
 		$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
 		// To show the list of news category
@@ -183,14 +190,14 @@ class NewsController extends AbstractNewsController {
 	public function showAction(\Lelesys\Plugin\News\Domain\Model\News $news = NULL) {
 		if ($news !== NULL) {
 			$related = $this->newsService->related($news);
-			$this->view->assign('assets', $related['assets']);
+			$this->view->assign('assetsdetail', $related['assets']);
 			$this->view->assign('comments', $related['comments']);
 			$this->view->assign('relatedFiles', $related['files']);
 			$this->view->assign('relatedLinkData', $this->newsService->show($news));
 			$this->view->assign('relatedNews', $related['news']);
 			$this->view->assign('categories', $related['categories']);
 			$this->view->assign('tags', $news->getTags());
-			$this->view->assign('news', $news);
+			$this->view->assign('newsdetail', $news);
 			$this->view->assign('currentUri', $this->bootstrap->getActiveRequestHandler()->getHttpRequest()->getUri());
 		}
 	}

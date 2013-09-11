@@ -5,9 +5,9 @@
 
 <f:section name="Content">
 	<div class="container-fluid">
-		<f:if condition="{news}">
+		<f:if condition="{newsdetail}">
 			<f:then>
-				<h2><f:link.action action="show" arguments="{news: news}">{news.title}</f:link.action></h2>
+				<h2><f:link.action action="show" arguments="{news: newsdetail}">{newsdetail.title}</f:link.action></h2>
 				<ul class="news-social-bookmark">
 					<li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={currentUri}"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/social-facebook-box-blue-icon.png')}" alt="social-facebook-box-blue-icon.png" width="22"/></a></li>
 					<li><a href="https://twitter.com/share" target="_blank"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/social-twitter-box-blue-icon.png')}" alt="social-twitter-box-blue-icon.png" width="22"/></a></li>
@@ -15,14 +15,14 @@
 					<li><a href="https://plus.google.com/share?url={currentUri}" target="_blank"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/Google-plus-icon.png')}" alt="Google-plus-icon.png" width="22"/></a></li>
 					<li><a href="http://digg.com/submit?&amp;url={currentUri}" target="_blank"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/social-digg-box-white-icon.png')}" alt="social-digg-box-white-icon.png" width="22"/></a></li>
 				</ul>
-				<p class="date"> <f:if condition="{news.authorName}"><f:translate id="lelesys.plugin.news.authorName"></f:translate>&nbsp;{news.authorName}&nbsp;&nbsp;</f:if> <f:translate id="lelesys.plugin.news.publishedOn"></f:translate>&nbsp;{news.dateTime -> f:format.date(format: 'j M y, h:i A')}</p>
+				<p class="date"> <f:if condition="{newsdetail.authorName}"><f:translate id="lelesys.plugin.news.authorName"></f:translate>&nbsp;{newsdetail.authorName}&nbsp;&nbsp;</f:if> <f:translate id="lelesys.plugin.news.publishedOn"></f:translate>&nbsp;{newsdetail.dateTime -> f:format.date(format: 'j M y, h:i A')}</p>
 				<div class="row-fluid">
 					<div class="news_content_left">
-						<f:if condition="{assets}">
+						<f:if condition="{assetsdetail}">
 							<f:then>
 								<div id="myCarousel" class="carousel slide news-slider">
 									<div class="carousel-inner">
-										<f:for each="{assets}" as="asset">
+										<f:for each="{assetsdetail}" as="asset">
 											<div class="item">
 												<a href="{f:uri.resource(resource: asset.resource)}">
 													<m:image image="{asset}" maximumWidth="500" maximumHeight="500" alt="sample" allowCropping="true" />
@@ -30,7 +30,7 @@
 											</div>
 										</f:for>
 									</div>
-									<f:if condition="{assets -> f:count()}>1">
+									<f:if condition="{assetsdetail -> f:count()}>1">
 										<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
 										<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
 									</f:if>
@@ -38,28 +38,28 @@
 							</f:then>
 						</f:if>
 						<div class="news_descript">
-							<p><b>{news.subTitle}</b></p>
-							<p><f:format.raw>{news.description}</f:format.raw></p>
+							<p><b>{newsdetail.subTitle}</b></p>
+							<p><f:format.raw>{newsdetail.description}</f:format.raw></p>
 						</div>
 					</div>
 					<a href="JavaScript:void(0);" id="rate-here">Give your Ratings</a>
 
-					<f:if condition="{news.avgRatings} == 1">
+					<f:if condition="{newsdetail.avgRatings} == 1">
 						<div class="rate rate1"></div>
 					</f:if>
-					<f:if condition="{news.avgRatings} == 2">
+					<f:if condition="{newsdetail.avgRatings} == 2">
 						<div class="rate rate2"></div>
 					</f:if>
-					<f:if condition="{news.avgRatings} == 3">
+					<f:if condition="{newsdetail.avgRatings} == 3">
 						<div class="rate rate3"></div>
 					</f:if>
-					<f:if condition="{news.avgRatings} == 4">
+					<f:if condition="{newsdetail.avgRatings} == 4">
 						<div class="rate rate4"></div>
 					</f:if>
-					<f:if condition="{news.avgRatings} == 5">
+					<f:if condition="{newsdetail.avgRatings} == 5">
 						<div class="rate rate5"></div>
 					</f:if>
-					<f:if condition="{news.avgRatings} == 0">
+					<f:if condition="{newsdetail.avgRatings} == 0">
 						<div class="rate"></div>
 					</f:if>
 					<f:form id="rate-recipe" action="create" name="newRating" controller="Rating">
@@ -70,7 +70,7 @@
 						<f:form.checkbox name="ratePoints[]" value="4" class="styled rate-points"/>
 						<f:form.checkbox name="ratePoints[]" value="5" class="styled rate-points"/>
 						<f:form.hidden property="points" id="points" value=""/>
-						<f:form.hidden property="news" value="{news}" />
+						<f:form.hidden property="news" value="{newsdetail}" />
 						<f:form.submit value="Create" />
 					</f:form>
 					<div class="clearfix"></div>
@@ -155,7 +155,7 @@
 							</ul>
 						</f:if>
 						<h2><f:translate id="lelesys.plugin.news.yourComment"></f:translate></h2>
-						<f:form action="create" controller="Comment" name="newComment" arguments="{news: news}">
+						<f:form action="create" controller="Comment" name="newComment" arguments="{news: newsdetail}">
 							<div class="control-group">
 								<label for="name"><f:translate id="lelesys.plugin.news.name"></f:translate></label>
 								<div class="controls">
