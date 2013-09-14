@@ -359,6 +359,10 @@
 				<source>End Date</source>
 				<target>End Date</target>
 			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.captcha" approved="no">
+				<source>Captcha</source>
+				<target>Captcha</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

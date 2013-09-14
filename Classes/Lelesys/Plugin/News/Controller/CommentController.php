@@ -10,7 +10,6 @@ namespace Lelesys\Plugin\News\Controller;
  *                                                                         */
 
 use TYPO3\Flow\Annotations as Flow;
-
 use TYPO3\Flow\Mvc\Controller\ActionController;
 use \Lelesys\Plugin\News\Domain\Model\Comment;
 
@@ -22,6 +21,8 @@ use \Lelesys\Plugin\News\Domain\Model\Comment;
 class CommentController extends AbstractNewsController {
 
 	/**
+	 * Comment service
+	 *
 	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Service\CommentService
 	 */
@@ -30,11 +31,14 @@ class CommentController extends AbstractNewsController {
 	/**
 	 * Adds the given new comment object to the comment repository
 	 *
+	 * @Flow\Validate(type="\Lelesys\Captcha\Validators\CaptchaValidator", value="$captcha")
+	 * @Flow\Validate(type="NotEmpty", value="$captcha")
 	 * @param \Lelesys\Plugin\News\Domain\Model\Comment $newComment A new comment to add
 	 * @param \Lelesys\Plugin\News\Domain\Model\News $news
+	 * @param string $captcha Captcha for comment
 	 * @return void
 	 */
-	public function createAction(\Lelesys\Plugin\News\Domain\Model\Comment $newComment, \Lelesys\Plugin\News\Domain\Model\News $news) {
+	public function createAction(\Lelesys\Plugin\News\Domain\Model\Comment $newComment, \Lelesys\Plugin\News\Domain\Model\News $news, $captcha) {
 		try {
 			$this->commentService->create($newComment, $news);
 			$array = array("news" => $news);

@@ -2,9 +2,7 @@ jQuery(document).ready(function() {
 
 	//Validation for News form
 	jQuery('#authorEmail').focusout(function() {
-		var email = jQuery('#authorEmail').val();
-		var className = this;
-		var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
+		var email = jQuery('#authorEmail').val(), className = this , emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
 		if (!jQuery(this).val() ) {
 			if (jQuery(this).next('.error').length < 1) {
 			}
@@ -34,9 +32,7 @@ jQuery(document).ready(function() {
 	});
 
 	jQuery('.createNews').click(function() {
-		var email = jQuery('#authorEmail').val();
-		var className = this;
-		var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
+		var email = jQuery('#authorEmail').val(), className = this, emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
 		if (!jQuery('.newsTitle').val()) {
 			if (jQuery('.newsTitle').next('.error').length < 1) {
 				jQuery('.newsTitle').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>This field is required.</div>');
@@ -65,11 +61,8 @@ jQuery(document).ready(function() {
 	//Validation for url
 	jQuery('.text-added').focusout(function(){
 		value = jQuery(this).val();
-		var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
-		var validEmail = emailRegex.test(value);
-		//		var urlregex = new RegExp(/^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/);
-		var urlregex = new RegExp(/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/);
-		var validUrl = urlregex.test(value);
+		var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i), validEmail = emailRegex.test(value),
+		urlregex = new RegExp(/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/), validUrl = urlregex.test(value);
 		if (value) {
 			if ((validUrl == true) || (validEmail == true)) {
 			} else {
@@ -85,7 +78,7 @@ jQuery(document).ready(function() {
 		var title = jQuery('.title-category').val();
 		if(jQuery('.title-category').val()) {
 			jQuery.ajax ({
-				url: checkTitle+'&--adminCategoryList[categoryTitle]='+title,
+				url: checkTitle+'&--categoryList[categoryTitle]='+title,
 				success : function (data){
 					if(data > 0){
 						if (jQuery('.title-category').next('.error').length < 1) {
@@ -109,7 +102,7 @@ jQuery(document).ready(function() {
 		var title = jQuery('.title-category').val();
 		if(jQuery('.title-category').val()) {
 					jQuery.ajax ({
-						url: checkTitle+'&--adminCategoryList[categoryTitle]='+title,
+						url: checkTitle+'&--categoryList[categoryTitle]='+title,
 						success : function (data) {
 							if(data > 0){
 								if (jQuery('.title-category').next('.error').length < 1) {
@@ -174,9 +167,7 @@ jQuery(document).ready(function() {
 	});
 
 	jQuery('#email').focusout(function() {
-		var email = jQuery('#email').val();
-		var className = this;
-		var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
+		var email = jQuery('#email').val(), className = this, emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
 		if (!jQuery(this).val() ) {
 			if (jQuery(this).next('.error').length < 1) {
 			}
@@ -215,8 +206,7 @@ jQuery(document).ready(function() {
 
 	   jQuery('a.delete').click(function(event) {
 		       event.preventDefault();
-		       var link = jQuery(this).attr('href');
-		       var itemDeleteMessage = confirm(deleteMessage);
+		       var link = jQuery(this).attr('href'), itemDeleteMessage = confirm(deleteMessage);
 		       if (itemDeleteMessage == true) {
 			           removeItem(event, link);
 		       }

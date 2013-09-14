@@ -1,4 +1,5 @@
 {namespace m=TYPO3\Media\ViewHelpers}
+{namespace captcha =Lelesys\Captcha\ViewHelpers}
 <f:layout name="Default" />
 
 <f:section name="Title"></f:section>
@@ -154,6 +155,7 @@
 								</f:for>
 							</ul>
 						</f:if>
+						</div>
 						<h2><f:translate id="lelesys.plugin.news.yourComment"></f:translate></h2>
 						<f:form action="create" controller="Comment" name="newComment" arguments="{news: newsdetail}">
 							<div class="control-group">
@@ -178,13 +180,21 @@
 								</div>
 							</div>
 							<div class="control-group">
+								<label for="captcha"><f:translate id="lelesys.plugin.news.captcha"></f:translate></label>
+								<div class="controls captcha-container">
+									<f:form.textfield name="captcha" id="captcha" class="span5"/>
+									<captcha:captcha></captcha:captcha>
+									<f:render partial="FormErrors" arguments="{for: 'newComment.captcha'}" />
+								</div>
+							</div>
+							<div class="control-group">
 								<div class="controls">
 									<f:form.submit class="btn create-comment" value="Create"/>
 								</div>
 							</div>
 						</f:form>
 						<a href="javascript:history.back()"><f:translate id="lelesys.plugin.news.back"></f:translate></a>
-					</div>
+
 				</div>
 			</f:then>
 			<f:else>

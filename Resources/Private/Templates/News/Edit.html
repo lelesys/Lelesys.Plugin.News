@@ -18,7 +18,7 @@
 						<div class="control-group">
 							<label for="title"><f:translate id="lelesys.plugin.news.title"></f:translate></label>
 							<div class="controls">
-								<f:form.textfield class="span5" property="title" id="title" />
+								<f:form.textfield class="span5 newsTitle" property="title" id="title" />
 								<f:render partial="FormErrors" arguments="{for: 'newNews.title'}" />
 							</div>
 						</div>
@@ -329,7 +329,7 @@
 				</div>
 				<div class="control-group">
 					<div class="controls">
-						<f:form.submit class="btn" value="Update" />
+						<f:form.submit class="btn createNews" value="Update" />
 					</div>
 				</div>
 			</div>

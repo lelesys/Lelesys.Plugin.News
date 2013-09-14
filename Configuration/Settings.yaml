@@ -1,4 +1,9 @@
 Lelesys:
+  Captcha:
+    primaryColor:
+      red: 225
+      green: 225
+      blue: 225
   Plugin:
     News:
       templateRootPath: 'resource://Lelesys.Plugin.News/Private/Templates/'
