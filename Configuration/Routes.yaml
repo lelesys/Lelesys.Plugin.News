@@ -1,7 +1,7 @@
 # News
 -
   name: 'Single News'
-  uriPattern: '{node}/show/{--newsDetail.news}.{@format}'
+  uriPattern: '{node}/news/{--newsDetail.news}.{@format}'
   defaults:
     '@package': 'TYPO3.Neos'
     '@controller': 'Frontend\Node'
@@ -17,7 +17,7 @@
       handler: TYPO3\Neos\Routing\FrontendNodeRoutePartHandler
     '--newsDetail.news':
       objectType: 'Lelesys\Plugin\News\Domain\Model\News'
-      uriPattern: '{title}'
+      uriPattern: '{dateTime:Y}/{dateTime:m}/{title}'
   appendExceedingArguments: TRUE
 
 -
