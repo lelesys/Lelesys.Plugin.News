@@ -23,66 +23,88 @@ use TYPO3\Flow\Mvc\Routing\UriBuilder;
 class NewsController extends AbstractNewsController {
 
 	/**
+	 * News service
+	 *
 	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Service\NewsService
 	 */
 	protected $newsService;
 
 	/**
+	 * Category service
+	 *
 	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Service\CategoryService
 	 */
 	protected $categoryService;
 
 	/**
+	 * Tag service
+	 *
 	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Service\TagService
 	 */
 	protected $tagService;
 
 	/**
+	 * Property Mapper
+	 *
 	 * @Flow\Inject
 	 * @var \TYPO3\Flow\Property\PropertyMapper
 	 */
 	protected $propertyMapper;
 
 	/**
+	 * Asset service
+	 *
 	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Service\AssetService
 	 */
 	protected $assetService;
 
 	/**
+	 * File service
+	 *
 	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Service\FileService
 	 */
 	protected $fileService;
 
 	/**
+	 * Link service
+	 *
 	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Service\LinkService
 	 */
 	protected $linkService;
 
 	/**
-	 * @Flow\Inject
-	 * @var \Lelesys\Plugin\News\Domain\Repository\CategoryRepository
-	 */
-	protected $categoryRepository;
-
-	/**
+	 * NodeType Manager
+	 *
 	 * @var \TYPO3\TYPO3CR\Domain\Service\NodeTypeManager
 	 * @Flow\Inject
 	 */
 	protected $nodeTypeManager;
 
 	/**
+	 * Folder service
+	 *
 	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Service\FolderService
 	 */
 	protected $folderService;
 
 	/**
+	 * Comment service
+	 *
+	 * @Flow\Inject
+	 * @var \Lelesys\Plugin\News\Domain\Service\CommentService
+	 */
+	protected $commentService;
+
+	/**
+	 * Bootstrap
+	 *
 	 * @var \TYPO3\Flow\Core\Bootstrap
 	 * @Flow\Inject
 	 */
@@ -91,11 +113,11 @@ class NewsController extends AbstractNewsController {
 	/**
 	 * Shows a list of news
 	 *
-	 * @param string $category
-	 * @param string $folder
-	 * @param string $tag
-	 * @param integer $year
-	 * @param string $month
+	 * @param string $category The category
+	 * @param string $folder The folder
+	 * @param string $tag The tag
+	 * @param integer $year News year
+	 * @param string $month News month
 	 * @return void
 	 */
 	public function indexAction($category = NULL, $folder = NULL, $tag = NULL, $year = NULL, $month = NULL) {
@@ -132,7 +154,6 @@ class NewsController extends AbstractNewsController {
 		$this->view->assign('allNews', $allNews);
 		$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
 		// To show the list of news category
-		$this->view->assign('month', $month);
 		$this->view->assign('itemsPerPage', $itemsPerPage);
 		$this->view->assign('categories', $this->categoryService->getEnabledLatestCategories());
 		$this->view->assign('folders', $this->folderService->listAll());
@@ -140,7 +161,7 @@ class NewsController extends AbstractNewsController {
 	}
 
 	/**
-	 * Shows a list of news
+	 * Shows a list of latest news
 	 *
 	 * @return void
 	 */
@@ -234,10 +255,10 @@ class NewsController extends AbstractNewsController {
 	 * Adds the given new news object to the news repository
 	 *
 	 * @param \Lelesys\Plugin\News\Domain\Model\News $newNews A new news to add
-	 * @param array $media
-	 * @param array $file
-	 * @param array $tags
-	 * @param array $relatedLink
+	 * @param array $media The media
+	 * @param array $file The file
+	 * @param array $tags The tag
+	 * @param array $relatedLink News related links
 	 * @return void
 	 */
 	public function createAction(\Lelesys\Plugin\News\Domain\Model\News $newNews, $media, $file, $relatedLink, $tags) {
@@ -295,10 +316,10 @@ class NewsController extends AbstractNewsController {
 	 * Updates the given news object
 	 *
 	 * @param \Lelesys\Plugin\News\Domain\Model\News $news The news to update
-	 * @param array $media
-	 * @param array $file
-	 * @param array $relatedLink
-	 * @param array $tags
+	 * @param array $media The media
+	 * @param array $file The file
+	 * @param array $relatedLink News related links
+	 * @param array $tags The tag
 	 * @return void
 	 */
 	public function updateAction(\Lelesys\Plugin\News\Domain\Model\News $news, $media, $file, $relatedLink, $tags) {
@@ -330,8 +351,8 @@ class NewsController extends AbstractNewsController {
 	/**
 	 * Removes the asset of news
 	 *
-	 * @param string $newsId
-	 * @param \TYPO3\Media\Domain\Model\Image $assetId
+	 * @param string $newsId News identinfier
+	 * @param \TYPO3\Media\Domain\Model\Image $assetId News asset
 	 * @return void
 	 */
 	public function removeAssetAction($newsId, $assetId) {
@@ -348,8 +369,8 @@ class NewsController extends AbstractNewsController {
 	/**
 	 * Removes the tag of news
 	 *
-	 * @param string $newsId
-	 * @param string $tagId
+	 * @param string $newsId News identinfier
+	 * @param string $tagId News tag
 	 * @return void
 	 */
 	public function removeTagAction($newsId, $tagId) {
@@ -367,8 +388,8 @@ class NewsController extends AbstractNewsController {
 	/**
 	 * Removes the asset of news
 	 *
-	 * @param string $newsId
-	 * @param string $linkId
+	 * @param string $newsId News identinfier
+	 * @param string $linkId News link
 	 * @return void
 	 */
 	public function removeRelatedLinkAction($newsId, $linkId) {
@@ -386,8 +407,8 @@ class NewsController extends AbstractNewsController {
 	/**
 	 * Removes the asset of news
 	 *
-	 * @param string $newsId
-	 * @param \TYPO3\Media\Domain\Model\Document $fileId
+	 * @param string $newsId News identinfier
+	 * @param \TYPO3\Media\Domain\Model\Document $fileId News file
 	 * @return void
 	 */
 	public function removeRelatedFileAction($newsId, $fileId) {
@@ -404,7 +425,7 @@ class NewsController extends AbstractNewsController {
 	/**
 	 * hide's the news
 	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\News $news
+	 * @param \Lelesys\Plugin\News\Domain\Model\News $news The News object
 	 * @return void
 	 */
 	public function hideNewsAction(\Lelesys\Plugin\News\Domain\Model\News $news) {
@@ -420,7 +441,7 @@ class NewsController extends AbstractNewsController {
 	/**
 	 * show's the hidden news
 	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\News $news
+	 * @param \Lelesys\Plugin\News\Domain\Model\News $news The News object
 	 * @return void
 	 */
 	public function showNewsAction(\Lelesys\Plugin\News\Domain\Model\News $news) {
@@ -446,8 +467,8 @@ class NewsController extends AbstractNewsController {
 	/**
 	 * Shows a list of news
 	 *
-	 * @param string $search
-	 * @param integer $recordLimit
+	 * @param string $search Search value
+	 * @param integer $recordLimit record limit for news
 	 * @return void
 	 */
 	public function searchResultAction($search = NULL) {
@@ -475,7 +496,7 @@ class NewsController extends AbstractNewsController {
 	/**
 	 * Downloads the file
 	 *
-	 * @param array $file
+	 * @param array $file The News files
 	 * @return void
 	 */
 	public function downloadFileAction(array $file) {
