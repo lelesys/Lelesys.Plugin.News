@@ -10,10 +10,11 @@ namespace Lelesys\Plugin\News\Controller;
  * of the License, or (at your option) any later version.                  *
  *                                                                         */
 
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Mvc\Controller\ActionController;
 use \Lelesys\Plugin\News\Domain\Model\News;
+use TYPO3\Flow\Mvc\Controller\ActionController;
+use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Mvc\Routing\UriBuilder;
+
 
 /**
  * News controller for the Lelesys.Plugin.News package
@@ -159,6 +160,35 @@ class NewsController extends AbstractNewsController {
 		$this->view->assign('categories', $this->categoryService->getEnabledLatestCategories());
 		$this->view->assign('folders', $this->folderService->listAll());
 		$this->view->assign('baseUri', $this->bootstrap->getActiveRequestHandler()->getHttpRequest()->getBaseUri());
+	}
+
+	/**
+	 * Shows Archive Date menu
+	 *
+	 * @return void
+	 */
+	public function archiveAction() {
+		$currentNode = $this->request->getInternalArgument('__node');
+		if ($this->request->hasArgument('newsBySelection')) {
+			$nodeArgument = $this->request->getArgument('newsBySelection');
+			$currentNode->setProperty('categoryId', $nodeArgument['category']);
+			$currentNode->setProperty('folderId', $nodeArgument['folder']);
+		}
+		$categoryId = $currentNode->getProperty('categoryId');
+		$folderId = $currentNode->getProperty('folderId');
+		$this->view->assign('folderId', $folderId);
+		$this->view->assign('categoryId', $categoryId);
+		$category = NULL;
+		$folder = NULL;
+		if ($categoryId !== NULL) {
+			$category = $categoryId;
+		}
+		if ($folderId !== NULL) {
+			$folder = $folderId;
+		}
+		$this->view->assign('archiveView', $this->newsService->archiveDateView($category, $folder));
+		$this->view->assign('categories', $this->categoryService->getEnabledLatestCategories());
+		$this->view->assign('folders', $this->folderService->listAll());
 	}
 
 	/**
@@ -484,15 +514,6 @@ class NewsController extends AbstractNewsController {
 		$this->view->assign('itemsPerPage', $itemsPerPage);
 		$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
 		$this->view->assign('newsSearched', $allNews);
-	}
-
-	/**
-	 * Shows Archive Date menu
-	 *
-	 * @return void
-	 */
-	public function archiveAction() {
-		$this->view->assign('archiveView', $this->newsService->archiveDateView());
 	}
 
 	/**

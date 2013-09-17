@@ -55,9 +55,9 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 	 * Get the news list by category
 	 *
 	 * @param string $category The category
-	 * @param string $folder
-	 * @param string $tag
-	 * @param array $pluginArguments
+	 * @param string $folder The folder
+	 * @param string $tag The tag
+	 * @param array $pluginArguments Plugin arguments
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function getEnabledNewsBySelection($category = NULL, $folder = NULL, $pluginArguments = array(), $tag = NULL) {
@@ -121,9 +121,9 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 	 * Get the news list by category
 	 *
 	 * @param \Lelesys\Plugin\News\Domain\Model\Category $category The category
-	 * @param \Lelesys\Plugin\News\Domain\Model\Folder $folder
-	 * @param \Lelesys\Plugin\News\Domain\Model\Tag $tag
-	 * @param array $pluginArguments
+	 * @param \Lelesys\Plugin\News\Domain\Model\Folder $folder The folder
+	 * @param \Lelesys\Plugin\News\Domain\Model\Tag $tag The tag
+	 * @param array $pluginArguments Plugin arguments
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function getNewsAdmin(\Lelesys\Plugin\News\Domain\Model\Category $category = NULL, \Lelesys\Plugin\News\Domain\Model\Folder $folder = NULL, $pluginArguments = array(), \Lelesys\Plugin\News\Domain\Model\Tag $tag = NULL) {
@@ -147,11 +147,11 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 	}
 
 	/**
-	 * Shows list of news as per month.
+	 * Shows list of news as per year and month.
 	 *
-	 * @param integer $year
-	 * @param string $month
-	 * @param array $pluginArguments
+	 * @param integer $year News year
+	 * @param string $month News month
+	 * @param array $pluginArguments news plugin arguments
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function archiveNewsList($year, $month, $pluginArguments) {
@@ -186,8 +186,8 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 	/**
 	 * Finds all the news by search value
 	 *
-	 * @param string $searchval
-	 * @param array $pluginArguments
+	 * @param string $searchval Search value
+	 * @param array $pluginArguments Plugin arguments
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface
 	 */
 	public function searchAll($searchval, $pluginArguments) {
@@ -220,9 +220,11 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 	/**
 	 * Finds all the news by year and month
 	 *
+	 * @param string $category The category
+	 * @param string $folder The folder
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface
 	 */
-	public function archiveDateView() {
+	public function archiveDateView($category = NULL, $folder = NULL) {
 		$emConfig = $this->entityManager->getConfiguration();
 		$emConfig->addCustomDatetimeFunction('DATEDIFF', 'Lelesys\Plugin\News\Doctrine\Query\Mysql\DateDiff');
 		$emConfig->addCustomDatetimeFunction('YEAR', 'Lelesys\Plugin\News\Doctrine\Query\Mysql\Year');
@@ -230,15 +232,39 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 
 		$query = $this->createQuery();
 		$queryBuilder = ObjectAccess::getProperty($query, 'queryBuilder', TRUE);
+		$constraints = array();
+		if (!empty($folder)) {
+			$constraints[] = 'n.folder = ' . "'" . $folder . "'";
+		}
+		if (!empty($category)) {
+			$constraints[] = 'c.Persistence_Object_Identifier IN (' . "'" . $category . "'" . ')';
+		}
+		$newsConstraints = '';
+		$count = count($constraints);
+		$newCount = 1;
+		foreach ($constraints as $contraint) {
+			if ($count > $newCount) {
+				$newsConstraints .= $contraint . ' OR ';
+			} else {
+				$newsConstraints .= $contraint;
+			}
+			$newCount++;
+		}
 		$queryBuilder
 				->resetDQLParts()
 				->select('YEAR(n.dateTime) year, MONTH(n.dateTime) month, COUNT(n) cnt')
 				->from('Lelesys\Plugin\News\Domain\Model\News', 'n')
+				->leftjoin('n.categories', 'c')
 				->where('(n.startDate is null and n.endDate >= current_date()
 					OR DATEDIFF(n.startDate,current_date())<1 and n.endDate >= current_date()
 					OR n.endDate is null and n.startDate is null
-					OR n.endDate is null and n.startDate <= current_date() and DATEDIFF(n.startDate,current_date())<1) AND n.hidden = 0')
-				->groupBy('year, month')
+					OR n.endDate is null and n.startDate <= current_date() and DATEDIFF(n.startDate,current_date())<1) AND n.hidden = 0');
+		if ((!empty($category)) || (!empty($folder))) {
+			$queryBuilder->andWhere(
+					$newsConstraints
+			);
+		}
+		$queryBuilder->groupBy('year, month')
 				->orderBy('year', 'DESC');
 
 		return $query->execute();

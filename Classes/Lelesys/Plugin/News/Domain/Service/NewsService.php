@@ -15,73 +15,95 @@ use \Lelesys\Plugin\News\Domain\Model\News;
 use \TYPO3\Media\Domain\Model\Image;
 
 /**
- * News controller for the Lelesys.Plugin.News package
+ * News service for the Lelesys.Plugin.News package
  *
  * @Flow\Scope("singleton")
  */
 class NewsService {
 
 	/**
+	 * News repository
+	 *
 	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Repository\NewsRepository
 	 */
 	protected $newsRepository;
 
 	/**
+	 * Image repository
+	 *
 	 * @Flow\Inject
 	 * @var \TYPO3\Media\Domain\Repository\ImageRepository
 	 */
 	protected $imageRepository;
 
 	/**
+	 * Asset repository
+	 *
 	 * @Flow\Inject
 	 * @var \TYPO3\Media\Domain\Repository\AssetRepository
 	 */
 	protected $assetRepository;
 
 	/**
+	 * Link service
+	 *
 	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Service\LinkService
 	 */
 	protected $linkService;
 
 	/**
+	 * Property Mapper
+	 *
 	 * @Flow\Inject
 	 * @var \TYPO3\Flow\Property\PropertyMapper
 	 */
 	protected $propertyMapper;
 
 	/**
+	 * Resource Manager
+	 *
 	 * @Flow\Inject
 	 * @var \TYPO3\Flow\Resource\ResourceManager
 	 */
 	protected $resourceManager;
 
 	/**
+	 * Asset service
+	 *
 	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Service\AssetService
 	 */
 	protected $assetService;
 
 	/**
+	 * Tag service
+	 *
 	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Service\TagService
 	 */
 	protected $tagService;
 
 	/**
+	 * File service
+	 *
 	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Service\FileService
 	 */
 	protected $fileService;
 
 	/**
+	 * Folder service
+	 *
 	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Service\FolderService
 	 */
 	protected $folderService;
 
 	/**
+	 * Settings
+	 *
 	 * @var array
 	 */
 	protected $settings;
@@ -97,12 +119,15 @@ class NewsService {
 	}
 
 	/**
+	 * Doctrine service
+	 *
 	 * @Flow\Inject
 	 * @var \TYPO3\Flow\Persistence\Doctrine\Service
 	 */
 	protected $doctrintService;
 
 	/**
+	 * Persistence Manager
 	 * @Flow\Inject
 	 * @var \TYPO3\Flow\Persistence\PersistenceManagerInterface
 	 */
@@ -112,9 +137,9 @@ class NewsService {
 	 * Shows the list of news by category
 	 *
 	 * @param string $category The category
-	 * @param string $folder
-	 * @param string $tag
-	 * @param array $pluginArguments
+	 * @param string $folder The folder
+	 * @param string $tag The tag
+	 * @param array $pluginArguments Plugin arguments
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function listAllBySelection($category = NULL, $folder = NULL, $pluginArguments = array(), $tag = NULL) {
@@ -125,9 +150,9 @@ class NewsService {
 	 * Shows the list of news by category
 	 *
 	 * @param \Lelesys\Plugin\News\Domain\Model\Category $category The category
-	 * @param \Lelesys\Plugin\News\Domain\Model\Folder $folder
-	 * @param \Lelesys\Plugin\News\Domain\Model\Tag $tag
-	 * @param array $pluginArguments
+	 * @param \Lelesys\Plugin\News\Domain\Model\Folder $folder The folder
+	 * @param \Lelesys\Plugin\News\Domain\Model\Tag $tag The tag
+	 * @param array $pluginArguments Plugin arguments
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function listAllNewsAdmin(\Lelesys\Plugin\News\Domain\Model\Category $category = NULL, \Lelesys\Plugin\News\Domain\Model\Folder $folder = NULL) {
@@ -137,7 +162,7 @@ class NewsService {
 	/**
 	 * List of related news
 	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\News $news
+	 * @param \Lelesys\Plugin\News\Domain\Model\News $news The news
 	 * @return array $related
 	 */
 	public function related(\Lelesys\Plugin\News\Domain\Model\News $news) {
@@ -178,8 +203,8 @@ class NewsService {
 
 	/**
 	 * News assets
-	 * @param \Lelesys\Plugin\News\Domain\Model\News $newsObj
 	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\News $newsObj The news object to get assets
 	 * @return array $newsAssets
 	 */
 	public function assetsForNews($newsObj) {
@@ -197,7 +222,8 @@ class NewsService {
 
 	/**
 	 * Shows a list of news
-	 * @param \Lelesys\Plugin\News\Domain\Model\News $news
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\News $news The news
 	 * @return array $combineLinkData
 	 */
 	public function show(\Lelesys\Plugin\News\Domain\Model\News $news) {
@@ -228,9 +254,9 @@ class NewsService {
 	 * Adds the given new news object to the news repository
 	 *
 	 * @param \Lelesys\Plugin\News\Domain\Model\News $newNews A new news to add
-	 * @param array $media
-	 * @param array $file
-	 * @param array $tags
+	 * @param array $media News media
+	 * @param array $file News file
+	 * @param array $tags News tag
 	 * @param array $relatedLink
 	 * @return void
 	 */
@@ -292,10 +318,10 @@ class NewsService {
 	 * Updates the given news object
 	 *
 	 * @param \Lelesys\Plugin\News\Domain\Model\News $news The news to update
-	 * @param array $media
-	 * @param array $file
-	 * @param array $tags
-	 * @param array $relatedLink
+	 * @param array $media  News media
+	 * @param array $file News file
+	 * @param array $tags News tags
+	 * @param array $relatedLink News related links
 	 * @return void
 	 */
 	public function update(\Lelesys\Plugin\News\Domain\Model\News $news, $media, $file, $relatedLink, $tags) {
@@ -387,9 +413,9 @@ class NewsService {
 	/**
 	 * Shows list of news as per month.
 	 *
-	 * @param integer $year
-	 * @param string $month
-	 * @param array $pluginArguments
+	 * @param integer $year News year
+	 * @param string $month News month
+	 * @param array $pluginArguments News plugin arguments
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function archiveNewsList($year, $month, $pluginArguments) {
@@ -399,10 +425,12 @@ class NewsService {
 	/**
 	 * Archive Date menu view according to year and month
 	 *
-	 * @return array $archiveDate
+	 * @param string $category The category
+	 * @param string $folder The folder
+	 * @return array $archiveDate News archive date
 	 */
-	public function archiveDateView() {
-		$result = $this->newsRepository->archiveDateView();
+	public function archiveDateView($category = NULL, $folder = NULL) {
+		$result = $this->newsRepository->archiveDateView($category, $folder);
 		$archiveDate = array();
 		foreach ($result as $archive) {
 			$archiveDate[$archive['year']][date("F", strtotime(date("d-" . $archive['month'] . "-y")))] = $archive['cnt'];
@@ -413,7 +441,7 @@ class NewsService {
 	/**
 	 * List all related news
 	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\News $news
+	 * @param \Lelesys\Plugin\News\Domain\Model\News $news The news
 	 * @return array $listRelatedNews
 	 */
 	public function listRelatedNews(\Lelesys\Plugin\News\Domain\Model\News $news) {
@@ -430,8 +458,8 @@ class NewsService {
 	/**
 	 * removes a tags related to a news
 	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\News $news
-	 * @param \Lelesys\Plugin\News\Domain\Model\Tag $tag
+	 * @param \Lelesys\Plugin\News\Domain\Model\News $news The news
+	 * @param \Lelesys\Plugin\News\Domain\Model\Tag $tag News tag to be removed
 	 * @return void
 	 */
 	public function removeTag(\Lelesys\Plugin\News\Domain\Model\Tag $tag, \Lelesys\Plugin\News\Domain\Model\News $news) {
@@ -443,8 +471,8 @@ class NewsService {
 	/**
 	 * removes a asset related to a news
 	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\News $news
-	 * @param \TYPO3\Media\Domain\Model\Image $asset
+	 * @param \Lelesys\Plugin\News\Domain\Model\News $news The news
+	 * @param \TYPO3\Media\Domain\Model\Image $asset News asset to be removed
 	 * @return void
 	 */
 	public function removeAsset(\TYPO3\Media\Domain\Model\Image $asset, \Lelesys\Plugin\News\Domain\Model\News $news) {
@@ -456,8 +484,8 @@ class NewsService {
 	/**
 	 * removes a asset related link of the news
 	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\News $news
-	 * @param \Lelesys\Plugin\News\Domain\Model\Link $link
+	 * @param \Lelesys\Plugin\News\Domain\Model\News $news The News
+	 * @param \Lelesys\Plugin\News\Domain\Model\Link $link News link to be removed
 	 * @return void
 	 */
 	public function removeRelatedLink(\Lelesys\Plugin\News\Domain\Model\Link $link, \Lelesys\Plugin\News\Domain\Model\News $news) {
@@ -469,8 +497,8 @@ class NewsService {
 	/**
 	 * removes a asset related link of the news
 	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\News $news
-	 * @param \TYPO3\Media\Domain\Model\Document $file
+	 * @param \Lelesys\Plugin\News\Domain\Model\News $news The news
+	 * @param \TYPO3\Media\Domain\Model\Document $file News file to be removed
 	 * @return void
 	 */
 	public function removeRelatedFile(\TYPO3\Media\Domain\Model\Document $File, \Lelesys\Plugin\News\Domain\Model\News $news) {
@@ -482,7 +510,7 @@ class NewsService {
 	/**
 	 * hide's the news
 	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\News $news
+	 * @param \Lelesys\Plugin\News\Domain\Model\News $news News to hide
 	 * @return void
 	 */
 	public function hideNews(\Lelesys\Plugin\News\Domain\Model\News $news) {
@@ -493,7 +521,7 @@ class NewsService {
 	/**
 	 * shows's the hidden news
 	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\News $news
+	 * @param \Lelesys\Plugin\News\Domain\Model\News $news News to display
 	 * @return void
 	 */
 	public function showNews(\Lelesys\Plugin\News\Domain\Model\News $news) {
@@ -504,8 +532,8 @@ class NewsService {
 	/**
 	 * Searches news by title
 	 *
-	 * @param string $searchval
-	 * @param array $pluginArguments
+	 * @param string $searchval Search value
+	 * @param array $pluginArguments News plugin arguments
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function searchResult($searchval, $pluginArguments) {
@@ -517,7 +545,7 @@ class NewsService {
 	/**
 	 * return news for given identifier
 	 *
-	 * @param string $identifier
+	 * @param string $identifier News identifier
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function findById($identifier) {
@@ -546,7 +574,7 @@ class NewsService {
 	/**
 	 * Downloads the file
 	 *
-	 * @param array $file
+	 * @param array $file The file
 	 * @return void
 	 */
 	public function downloadFile(array $file) {
