@@ -14,13 +14,15 @@ use TYPO3\Flow\Annotations as Flow;
 use \Lelesys\Plugin\News\Domain\Model\Comment;
 
 /**
- * Asset controller for the Lelesys.Plugin.News package
+ * Comment Service for the Lelesys.Plugin.News package
  *
  * @Flow\Scope("singleton")
  */
 class CommentService {
 
 	/**
+	 * The comment repository
+	 *
 	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Repository\CommentRepository
 	 */
@@ -36,10 +38,31 @@ class CommentService {
 	}
 
 	/**
+	 * Returns non hidden comments of news
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\News $newsObj The news object
+	 * @return array $enabledComments
+	 */
+	public function getEnabledComments($newsObj) {
+		$enabledComments = array();
+		foreach ($newsObj as $news) {
+			$comments = $news->getComments();
+			if (count($comments) > 0) {
+				foreach ($comments as $comment) {
+					if ($comment->getSetHidden() !== TRUE) {
+						$enabledComments[$news->getUuid()][] = $comment;
+					}
+				}
+			}
+		}
+		return $enabledComments;
+	}
+
+	/**
 	 * Adds the given new comment object to the comment repository
 	 *
 	 * @param \Lelesys\Plugin\News\Domain\Model\Comment $newComment A new comment to add
-	 * @param \Lelesys\Plugin\News\Domain\Model\News $news
+	 * @param \Lelesys\Plugin\News\Domain\Model\News $news The news
 	 * @return void
 	 */
 	public function create(\Lelesys\Plugin\News\Domain\Model\Comment $newComment, \Lelesys\Plugin\News\Domain\Model\News $news) {
@@ -60,9 +83,9 @@ class CommentService {
 	}
 
 	/**
-	 * return asset for given identifier
+	 * Return asset for given identifier
 	 *
-	 * @param string $identifier
+	 * @param string $identifier comment identifier
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function findById($identifier) {
@@ -73,7 +96,7 @@ class CommentService {
 	/**
 	 * hide's the category
 	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\Comment $comment
+	 * @param \Lelesys\Plugin\News\Domain\Model\Comment $comment The comment to unpublish
 	 * @return void
 	 */
 	public function unPublishComment(\Lelesys\Plugin\News\Domain\Model\Comment $comment) {
@@ -84,7 +107,7 @@ class CommentService {
 	/**
 	 * shows's the hidden category
 	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\Comment $category
+	 * @param \Lelesys\Plugin\News\Domain\Model\Comment $category The comment to publish
 	 * @return void
 	 */
 	public function publishComment(\Lelesys\Plugin\News\Domain\Model\Comment $comment) {

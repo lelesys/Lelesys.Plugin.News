@@ -154,6 +154,7 @@ class NewsController extends AbstractNewsController {
 		$this->view->assign('allNews', $allNews);
 		$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
 		// To show the list of news category
+		$this->view->assign('newsComments', $this->commentService->getEnabledComments($allNews));
 		$this->view->assign('itemsPerPage', $itemsPerPage);
 		$this->view->assign('categories', $this->categoryService->getEnabledLatestCategories());
 		$this->view->assign('folders', $this->folderService->listAll());
@@ -187,6 +188,7 @@ class NewsController extends AbstractNewsController {
 			$folder = $folderId;
 		}
 		$allNews = $this->newsService->listAllBySelection($category, $folder, $pluginArguments);
+		$this->view->assign('newsLatestComments', $this->commentService->getEnabledComments($allNews));
 		$this->view->assign('categories', $this->categoryService->getEnabledLatestCategories());
 		$this->view->assign('folders', $this->folderService->listAll());
 		$this->view->assign('allNews', $allNews);
