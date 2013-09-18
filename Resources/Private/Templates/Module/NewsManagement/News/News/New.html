@@ -22,7 +22,7 @@
 							<div class="control-group">
 								<label for="subTitle"><f:translate id="lelesys.plugin.news.subTitle"></f:translate></label>
 								<div class="controls">
-									<f:form.textarea class="" rows="4" cols="5" property="subTitle" id="subTitle" />
+									<f:form.textarea rows="4" cols="5" property="subTitle" id="subTitle" />
 								</div>
 							</div>
 							<div class="control-group">
@@ -36,20 +36,20 @@
 							<div class="control-group">
 								<label for="authorName"><f:translate id="lelesys.plugin.news.authorName"></f:translate></label>
 								<div class="controls">
-									<f:form.textfield class="" property="authorName" id="authorName" />
+									<f:form.textfield property="authorName" id="authorName" />
 								</div>
 							</div>
 							<div class="control-group">
 								<label for="authorEmail"><f:translate id="lelesys.plugin.news.authorEmail"></f:translate></label>
 								<div class="controls">
-									<f:form.textfield class="" property="authorEmail" id="authorEmail" />
+									<f:form.textfield property="authorEmail" id="authorEmail" />
 									<f:render partial="FormErrors" arguments="{for: 'newNews.authorEmail'}" />
 								</div>
 							</div>
 							<div class="control-group">
 								<label for="alternativeTitle"><f:translate id="lelesys.plugin.news.alternativeTitle"></f:translate></label>
 								<div class="controls">
-									<f:form.textfield class="" property="alternativeTitle" id="alternativeTitle" />
+									<f:form.textfield property="alternativeTitle" id="alternativeTitle" />
 								</div>
 							</div>
 							<div class="control-group">
@@ -76,6 +76,13 @@
 									<f:form.select options="{folders}" optionLabelField="title" id="folders" prependOptionLabel="Select folder" property="folder"></f:form.select>
 								</div>
 							</div>
+							<div class="control-group">
+								<label for="hidden"><f:translate id="lelesys.plugin.news.hidden"></f:translate></label>
+								<div class="controls">
+									<f:form.checkbox property="hidden" value="1" />
+									<f:render partial="FormErrors" arguments="{for: 'newNews.hidden'}" />
+								</div>
+							</div>
 						</fieldset>
 					</div>
 					<div class="tab-pane" id="tab2">
@@ -85,10 +92,10 @@
 								<div class="controls">
 									<f:if condition="{newsCategories}">
 										<f:then>
-											<f:form.select class="" options="{newsCategories}" optionLabelField="title" id="categories" property="categories" multiple="true" size="7"></f:form.select>
+											<f:form.select options="{newsCategories}" optionLabelField="title" id="categories" property="categories" multiple="true" size="7"></f:form.select>
 										</f:then>
 										<f:else>
-											<f:form.select disabled="disabled" class="" options="{newsCategories}" optionLabelField="title" id="categories" property="categories" size="7"></f:form.select>
+											<f:form.select disabled="disabled" options="{newsCategories}" optionLabelField="title" id="categories" property="categories" size="7"></f:form.select>
 										</f:else>
 									</f:if>
 								</div>
@@ -106,10 +113,10 @@
 								<div class="controls">
 									<f:if condition="{related}">
 										<f:then>
-											<f:form.select class="" options="{related}" optionLabelField="title" id="relatedNews" property="relatedNews" multiple="true" size="7"></f:form.select>
+											<f:form.select options="{related}" optionLabelField="title" id="relatedNews" property="relatedNews" multiple="true" size="7"></f:form.select>
 										</f:then>
 										<f:else>
-											<f:form.select disabled="disabled" class="" options="{related}" optionLabelField="title" id="relatedNews" property="relatedNews" size="7"></f:form.select>
+											<f:form.select disabled="disabled" options="{related}" optionLabelField="title" id="relatedNews" property="relatedNews" size="7"></f:form.select>
 										</f:else>
 									</f:if>
 								</div>
@@ -117,7 +124,7 @@
 							<div class="control-group">
 								<label for="keywords"><f:translate id="lelesys.plugin.news.keywords"> ( , )</f:translate></label>
 								<div class="controls">
-									<f:form.textarea class="" rows="4" cols="5" property="keywords" id="keywords" />
+									<f:form.textarea rows="4" cols="5" property="keywords" id="keywords" />
 								</div>
 							</div>
 						</fieldset>
@@ -199,13 +206,13 @@
 											<div class="control-group">
 												<label class="control-label" for="relatedLinks-title-0"><f:translate id="lelesys.plugin.news.title"></f:translate></label>
 												<div class="controls">
-													<f:form.textfield class=""  name="relatedLink[0][relatedUriTitle]" id="relatedLinks-title-0" />
+													<f:form.textfield name="relatedLink[0][relatedUriTitle]" id="relatedLinks-title-0" />
 												</div>
 											</div>
 											<div class="control-group">
 												<label class="control-label" for="relatedLinks-description-0"><f:translate id="lelesys.plugin.news.description"></f:translate></label>
 												<div class="controls">
-													<f:form.textarea class="" rows="4" cols="5" name="relatedLink[0][relatedUriDescription]" id="relatedLinks-description-0" />
+													<f:form.textarea rows="4" cols="5" name="relatedLink[0][relatedUriDescription]" id="relatedLinks-description-0" />
 												</div>
 											</div>
 										</div>

@@ -1,7 +1,8 @@
 <?php
+
 namespace Lelesys\Plugin\News\Domain\Model;
 
-/*                                                                         *
+/* *
  * This script belongs to the package "Lelesys.Plugin.News".               *
  *                                                                         *
  * It is free software; you can redistribute it and/or modify it under     *
@@ -32,6 +33,13 @@ class Comment {
 	 * @Flow\Validate(type="EmailAddress")
 	 */
 	protected $email;
+
+	/**
+	 * The url
+	 * @var string
+	 * @ORM\Column(nullable=true)
+	 */
+	protected $url;
 
 	/**
 	 * The message
@@ -89,6 +97,25 @@ class Comment {
 	 */
 	public function setName($name) {
 		$this->name = $name;
+	}
+
+	/**
+	 * Get the Comment's url
+	 *
+	 * @return string The Comment's url
+	 */
+	public function getUrl() {
+		return $this->url;
+	}
+
+	/**
+	 * Sets this Comment's url
+	 *
+	 * @param string $url The Comment's url
+	 * @return void
+	 */
+	public function setUrl($url) {
+		$this->url = $url;
 	}
 
 	/**
@@ -206,4 +233,5 @@ class Comment {
 	}
 
 }
+
 ?>

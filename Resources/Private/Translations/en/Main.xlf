@@ -363,6 +363,10 @@
 				<source>Captcha</source>
 				<target>Captcha</target>
 			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.hidden" approved="no">
+				<source>Hide news</source>
+				<target>Hide news</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

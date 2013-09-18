@@ -170,7 +170,7 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 				->where('n.startDate is null and n.endDate >= current_date()
 					OR DATEDIFF(n.startDate,current_date())<1 and n.endDate >= current_date()
 					OR n.endDate is null and n.startDate is null
-					OR n.endDate is null and n.startDate <= current_date() and DATEDIFF(n.startDate,current_date())<1')
+					OR n.endDate is null and n.startDate <= current_date() and DATEDIFF(n.startDate,current_date())<1 AND n.hidden = 0')
 				->andWhere('YEAR(n.dateTime) = ' . $year . ' AND MONTH(n.dateTime) = ' . date("n", strtotime($month)) . '');
 
 		if (!empty($pluginArguments['orderBy'])) {
