@@ -38,7 +38,7 @@ class CommentController extends AbstractNewsController {
 	 * @param string $captcha Captcha for comment
 	 * @return void
 	 */
-	public function createAction(\Lelesys\Plugin\News\Domain\Model\Comment $newComment, \Lelesys\Plugin\News\Domain\Model\News $news, $captcha) {
+	public function createAction(\Lelesys\Plugin\News\Domain\Model\Comment $newComment, \Lelesys\Plugin\News\Domain\Model\News $news, $captcha = NULL) {
 		try {
 			$this->commentService->create($newComment, $news);
 			$array = array("news" => $news);
