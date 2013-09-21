@@ -73,6 +73,20 @@ jQuery(document).ready(function() {
 		}
 	});
 
+	//Validation for news comment url
+	jQuery('.comment-url').focusout(function(){
+		value = jQuery(this).val();
+		urlregex = new RegExp(/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/), validUrl = urlregex.test(value);
+		if (value) {
+			if ((validUrl == true)) {
+			} else {
+				if (jQuery('.comment-url').next('.error').length < 1) {
+					jQuery('.comment-url').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>Please specify a valid Url.</div>');
+				}
+			}
+		}
+	});
+
 	//Validation for category form
 	jQuery('.title-category').focusout(function(){
 		var title = jQuery('.title-category').val();
@@ -101,20 +115,20 @@ jQuery(document).ready(function() {
 	jQuery('.createCategory').click(function() {
 		var title = jQuery('.title-category').val();
 		if(jQuery('.title-category').val()) {
-					jQuery.ajax ({
-						url: checkTitle+'&--categoryList[categoryTitle]='+title,
-						success : function (data) {
-							if(data > 0){
-								if (jQuery('.title-category').next('.error').length < 1) {
-									jQuery('.title-category').after('<div class="alert alert-error form-error error category-title-error"><button type="button" class="close" data-dismiss="alert">×</button>Category title already exist</div>');
-								}
-								return false;
-							} else {
-								jQuery('.title-category').next('.error').remove();
-								jQuery('#news-category-form').submit();
-							}
+			jQuery.ajax ({
+				url: checkTitle+'&--categoryList[categoryTitle]='+title,
+				success : function (data) {
+					if(data > 0){
+						if (jQuery('.title-category').next('.error').length < 1) {
+							jQuery('.title-category').after('<div class="alert alert-error form-error error category-title-error"><button type="button" class="close" data-dismiss="alert">×</button>Category title already exist</div>');
 						}
-					});
+						return false;
+					} else {
+						jQuery('.title-category').next('.error').remove();
+						jQuery('#news-category-form').submit();
+					}
+				}
+			});
 		} else {
 			if (jQuery('.title-category').next('.error').length < 1) {
 				jQuery('.title-category').after('<div class="alert alert-error form-error error category-title-error"><button type="button" class="close" data-dismiss="alert">×</button>This field is required</div>');
@@ -218,9 +232,9 @@ jQuery(document).ready(function() {
 		       jQuery('#showHideItem').attr('action', link);
 		       jQuery('#showHideItem').submit();
 	   }
-		jQuery('a.show-hide-item').click(function(event) {
+	jQuery('a.show-hide-item').click(function(event) {
 		       event.preventDefault();
-				var link = jQuery(this).attr('href');
-			   showHideItem(event, link);
+		var link = jQuery(this).attr('href');
+		showHideItem(event, link);
 	   });
 });
