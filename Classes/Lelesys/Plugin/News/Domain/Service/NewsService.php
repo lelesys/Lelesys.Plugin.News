@@ -134,6 +134,14 @@ class NewsService {
 	protected $persistenceManager;
 
 	/**
+	 * Security Context
+	 *
+	 * @var \TYPO3\Flow\Security\Context
+	 * @Flow\Inject
+	 */
+	protected $securityContext;
+
+	/**
 	 * Shows the list of news by category
 	 *
 	 * @param string $category The category
@@ -261,6 +269,10 @@ class NewsService {
 	 * @return void
 	 */
 	public function create(\Lelesys\Plugin\News\Domain\Model\News $newNews, $media, $file, $relatedLink, $tags) {
+		$currentUser = $this->securityContext->getAccount()->getParty();
+		if ($currentUser !== NULL) {
+			$newNews->setCreatedBy($currentUser);
+		}
 		if (!empty($tags['title'])) {
 			$tagsArray = array_unique(\TYPO3\Flow\Utility\Arrays::trimExplode(',', strtolower($tags['title'])));
 			foreach ($tagsArray as $tag) {
@@ -325,6 +337,10 @@ class NewsService {
 	 * @return void
 	 */
 	public function update(\Lelesys\Plugin\News\Domain\Model\News $news, $media, $file, $relatedLink, $tags) {
+		$currentUser = $this->securityContext->getAccount()->getParty();
+		if ($currentUser !== NULL) {
+			$news->setCreatedBy($currentUser);
+		}
 		if (!empty($tags['title'])) {
 			$tagsArray = array_unique(\TYPO3\Flow\Utility\Arrays::trimExplode(',', strtolower($tags['title'])));
 			foreach ($tagsArray as $tag) {

@@ -29,6 +29,31 @@ class CommentService {
 	protected $commentRepository;
 
 	/**
+	 * The email notification service
+	 *
+	 * @Flow\Inject
+	 * @var \Lelesys\Plugin\News\Service\Notification
+	 */
+	protected $emailNotification;
+
+	/**
+	 * Settings
+	 *
+	 * @var array
+	 */
+	protected $settings;
+
+	/**
+	 * Injects settings
+	 *
+	 * @param array $settings
+	 * @return void
+	 */
+	public function injectSettings(array $settings) {
+		$this->settings = $settings;
+	}
+
+	/**
 	 * Shows a list of comments
 	 *
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
@@ -67,7 +92,13 @@ class CommentService {
 	 */
 	public function create(\Lelesys\Plugin\News\Domain\Model\Comment $newComment, \Lelesys\Plugin\News\Domain\Model\News $news) {
 		$newComment->setNews($news);
+		if ($this->settings['comment']['publish'] !== NULL) {
+			$newComment->setSetHidden($this->settings['comment']['publish']);
+		}
 		$this->commentRepository->add($newComment);
+		if ($news->getCreatedBy()->getPrimaryElectronicAddress()->getIdentifier() !== NULL) {
+			$this->emailNotification->sendCommentApprovalNotification($newComment, $news);
+		}
 		$this->emitCommentCreated($newComment);
 	}
 

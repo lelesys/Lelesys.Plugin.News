@@ -22,6 +22,7 @@ class News {
 
 	/**
 	 * The title
+	 *
 	 * @var string
 	 * @Flow\Validate(type="NotEmpty")
 	 */
@@ -29,6 +30,7 @@ class News {
 
 	/**
 	 * The sub title
+	 *
 	 * @ORM\Column(type="text")
 	 * @var string
 	 */
@@ -36,18 +38,21 @@ class News {
 
 	/**
 	 * The alternative title
+	 *
 	 * @var string
 	 */
 	protected $alternativeTitle;
 
 	/**
 	 * The author name
+	 *
 	 * @var string
 	 */
 	protected $authorName;
 
 	/**
 	 * The author email
+	 *
 	 * @var string
 	 * @Flow\Validate(type="EmailAddress")
 	 */
@@ -55,31 +60,28 @@ class News {
 
 	/**
 	 * The created date
+	 *
 	 * @var \DateTime
 	 */
 	protected $createdDate;
 
 	/**
 	 * The hidden
+	 *
 	 * @var boolean
 	 */
 	protected $hidden;
 
 	/**
 	 * The deleted
+	 *
 	 * @var boolean
 	 */
 	protected $deleted;
 
 	/**
-	 * The created by
-	 * @var \Lelesys\Plugin\News\Domain\Model\User
-	 * @ORM\ManyToOne(inversedBy="news")
-	 */
-	protected $createdBy;
-
-	/**
 	 * The description
+	 *
 	 * @ORM\Column(type="text")
 	 * @var string
 	 */
@@ -87,12 +89,14 @@ class News {
 
 	/**
 	 * The date time
+	 *
 	 * @var \DateTime
 	 */
 	protected $dateTime;
 
 	/**
 	 * The archive date
+	 *
 	 * @var \DateTime
 	 * @ORM\Column(nullable=true)
 	 */
@@ -100,6 +104,7 @@ class News {
 
 	/**
 	 * The categories
+	 *
 	 * @var \Doctrine\Common\Collections\Collection<Lelesys\Plugin\News\Domain\Model\Category>
 	 * @ORM\ManyToMany(inversedBy="news", cascade={"persist"})
 	 */
@@ -107,6 +112,7 @@ class News {
 
 	/**
 	 * The tags
+	 *
 	 * @var \Doctrine\Common\Collections\Collection<Lelesys\Plugin\News\Domain\Model\Tag>
 	 * @ORM\ManyToMany(inversedBy="news", cascade={"persist"})
 	 */
@@ -114,6 +120,7 @@ class News {
 
 	/**
 	 * The keywords
+	 *
 	 * @ORM\Column(type="text")
 	 * @var string
 	 */
@@ -121,6 +128,7 @@ class News {
 
 	/**
 	 * The assets
+	 *
 	 * @var \Doctrine\Common\Collections\Collection<\TYPO3\Media\Domain\Model\Image>
 	 * @ORM\ManyToMany
 	 */
@@ -128,6 +136,7 @@ class News {
 
 	/**
 	 * The files
+	 *
 	 * @var \Doctrine\Common\Collections\Collection<\TYPO3\Media\Domain\Model\Document>
 	 * @ORM\ManyToMany
 	 */
@@ -135,6 +144,7 @@ class News {
 
 	/**
 	 * The related links
+	 *
 	 * @var \Doctrine\Common\Collections\Collection<Lelesys\Plugin\News\Domain\Model\Link>
 	 * @ORM\ManyToMany
 	 */
@@ -142,6 +152,7 @@ class News {
 
 	/**
 	 * The end date
+	 *
 	 * @var \DateTime
 	 * @ORM\Column(nullable=true)
 	 */
@@ -149,6 +160,7 @@ class News {
 
 	/**
 	 * The related news
+	 *
 	 * @var \Doctrine\Common\Collections\Collection<Lelesys\Plugin\News\Domain\Model\News>
 	 * @ORM\ManyToMany
 	 * @ORM\JoinTable(inverseJoinColumns={@ORM\JoinColumn(name="related_news_id")})
@@ -157,12 +169,14 @@ class News {
 
 	/**
 	 * The is top news
+	 *
 	 * @var boolean
 	 */
 	protected $isTopNews;
 
 	/**
 	 * The updated date
+	 *
 	 * @var \DateTime
 	 * @ORM\Column(nullable=true)
 	 */
@@ -170,6 +184,7 @@ class News {
 
 	/**
 	 * The comments
+	 *
 	 * @var \Doctrine\Common\Collections\Collection<Lelesys\Plugin\News\Domain\Model\Comment>
 	 * @ORM\OneToMany(mappedBy="news" , cascade={"persist", "remove"})
 	 * @ORM\OrderBy({"createdDate" = "DESC"})
@@ -178,6 +193,7 @@ class News {
 
 	/**
 	 * The folder
+	 *
 	 * @var \Lelesys\Plugin\News\Domain\Model\Folder
 	 * @ORM\ManyToOne(inversedBy="news")
 	 */
@@ -185,18 +201,32 @@ class News {
 
 	/**
 	 * The start date
+	 *
 	 * @var \DateTime
 	 * @ORM\Column(nullable=true)
 	 */
 	protected $startDate;
 
 	/**
+	 * The Created By
+	 *
+	 * @var \TYPO3\Party\Domain\Model\AbstractParty
+	 * @ORM\ManyToOne
+	 */
+	protected $createdBy;
+
+	/**
 	 * The ratings
+	 *
 	 * @var \Doctrine\Common\Collections\Collection<Lelesys\Plugin\News\Domain\Model\Rating>
 	 * @ORM\OneToMany(mappedBy="news", cascade={"persist", "detach"})
 	 */
 	protected $ratings;
 
+	/**
+	 * The constructor for news
+	 *
+	 */
 	public function __construct() {
 		$this->relatedNews = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->relatedLinks = new \Doctrine\Common\Collections\ArrayCollection();
@@ -361,25 +391,6 @@ class News {
 	 */
 	public function setDeleted($deleted) {
 		$this->deleted = $deleted;
-	}
-
-	/**
-	 * Get the News's created by
-	 *
-	 * @return \Lelesys\Plugin\News\Domain\Model\User The News's created by
-	 */
-	public function getCreatedBy() {
-		return $this->createdBy;
-	}
-
-	/**
-	 * Sets this News's created by
-	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\User $createdBy The News's created by
-	 * @return void
-	 */
-	public function setCreatedBy($createdBy) {
-		$this->createdBy = $createdBy;
 	}
 
 	/**
@@ -795,6 +806,25 @@ class News {
 	}
 
 	/**
+	 * Get the News's created by
+	 *
+	 * @return \TYPO3\Party\Domain\Model\AbstractParty The News's created by
+	 */
+	public function getCreatedBy() {
+		return $this->createdBy;
+	}
+
+	/**
+	 * Sets this News's created by
+	 *
+	 * @param \TYPO3\Party\Domain\Model\AbstractParty $createdBy The News's created by
+	 * @return void
+	 */
+	public function setCreatedBy($createdBy) {
+		$this->createdBy = $createdBy;
+	}
+
+	/**
 	 * Returns the ratings
 	 *
 	 * @return integer $avgRating
@@ -810,6 +840,24 @@ class News {
 			$avgRating = round($totalPoints / count($ratings));
 		}
 		return $avgRating;
+	}
+
+	/**
+	 * Returns the visible comments
+	 *
+	 * @return array $visibleComments
+	 */
+	public function getVisibleComments() {
+		$visibleComments = array();
+		$comments = $this->getComments();
+		if (count($comments) > 0) {
+			foreach ($comments as $comment) {
+				if ($comment->getSetHidden() !== TRUE) {
+					$visibleComments[] = $comment;
+				}
+			}
+		}
+		return $visibleComments;
 	}
 
 }

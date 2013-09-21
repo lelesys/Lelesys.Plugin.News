@@ -22,6 +22,7 @@ class Comment {
 
 	/**
 	 * The name
+	 *
 	 * @var string
 	 * @Flow\Validate(type="NotEmpty")
 	 */
@@ -29,6 +30,7 @@ class Comment {
 
 	/**
 	 * The email
+	 *
 	 * @var string
 	 * @Flow\Validate(type="EmailAddress")
 	 */
@@ -36,6 +38,7 @@ class Comment {
 
 	/**
 	 * The url
+	 *
 	 * @var string
 	 * @ORM\Column(nullable=true)
 	 */
@@ -43,6 +46,7 @@ class Comment {
 
 	/**
 	 * The message
+	 *
 	 * @var string
 	 * @Flow\Validate(type="NotEmpty")
 	 * @ORM\Column(type="text")
@@ -51,31 +55,55 @@ class Comment {
 
 	/**
 	 * The created date
+	 *
 	 * @var \DateTime
 	 */
 	protected $createdDate;
 
 	/**
 	 * The updated date
+	 *
 	 * @var \DateTime
 	 */
 	protected $updatedDate;
 
 	/**
 	 * The set hidden
+	 *
 	 * @var boolean
 	 */
 	protected $setHidden;
 
 	/**
+	 * The children comment
+	 *
+	 * @var \Doctrine\Common\Collections\Collection<\Lelesys\Plugin\News\Domain\Model\Comment>
+	 * @ORM\OneToMany(mappedBy="replyTo", cascade={"persist", "detach"})
+	 */
+	protected $children;
+
+	/**
+	 * The Reply to comment
+	 *
+	 * @var \Lelesys\Plugin\News\Domain\Model\Comment
+	 * @ORM\ManyToOne(inversedBy="children", cascade={"persist", "detach"})
+	 */
+	protected $replyTo;
+
+	/**
 	 * The news
+	 *
 	 * @var \Lelesys\Plugin\News\Domain\Model\News
 	 * @ORM\ManyToOne(inversedBy="comments")
 	 */
 	protected $news;
 
+	/**
+	 * The Constructor for comment
+	 *
+	 */
 	public function __construct() {
-		$this->setSetHidden(0);
+		$this->setSetHidden(1);
 		$this->setCreatedDate(new \DateTime());
 		$this->setUpdatedDate(new \DateTime());
 	}
@@ -230,6 +258,44 @@ class Comment {
 	 */
 	public function setNews($news) {
 		$this->news = $news;
+	}
+
+	/**
+	 * Gets the comment children
+	 *
+	 * @return \Doctrine\Common\Collections\Collection The Comment's children
+	 */
+	public function getChildren() {
+		return $this->children;
+	}
+
+	/**
+	 * Sets the comment children
+	 *
+	 * @param \Doctrine\Common\Collections\Collection $children
+	 * @return void
+	 */
+	public function setChildren(\Doctrine\Common\Collections\Collection $children) {
+		$this->children = $children;
+	}
+
+	/**
+	 * Get the Comment's reply to comment
+	 *
+	 * @return \Lelesys\Plugin\News\Domain\Model\Comment The Comment's Reply to comment
+	 */
+	public function getReplyTo() {
+		return $this->replyTo;
+	}
+
+	/**
+	 * Sets this Comment's reply to comment
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\Comment $replyTo The Comment's reply to comment
+	 * @return void
+	 */
+	public function setReplyTo(\Lelesys\Plugin\News\Domain\Model\Comment $replyTo = NULL) {
+		$this->replyTo = $replyTo;
 	}
 
 }

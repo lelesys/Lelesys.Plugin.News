@@ -6,6 +6,11 @@ Lelesys:
       blue: 225
   Plugin:
     News:
+      notifications:
+        emailTemplatePath: 'Plugins/Lelesys.Plugin.News/Resources/Private/Templates/Emails/CommentApproval.txt'
+      # set comment publish to 0 for enabling comment before admin approval
+      comment:
+        publish:
       templateRootPath: 'resource://Lelesys.Plugin.News/Private/Templates/'
       partialRootPath: 'resource://Lelesys.Plugin.News/Private/Partials/'
       layoutRootPath: 'resource://Lelesys.Plugin.News/Private/Layouts/'
