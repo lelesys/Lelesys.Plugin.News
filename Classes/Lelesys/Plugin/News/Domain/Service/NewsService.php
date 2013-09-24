@@ -303,6 +303,7 @@ class NewsService {
 			if (!empty($fileSource['resource']['name'])) {
 				$resource = $this->propertyMapper->convert($fileSource['resource'], 'TYPO3\Flow\Resource\Resource');
 				$file = new \TYPO3\Media\Domain\Model\Document($resource);
+				$file->setTitle($fileSource['title']);
 				$this->assetRepository->add($file);
 				$newNews->addFiles($file);
 			}
@@ -381,6 +382,7 @@ class NewsService {
 				if (!empty($fileSource['resource']['name'])) {
 					$resource = $this->propertyMapper->convert($fileSource['resource'], 'TYPO3\Flow\Resource\Resource');
 					$file = new \TYPO3\Media\Domain\Model\Document($resource);
+					$file->setTitle($fileSource['title']);
 					$this->assetRepository->add($file);
 					$news->addFiles($file);
 				}
