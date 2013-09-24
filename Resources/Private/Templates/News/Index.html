@@ -30,6 +30,14 @@
 									<f:render partial="NewsList" arguments="{news: news, assetsForNews: assetsForNews}" />
 									<div class="news_footer">
 										<f:if condition="{news.authorName}"><span class="date">author name: &nbsp;{news.authorName}</span></f:if>
+										<f:if condition="{news.visibleComments}">
+											<f:then>
+												<a href="{f:uri.action(action: 'show', arguments: '{news: news}')}#comments"><span class="icon-comments"></span> <f:count>{news.visibleComments}</f:count> comments</a>
+											</f:then>
+											<f:else>
+												<a href="{f:uri.action(action: 'show', arguments: '{news: news}')}#comments"><span class="icon-comments"></span> 0 comments</a>
+											</f:else>
+										</f:if>
 										<span><f:link.action action="edit" arguments="{news: news}" rel="tooltip" title="Edit" class="tooltip-demo"><i class="icon-pencil"></i><f:translate id="lelesys.plugin.news.edit"></f:translate></f:link.action></span>
 										<span>
 											<f:link.action action="delete" arguments="{news: news}" rel="tooltip" title="Delete" class="tooltip-demo delete"><i class="icon-trash"></i><f:translate id="lelesys.plugin.news.delete"></f:translate></f:link.action>
