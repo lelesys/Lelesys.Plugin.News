@@ -96,7 +96,8 @@ class CommentService {
 			$newComment->setSetHidden($this->settings['comment']['publish']);
 		}
 		$this->commentRepository->add($newComment);
-		if ($news->getCreatedBy()->getPrimaryElectronicAddress() !== NULL) {
+
+		if ($news->getCreatedBy() !== NULL) {
 			$this->emailNotification->sendCommentApprovalNotification($newComment, $news);
 		}
 		$this->emitCommentCreated($newComment);
