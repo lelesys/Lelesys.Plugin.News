@@ -108,20 +108,20 @@ jQuery(document).ready(function() {
 	jQuery('.createCategory').click(function() {
 		var title = jQuery('.title-category').val();
 		if(jQuery('.title-category').val()) {
-					jQuery.ajax ({
-						url: checkTitle+'?moduleArguments[%40package]=lelesys.plugin.news&moduleArguments[%40controller]=category&moduleArguments[%40action]=checkTitle&moduleArguments[categoryTitle]='+title,
-						success : function (data) {
-							if(data > 0){
-								if (jQuery('.title-category').next('.error').length < 1) {
-									jQuery('.title-category').after('<div class="alert alert-error form-error error category-title-error"><button type="button" class="close" data-dismiss="alert">×</button>Category title already exist</div>');
-								}
-								return false;
-							} else {
-								jQuery('.title-category').next('.error').remove();
-								jQuery('#news-category-form').submit();
-							}
+			jQuery.ajax ({
+				url: checkTitle+'?moduleArguments[%40package]=lelesys.plugin.news&moduleArguments[%40controller]=category&moduleArguments[%40action]=checkTitle&moduleArguments[categoryTitle]='+title,
+				success : function (data) {
+					if(data > 0){
+						if (jQuery('.title-category').next('.error').length < 1) {
+							jQuery('.title-category').after('<div class="alert alert-error form-error error category-title-error"><button type="button" class="close" data-dismiss="alert">×</button>Category title already exist</div>');
 						}
-					});
+						return false;
+					} else {
+						jQuery('.title-category').next('.error').remove();
+						jQuery('#news-category-form').submit();
+					}
+				}
+			});
 		} else {
 			if (jQuery('.title-category').next('.error').length < 1) {
 				jQuery('.title-category').after('<div class="alert alert-error form-error error category-title-error"><button type="button" class="close" data-dismiss="alert">×</button>This field is required</div>');
@@ -228,9 +228,20 @@ jQuery(document).ready(function() {
 		       jQuery('#showHideItem').attr('action', link);
 		       jQuery('#showHideItem').submit();
 	   }
-		jQuery('a.show-hide-item').click(function(event) {
+	jQuery('a.show-hide-item').click(function(event) {
 		       event.preventDefault();
-				var link = jQuery(this).attr('href');
-			   showHideItem(event, link);
+		var link = jQuery(this).attr('href');
+		showHideItem(event, link);
 	   });
+
+	// filter by folder and category for news
+	$('#module-folder').change(function() {
+		$('.folder-id').val($(this).val());
+		$(this).parent('form').submit();
+	});
+	$('#module-category').change(function() {
+		$('.cat-id').val($(this).val());
+		$(this).parent('form').submit();
+	});
+
 });

@@ -298,6 +298,15 @@ class Comment {
 		$this->replyTo = $replyTo;
 	}
 
+	/**
+	 * Returns uuid of this object
+	 *
+	 * @return string
+	 */
+	public function getUuid() {
+		return $this->Persistence_Object_Identifier;
+	}
+
 }
 
 ?>

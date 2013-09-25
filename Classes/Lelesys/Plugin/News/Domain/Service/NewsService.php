@@ -159,8 +159,6 @@ class NewsService {
 	 *
 	 * @param \Lelesys\Plugin\News\Domain\Model\Category $category The category
 	 * @param \Lelesys\Plugin\News\Domain\Model\Folder $folder The folder
-	 * @param \Lelesys\Plugin\News\Domain\Model\Tag $tag The tag
-	 * @param array $pluginArguments Plugin arguments
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function listAllNewsAdmin(\Lelesys\Plugin\News\Domain\Model\Category $category = NULL, \Lelesys\Plugin\News\Domain\Model\Folder $folder = NULL) {

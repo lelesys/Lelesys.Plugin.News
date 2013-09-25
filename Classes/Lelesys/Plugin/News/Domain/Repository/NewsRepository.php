@@ -122,26 +122,50 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 	 *
 	 * @param \Lelesys\Plugin\News\Domain\Model\Category $category The category
 	 * @param \Lelesys\Plugin\News\Domain\Model\Folder $folder The folder
-	 * @param \Lelesys\Plugin\News\Domain\Model\Tag $tag The tag
-	 * @param array $pluginArguments Plugin arguments
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
-	public function getNewsAdmin(\Lelesys\Plugin\News\Domain\Model\Category $category = NULL, \Lelesys\Plugin\News\Domain\Model\Folder $folder = NULL, $pluginArguments = array(), \Lelesys\Plugin\News\Domain\Model\Tag $tag = NULL) {
+	public function getNewsAdmin(\Lelesys\Plugin\News\Domain\Model\Category $category = NULL, \Lelesys\Plugin\News\Domain\Model\Folder $folder = NULL) {
+
+		$emConfig = $this->entityManager->getConfiguration();
+		$emConfig->addCustomDatetimeFunction('DATEDIFF', 'Lelesys\Plugin\News\Doctrine\Query\Mysql\DateDiff');
 		$query = $this->createQuery();
-		$constraint = array();
+
+		$queryBuilder = ObjectAccess::getProperty($query, 'queryBuilder', TRUE);
+
+		$constraints = array();
 		if (!empty($folder)) {
-			$constraint[] = $query->equals('folder', $folder);
+			$constraints[] = 'n.folder = ' . "'" . $folder->getUuid() . "'";
 		}
 		if (!empty($category)) {
-			$constraint[] = $query->contains('categories', $category);
+			$constraints[] = 'c.Persistence_Object_Identifier IN (' . "'" . $category->getUuid() . "'" . ')';
 		}
-		if ((!empty($category)) || (!empty($folder))) {
-			$query = $query->matching(
-					$query->logicalOr(
-							$constraint
-					)
+		$newsConstraints = '';
+		$count = count($constraints);
+		$newCount = 1;
+		foreach ($constraints as $contraint) {
+			if ($count > $newCount) {
+				$newsConstraints .= $contraint . ' OR ';
+			} else {
+				$newsConstraints .= $contraint;
+			}
+			$newCount++;
+		}
+		$queryBuilder
+				->resetDQLParts()
+				->select('n')
+				->from('Lelesys\Plugin\News\Domain\Model\News', 'n')
+				->leftjoin('n.categories', 'c')
+				->leftjoin('n.tags', 't')
+				->where('n.startDate is null and n.endDate >= current_date()
+					OR DATEDIFF(n.startDate,current_date())<1 and n.endDate >= current_date()
+					OR n.endDate is null and n.startDate is null
+					OR n.endDate is null and n.startDate <= current_date() and DATEDIFF(n.startDate,current_date())<1');
+		if ((!empty($category)) || (!empty($folder)) || (!empty($tag))) {
+			$queryBuilder->andWhere(
+					$newsConstraints
 			);
 		}
+		$queryBuilder->orderBy('n.dateTime', 'DESC');
 
 		return $query->execute();
 	}

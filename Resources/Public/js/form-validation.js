@@ -237,4 +237,9 @@ jQuery(document).ready(function() {
 		var link = jQuery(this).attr('href');
 		showHideItem(event, link);
 	   });
+
+	jQuery('a.comment-reply').click(function() {
+		var commentId = jQuery(this).next('.comment-reply-id').attr('data-comment-uuid');
+		jQuery('#reply-comment .hidden-replyto').attr('value',commentId);
+	});
 });

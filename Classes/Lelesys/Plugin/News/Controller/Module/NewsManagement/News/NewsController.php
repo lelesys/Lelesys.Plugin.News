@@ -71,14 +71,18 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 	/**
 	 * Shows a list of news
 	 *
-	 * @param \Lelesys\Plugin\News\Domain\Model\Category $category
-	 * @param \Lelesys\Plugin\News\Domain\Model\Folder $folder
+	 * @param \Lelesys\Plugin\News\Domain\Model\Category $category The Category
+	 * @param \Lelesys\Plugin\News\Domain\Model\Folder $folder The Folder
+	 * @param array $filterId The Filter Id
 	 * @return void
 	 */
-	public function indexAction(\Lelesys\Plugin\News\Domain\Model\Category $category = NULL, \Lelesys\Plugin\News\Domain\Model\Folder $folder = NULL) {
+	public function indexAction(\Lelesys\Plugin\News\Domain\Model\Category $category = NULL, \Lelesys\Plugin\News\Domain\Model\Folder $folder = NULL, $filterId = NULL) {
 		$allNews = $this->newsService->listAllNewsAdmin($category, $folder);
 		$this->view->assign('allNews', $allNews);
 		$this->view->assign('assetsForNews', $this->newsService->assetsForNews($allNews));
+		$this->view->assign('folders', $this->folderService->listAll());
+		$this->view->assign('categories', $this->categoryService->getEnabledLatestCategories());
+		$this->view->assign('filter', $filterId);
 	}
 
 	/**
