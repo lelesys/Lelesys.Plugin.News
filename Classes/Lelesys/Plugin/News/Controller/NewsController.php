@@ -15,7 +15,6 @@ use TYPO3\Flow\Mvc\Controller\ActionController;
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Mvc\Routing\UriBuilder;
 
-
 /**
  * News controller for the Lelesys.Plugin.News package
  *

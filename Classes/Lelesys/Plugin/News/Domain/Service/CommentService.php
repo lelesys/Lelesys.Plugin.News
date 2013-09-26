@@ -98,7 +98,9 @@ class CommentService {
 		$this->commentRepository->add($newComment);
 
 		if ($news->getCreatedBy() !== NULL) {
-			$this->emailNotification->sendCommentApprovalNotification($newComment, $news);
+			if ($news->getCreatedBy()->getPrimaryElectronicAddress() !== NULL) {
+				$this->emailNotification->sendCommentApprovalNotification($newComment, $news);
+			}
 		}
 		$this->emitCommentCreated($newComment);
 	}

@@ -67,45 +67,41 @@
 									</div>
 								</f:then>
 								<f:else>
-									<f:if condition="{news.hidden} != 1">
+									<f:render partial="NewsList" arguments="{news: news, assetsForNews: assetsForNews}" />
+									<ul class="news-social-bookmark">
+										<li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={baseUri}<f:uri.action action="show" arguments="{news: news}"></f:uri.action>"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/social-facebook-box-blue-icon.png')}" alt="social-facebook-box-blue-icon.png"  width="22"/></a></li>
+										<li><a target="_blank" href="https://twitter.com/share?url={baseUri}<f:uri.action action="show" arguments="{news: news}"></f:uri.action>"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/social-twitter-box-blue-icon.png')}" alt="social-twitter-box-blue-icon.png" width="22" /></a></li>
+										<li><a target="_blank" href="http://www.linkedin.com/shareArticle?mini=false&amp;url={baseUri}<f:uri.action action="show" arguments="{news: news}"></f:uri.action>"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/social-linkedin-box-blue-icon.png')}" alt="social-linkedin-box-blue-icon.png" width="22" /></a></li>
+										<li><a target="_blank" href="https://plus.google.com/share?url={baseUri}<f:uri.action action="show" arguments="{news: news}"></f:uri.action>"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/Google-plus-icon.png')}" alt="Google-plus-icon.png" width="22" /></a></li>
+										<li><a target="_blank" href="http://digg.com/submit?&amp;url={baseUri}<f:uri.action action="show" arguments="{news: news}"></f:uri.action>"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/social-digg-box-white-icon.png')}" alt="social-digg-box-white-icon.png" width="22" /></a></li>
+									</ul>
+									<f:if condition="{news.avgRatings} == 1">
+										<div class="rate rate1"></div>
+									</f:if>
+									<f:if condition="{news.avgRatings} == 2">
+										<div class="rate rate2"></div>
+									</f:if>
+									<f:if condition="{news.avgRatings} == 3">
+										<div class="rate rate3"></div>
+									</f:if>
+									<f:if condition="{news.avgRatings} == 4">
+										<div class="rate rate4"></div>
+									</f:if>
+									<f:if condition="{news.avgRatings} == 5">
+										<div class="rate rate5"></div>
+									</f:if>
+									<f:if condition="{news.avgRatings} == 0">
+										<div class="rate"></div>
+									</f:if>
+									<f:if condition="{news.authorName}">
 										<f:then>
-											<f:render partial="NewsList" arguments="{news: news, assetsForNews: assetsForNews}" />
-											<ul class="news-social-bookmark">
-												<li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={baseUri}<f:uri.action action="show" arguments="{news: news}"></f:uri.action>"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/social-facebook-box-blue-icon.png')}" alt="social-facebook-box-blue-icon.png"  width="22"/></a></li>
-												<li><a target="_blank" href="https://twitter.com/share?url={baseUri}<f:uri.action action="show" arguments="{news: news}"></f:uri.action>"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/social-twitter-box-blue-icon.png')}" alt="social-twitter-box-blue-icon.png" width="22" /></a></li>
-												<li><a target="_blank" href="http://www.linkedin.com/shareArticle?mini=false&amp;url={baseUri}<f:uri.action action="show" arguments="{news: news}"></f:uri.action>"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/social-linkedin-box-blue-icon.png')}" alt="social-linkedin-box-blue-icon.png" width="22" /></a></li>
-												<li><a target="_blank" href="https://plus.google.com/share?url={baseUri}<f:uri.action action="show" arguments="{news: news}"></f:uri.action>"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/Google-plus-icon.png')}" alt="Google-plus-icon.png" width="22" /></a></li>
-												<li><a target="_blank" href="http://digg.com/submit?&amp;url={baseUri}<f:uri.action action="show" arguments="{news: news}"></f:uri.action>"><img src="{f:uri.resource(package:'Lelesys.Plugin.News', path:'images/Icons/social-digg-box-white-icon.png')}" alt="social-digg-box-white-icon.png" width="22" /></a></li>
-											</ul>
-											<f:if condition="{news.avgRatings} == 1">
-												<div class="rate rate1"></div>
-											</f:if>
-											<f:if condition="{news.avgRatings} == 2">
-												<div class="rate rate2"></div>
-											</f:if>
-											<f:if condition="{news.avgRatings} == 3">
-												<div class="rate rate3"></div>
-											</f:if>
-											<f:if condition="{news.avgRatings} == 4">
-												<div class="rate rate4"></div>
-											</f:if>
-											<f:if condition="{news.avgRatings} == 5">
-												<div class="rate rate5"></div>
-											</f:if>
-											<f:if condition="{news.avgRatings} == 0">
-												<div class="rate"></div>
-											</f:if>
-											<f:if condition="{news.authorName}">
-												<f:then>
-													<div class="news_footer">
-														<span class="date">author name: &nbsp;{news.authorName}</span>
-													</div>
-												</f:then>
-												<f:else>
-													<hr/>
-												</f:else>
-											</f:if>
+											<div class="news_footer">
+												<span class="date">author name: &nbsp;{news.authorName}</span>
+											</div>
 										</f:then>
+										<f:else>
+											<hr/>
+										</f:else>
 									</f:if>
 								</f:else>
 							</f:security.ifHasRole>

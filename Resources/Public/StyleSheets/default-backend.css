@@ -9,11 +9,14 @@
 .nice-edit-size {
 	color: #555555;
 }
-
-.datepicker-days {
+.datepicker-days,
+.datepicker-months,
+.datepicker-years {
 	color: #555555;
 }
-.datepicker-days th {
+.datepicker-days th,
+.datepicker-months th,
+.datepicker-years th {
 	font-weight: bold;
 }
 .hide-show-file {
