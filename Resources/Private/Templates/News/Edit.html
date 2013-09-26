@@ -339,7 +339,9 @@
 	<script src="{f:uri.resource(path:'nicEdit/nicEdit.js')}" type="text/javascript"></script>
 	<script src="{f:uri.resource(path:'nicEdit/domscript.js')}" type="text/javascript"></script>
 	<script>
-		deleteMessage = "Are you sure you want to delete?";
+		var validEmail = '<f:translate id="lelesys.plugin.news.validEmail"></f:translate>'
+		var requiredField = '<f:translate id="lelesys.plugin.news.requiredField"></f:translate>'
+		var deleteMessage = '<f:translate id="lelesys.plugin.news.confirmDelete"></f:translate>'
 		removeAsset = "{f:uri.action(package:'Lelesys.Plugin.News', action:'removeAsset', controller:'News')}";
 		removeTag = "{f:uri.action(package:'Lelesys.Plugin.News', action:'removeTag', controller:'News')}";
 		removeFile = "{f:uri.action(package:'Lelesys.Plugin.News', action:'removeRelatedFile', controller:'News')}";

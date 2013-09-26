@@ -156,45 +156,45 @@
 								</f:for>
 							</ul>
 						</f:if>
+					</div>
+					<h2><f:translate id="lelesys.plugin.news.yourComment"></f:translate></h2>
+					<f:form action="create" controller="Comment" name="newComment" arguments="{news: newsdetail}">
+						<div class="control-group">
+							<label for="name"><f:translate id="lelesys.plugin.news.name"></f:translate></label>
+							<div class="controls">
+								<f:form.textfield property="name" id="name" class="span5"/>
+								<f:render partial="FormErrors" arguments="{for: 'newComment.name'}" />
+							</div>
 						</div>
-						<h2><f:translate id="lelesys.plugin.news.yourComment"></f:translate></h2>
-						<f:form action="create" controller="Comment" name="newComment" arguments="{news: newsdetail}">
-							<div class="control-group">
-								<label for="name"><f:translate id="lelesys.plugin.news.name"></f:translate></label>
-								<div class="controls">
-									<f:form.textfield property="name" id="name" class="span5"/>
-									<f:render partial="FormErrors" arguments="{for: 'newComment.name'}" />
-								</div>
+						<div class="control-group">
+							<label for="email"><f:translate id="lelesys.plugin.news.email"></f:translate></label>
+							<div class="controls">
+								<f:form.textfield property="email" id="email" class="span5"/>
+								<f:render partial="FormErrors" arguments="{for: 'newComment.email'}" />
 							</div>
-							<div class="control-group">
-								<label for="email"><f:translate id="lelesys.plugin.news.email"></f:translate></label>
-								<div class="controls">
-									<f:form.textfield property="email" id="email" class="span5"/>
-									<f:render partial="FormErrors" arguments="{for: 'newComment.email'}" />
-								</div>
+						</div>
+						<div class="control-group">
+							<label for="message"><f:translate id="lelesys.plugin.news.message"></f:translate></label>
+							<div class="controls">
+								<f:form.textarea rows="4" cols="5" property="message" id="message" class="span5"/>
+								<f:render partial="FormErrors" arguments="{for: 'newComment.message'}" />
 							</div>
-							<div class="control-group">
-								<label for="message"><f:translate id="lelesys.plugin.news.message"></f:translate></label>
-								<div class="controls">
-									<f:form.textarea rows="4" cols="5" property="message" id="message" class="span5"/>
-									<f:render partial="FormErrors" arguments="{for: 'newComment.message'}" />
-								</div>
+						</div>
+						<div class="control-group">
+							<label for="captcha"><f:translate id="lelesys.plugin.news.captcha"></f:translate></label>
+							<div class="controls captcha-container">
+								<f:form.textfield name="captcha" id="captcha" class="span5"/>
+								<captcha:captcha></captcha:captcha>
+								<f:render partial="FormErrors" arguments="{for: 'newComment.captcha'}" />
 							</div>
-							<div class="control-group">
-								<label for="captcha"><f:translate id="lelesys.plugin.news.captcha"></f:translate></label>
-								<div class="controls captcha-container">
-									<f:form.textfield name="captcha" id="captcha" class="span5"/>
-									<captcha:captcha></captcha:captcha>
-									<f:render partial="FormErrors" arguments="{for: 'newComment.captcha'}" />
-								</div>
+						</div>
+						<div class="control-group">
+							<div class="controls">
+								<f:form.submit class="btn create-comment" value="Create"/>
 							</div>
-							<div class="control-group">
-								<div class="controls">
-									<f:form.submit class="btn create-comment" value="Create"/>
-								</div>
-							</div>
-						</f:form>
-						<a href="javascript:history.back()"><f:translate id="lelesys.plugin.news.back"></f:translate></a>
+						</div>
+					</f:form>
+					<a href="javascript:history.back()"><f:translate id="lelesys.plugin.news.back"></f:translate></a>
 				</div>
 			</f:then>
 			<f:else>
@@ -202,4 +202,9 @@
 			</f:else>
 		</f:if>
 	</div>
+	<script>
+		var validEmail = '<f:translate id="lelesys.plugin.news.validEmail"></f:translate>'
+		var requiredField = '<f:translate id="lelesys.plugin.news.requiredField"></f:translate>'
+		var Url = '<f:translate id="lelesys.plugin.news.validUrl"></f:translate>'
+	</script>
 </f:section>

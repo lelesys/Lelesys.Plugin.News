@@ -348,8 +348,10 @@
 		</div>
 	</f:form>
 	<script>
+		var validEmail = '<f:translate id="lelesys.plugin.news.validEmail"></f:translate>'
+		var requiredField = '<f:translate id="lelesys.plugin.news.requiredField"></f:translate>'
 		removeTag = "{f:uri.action(package:'Lelesys.Plugin.News', action:'removeTag', controller:'News')}";
-		deleteMessage = "Are you sure you want to delete?";
+		var deleteMessage = '<f:translate id="lelesys.plugin.news.confirmDelete"></f:translate>'
 		removeAsset = "{f:uri.action(package:'Lelesys.Plugin.News', action:'removeAsset', controller:'News')}";
 		removeFile = "{f:uri.action(package:'Lelesys.Plugin.News', action:'removeRelatedFile', controller:'News')}";
 		removeRelatedLink = "{f:uri.action(package:'Lelesys.Plugin.News', action:'removeRelatedLink', controller:'News')}";

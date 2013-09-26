@@ -16,7 +16,7 @@ jQuery(document).ready(function() {
 			jQuery(this).next('.error').remove();
 		} else {
 			if (jQuery(this).next('.error').length < 1) {
-				jQuery(this).after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>Please specify a valid email address.</div>');
+				jQuery(this).after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>'+validEmail+'</div>');
 			}
 			return false;
 		}
@@ -25,7 +25,7 @@ jQuery(document).ready(function() {
 	jQuery('.newsTitle').focusout(function() {
 		if (!jQuery(this).val()) {
 			if (jQuery(this).next('.error').length < 1) {
-				jQuery(this).after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>This field is required.</div>');
+				jQuery(this).after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>'+requiredField+'</div>');
 			}
 			return false;
 		}	else {
@@ -39,7 +39,7 @@ jQuery(document).ready(function() {
 		var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
 		if (!jQuery('.newsTitle').val()) {
 			if (jQuery('.newsTitle').next('.error').length < 1) {
-				jQuery('.newsTitle').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>This field is required.</div>');
+				jQuery('.newsTitle').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>'+requiredField+'</div>');
 			}
 			return false;
 		} else {
@@ -56,27 +56,9 @@ jQuery(document).ready(function() {
 			jQuery('#authorEmail').next('.error').remove();
 		} else {
 			if (jQuery('#authorEmail').next('.error').length < 1) {
-				jQuery('#authorEmail').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>Please specify a valid email address.</div>');
+				jQuery('#authorEmail').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>'+validEmail+'</div>');
 			}
 			return false
-		}
-	});
-
-	//Validation for url
-	jQuery('.text-added').focusout(function(){
-		value = jQuery(this).val();
-		var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
-		var validEmail = emailRegex.test(value);
-		//		var urlregex = new RegExp(/^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/);
-		var urlregex = new RegExp(/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/);
-		var validUrl = urlregex.test(value);
-		if (value) {
-			if ((validUrl == true) || (validEmail == true)) {
-			} else {
-				if (jQuery('.text-added').next('.error').length < 1) {
-					jQuery('.text-added').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>Please specify a valid Url.</div>');
-				}
-			}
 		}
 	});
 
@@ -89,7 +71,7 @@ jQuery(document).ready(function() {
 				success : function (data){
 					if(data > 0){
 						if (jQuery('.title-category').next('.error').length < 1) {
-							jQuery('.title-category').after('<div class="alert alert-error form-error error category-title-error"><button type="button" class="close" data-dismiss="alert">×</button>Category title already exist</div>');
+							jQuery('.title-category').after('<div class="alert alert-error form-error error category-title-error"><button type="button" class="close" data-dismiss="alert">×</button>'+checkCatTitle+'</div>');
 						}
 						return false;
 					} else {
@@ -99,7 +81,7 @@ jQuery(document).ready(function() {
 			});
 		} else {
 			if (jQuery('.title-category').next('.error').length < 1) {
-				jQuery('.title-category').after('<div class="alert alert-error form-error error category-title-error"><button type="button" class="close" data-dismiss="alert">×</button>This field is required</div>');
+				jQuery('.title-category').after('<div class="alert alert-error form-error error category-title-error"><button type="button" class="close" data-dismiss="alert">×</button>'+requiredField+'</div>');
 			}
 			return false
 		}
@@ -113,7 +95,7 @@ jQuery(document).ready(function() {
 				success : function (data) {
 					if(data > 0){
 						if (jQuery('.title-category').next('.error').length < 1) {
-							jQuery('.title-category').after('<div class="alert alert-error form-error error category-title-error"><button type="button" class="close" data-dismiss="alert">×</button>Category title already exist</div>');
+							jQuery('.title-category').after('<div class="alert alert-error form-error error category-title-error"><button type="button" class="close" data-dismiss="alert">×</button>'+checkCatTitle+'</div>');
 						}
 						return false;
 					} else {
@@ -124,7 +106,7 @@ jQuery(document).ready(function() {
 			});
 		} else {
 			if (jQuery('.title-category').next('.error').length < 1) {
-				jQuery('.title-category').after('<div class="alert alert-error form-error error category-title-error"><button type="button" class="close" data-dismiss="alert">×</button>This field is required</div>');
+				jQuery('.title-category').after('<div class="alert alert-error form-error error category-title-error"><button type="button" class="close" data-dismiss="alert">×</button>'+requiredField+'</div>');
 			}
 			return false
 		}
@@ -135,21 +117,21 @@ jQuery(document).ready(function() {
 		var email = jQuery('#email').val();
 		if (!jQuery('#name').val()) {
 			if (jQuery('#name').next('.error').length < 1) {
-				jQuery('#name').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>This field is required.</div>');
+				jQuery('#name').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>'+requiredField+'</div>');
 			}
 		} else {
 			jQuery('#name').next('.error').remove();
 		}
 		if (!jQuery('#email').val()) {
 			if (jQuery('#email').next('.error').length < 1) {
-				jQuery('#email').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>This field is required.</div>');
+				jQuery('#email').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>'+requiredField+'</div>');
 			}
 		} else {
 			jQuery('#message').next('.error').remove();
 		}
 		if (!jQuery('#message').val()) {
 			if (jQuery('#message').next('.error').length < 1) {
-				jQuery('#message').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>This field is required.</div>');
+				jQuery('#message').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>'+requiredField+'</div>');
 			}
 			return false;
 		} else {
@@ -167,7 +149,7 @@ jQuery(document).ready(function() {
 			jQuery('#email').next('.error').remove();
 		} else {
 			if (jQuery('#email').next('.error').length < 1) {
-				jQuery('#email').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>Please specify a valid email address.</div>');
+				jQuery('#email').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>'+validEmail+'</div>');
 			}
 			return false;
 		}
@@ -188,9 +170,24 @@ jQuery(document).ready(function() {
 			jQuery(this).next('.error').remove();
 		} else {
 			if (jQuery(this).next('.error').length < 1) {
-				jQuery(this).after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>Please specify a valid email address.</div>');
+				jQuery(this).after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>'+validEmail+'</div>');
 			}
 			return false;
+		}
+	});
+
+	//Validation for url
+	jQuery('.text-added').focusout(function(){
+		value = jQuery(this).val();
+		var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i), validEmail = emailRegex.test(value),
+		urlregex = new RegExp(/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/), validUrl = urlregex.test(value);
+		if (value) {
+			if ((validUrl == true) || (validEmail == true)) {
+			} else {
+				if (jQuery('.text-added').next('.error').length < 1) {
+					jQuery('.text-added').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>'+validUrl+'</div>');
+				}
+			}
 		}
 	});
 
@@ -198,7 +195,7 @@ jQuery(document).ready(function() {
 	jQuery('.create-tag').click(function() {
 		if (!jQuery('.tagTitle').val()) {
 			if (jQuery('.tagTitle').next('.error').length < 1) {
-				jQuery('.tagTitle').after('<div class="alert alert-error form-error error category-title-error"><button type="button" class="close" data-dismiss="alert">×</button>This field is required.</div>');
+				jQuery('.tagTitle').after('<div class="alert alert-error form-error error category-title-error"><button type="button" class="close" data-dismiss="alert">×</button>'+requiredField+'</div>');
 			}
 			return false;
 		} else {
@@ -243,5 +240,4 @@ jQuery(document).ready(function() {
 		$('.cat-id').val($(this).val());
 		$(this).parent('form').submit();
 	});
-
 });

@@ -367,6 +367,22 @@
 				<source>Hide news</source>
 				<target>Hide news</target>
 			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.validEmail" approved="no">
+				<source>Please specify a valid email address</source>
+				<target>Please specify a valid email address.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.requiredField" approved="no">
+				<source>This field is required.</source>
+				<target>This field is required.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.validUrl" approved="no">
+				<source>Please specify a valid Url.</source>
+				<target>Please specify a valid Url.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.checkCatTitle" approved="no">
+				<source>Category title already exist.</source>
+				<target>Category title already exist.</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -241,7 +241,7 @@ function cloneAddMedia() {
 };
 
 function deleteClone(el) {
-	var confirmDelete = confirm('Are you sure you want to delete?');
+	var confirmDelete = confirm(deleteMessage);
 	if(confirmDelete) {
 		jQuery(el).parent().parent().remove();
 	}
