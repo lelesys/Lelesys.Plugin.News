@@ -181,14 +181,14 @@
 										<div id="collapse-media-{indexIteration.cycle}" class="accordion-body collapse">
 											<div class="accordion-inner">
 												<div class="control-group">
-													<label class="control-label" for="resource"><f:translate id="lelesys.plugin.news.image"></f:translate></label>
+													<label class="control-label" for="resource-{indexIteration.cycle}"><f:translate id="lelesys.plugin.news.image"></f:translate></label>
 													<div class="controls">
 														<f:form.upload style="display: none;" name="media[{indexIteration.cycle}][resource]" id="resource-{indexIteration.cycle}" />
 														<img class="thumbnail" src="{f:uri.resource(resource: asset.resource)}" alt="{asset.caption}" width="100"/>
 													</div>
 												</div>
 												<div class="control-group">
-													<label class="control-label" for="caption"><f:translate id="lelesys.plugin.news.caption"></f:translate></label>
+													<label class="control-label" for="caption-{indexIteration.cycle}"><f:translate id="lelesys.plugin.news.caption"></f:translate></label>
 													<div class="controls">
 														<f:form.textfield value="{asset.caption}" name="media[{indexIteration.cycle}][caption]" id="caption-{indexIteration.cycle}" />
 													</div>
@@ -237,16 +237,16 @@
 										<div id="collapse-file-{indexIteration.cycle}" class="accordion-body collapse">
 											<div class="accordion-inner">
 												<div class="control-group">
-													<label class="control-label" for="file-resource"><f:translate id="lelesys.plugin.news.file"></f:translate></label>
+													<label class="control-label" for="file-resource-{indexIteration.cycle}"><f:translate id="lelesys.plugin.news.file"></f:translate></label>
 													<div class="controls">
 														<f:form.upload style="display: none;" name="file[{indexIteration.cycle}][resource]" id="file-resource-{indexIteration.cycle}" />
 														<f:link.action action="downloadFile" arguments="{file: file.resource}" controller="news">{file.resource.fileName}</f:link.action>
 													</div>
 												</div>
 												<div class="control-group">
-													<label class="control-label" for="file-title"><f:translate id="lelesys.plugin.news.title"></f:translate></label>
+													<label class="control-label" for="file-title-{indexIteration.cycle}"><f:translate id="lelesys.plugin.news.title"></f:translate></label>
 													<div class="controls">
-														<f:form.textfield value="{file.title}" name="file[{indexIteration.cycle}][title]" id="file-title-{resource.cycle}" />
+														<f:form.textfield value="{file.title}" name="file[{indexIteration.cycle}][title]" id="file-title-{indexIteration.cycle}" />
 														<f:form.hidden value="{file}" class="file-id" name="file[{indexIteration.cycle}][uuid]" />
 													</div>
 												</div>

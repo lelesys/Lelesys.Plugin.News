@@ -860,6 +860,24 @@ class News {
 		return $visibleComments;
 	}
 
+	/**
+	 * Returns the visible comments
+	 *
+	 * @return array $visibleComments
+	 */
+	public function getVisibleParentComments() {
+		$visibleParentComments = array();
+		$comments = $this->getComments();
+		if (count($comments) > 0) {
+			foreach ($comments as $comment) {
+				if ($comment->getSetHidden() !== TRUE && $comment->getReplyTo() === NULL) {
+					$visibleParentComments[] = $comment;
+				}
+			}
+		}
+		return $visibleParentComments;
+	}
+
 }
 
 ?>

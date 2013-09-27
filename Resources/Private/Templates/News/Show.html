@@ -141,16 +141,20 @@
 							</ul>
 						</div>
 					</f:if>
-
-					<div class="news-rel rel_title category_title">
-						<f:if condition="{comments}">
+					<div class="news-rel rel_title comment_title">
+						<f:if condition="{newsdetail.visibleParentComments}">
 							<p><f:translate id="lelesys.plugin.news.comments"></f:translate></p>
 							<ul>
-								<f:for each="{comments}" key="msgkey" as="comment">
+								<f:for each="{newsdetail.visibleParentComments}" as="comment">
 									<div>
 										<li>
 											{comment.message} <br>
 											<span class="date"> <f:translate id="lelesys.plugin.news.commentedBy"></f:translate>:&nbsp;{comment.name}&nbsp;&nbsp;on&nbsp;{comment.CreatedDate -> f:format.date(format: 'j M y, h:i A')}</span>
+										<f:if condition="{comment.children}">
+											<ul>
+												<f:render section="subItemList" arguments="{items: comment.children, news: newsdetail}" />
+											</ul>
+										</f:if>
 										</li>
 									</div>
 								</f:for>
@@ -202,6 +206,30 @@
 			</f:else>
 		</f:if>
 	</div>
+	<f:section name="subItemList">
+		<f:for each="{items}"  as="commentChild">
+			<f:if condition="{commentChild.setHidden} != 1">
+				<li>
+					<div>
+						<h6>{commentChild.name}
+							<br>
+							<small>{commentChild.CreatedDate -> f:format.date(format: 'F j, Y h:i A')} -
+								<a class="comment-reply" href="{f:uri.action(action: 'show', arguments: '{news: news}')}#reply-comment">Reply</a>
+							</small>
+							<span class="comment-reply-id" data-comment-uuid="{commentChild.uuid}" style="display: none;"></span>
+							<br/><small><f:link.external uri="{commentChild.url}" target="_blank">{commentChild.url}</f:link.external></small>
+						</h6>
+						<div>{commentChild.message}</div>
+					</div>
+				<f:if condition="{commentChild.children}">
+					<ul>
+						<f:render section="subItemList" arguments="{items: commentChild.children, news: news}" />
+					</ul>
+				</f:if>
+				</li>
+			</f:if>
+		</f:for>
+	</f:section>
 	<script>
 		var validEmail = '<f:translate id="lelesys.plugin.news.validEmail"></f:translate>'
 		var requiredField = '<f:translate id="lelesys.plugin.news.requiredField"></f:translate>'
