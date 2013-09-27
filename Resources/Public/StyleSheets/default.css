@@ -224,3 +224,6 @@
 		margin-right: 18px;
 	}
 }
+.comment_title li {
+	border: 0 none;
+}

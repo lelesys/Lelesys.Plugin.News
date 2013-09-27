@@ -239,7 +239,7 @@ jQuery(document).ready(function() {
 	   });
 
 	jQuery('a.comment-reply').click(function() {
-		var commentId = jQuery(this).next('.comment-reply-id').attr('data-comment-uuid');
+		var commentId = jQuery(this).parent().next('.comment-reply-id').attr('data-comment-uuid');
 		jQuery('#reply-comment .hidden-replyto').attr('value',commentId);
 	});
 });

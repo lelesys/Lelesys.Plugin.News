@@ -204,7 +204,7 @@ function cloneAddFiles() {
 		'name': '--newsList[file]['+newId+'][title]',
 		'id': 'file-title-'+newId
 	}).parent().prev('label').attr('for','file-title-'+newId);
-	div.find('#file-resource-'+newId).next('img').remove();
+	div.find('#file-resource-'+newId).next('a').remove();
 	div.find('#collapse-file-'+newId).removeClass('in').removeAttr("style");
 	div.find('.remove-file').remove();
 	div.find('.accordion-heading').append('<a class="pull-right remove-file tooltip-demo" rel="tooltip" title="Delete" onclick="deleteClone(this)"><i class="icon-trash"></i></a>');
