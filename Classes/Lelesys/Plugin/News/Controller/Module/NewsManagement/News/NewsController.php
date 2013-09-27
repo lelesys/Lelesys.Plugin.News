@@ -22,6 +22,12 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 
 	/**
 	 * @Flow\Inject
+	 * @var \TYPO3\Flow\I18n\Translator
+	 */
+	protected $translator;
+
+	/**
+	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Service\NewsService
 	 */
 	protected $newsService;
@@ -154,10 +160,16 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 	public function createAction(\Lelesys\Plugin\News\Domain\Model\News $newNews, $media, $file, $relatedLink, $tags) {
 		try {
 			$this->newsService->create($newNews, $media, $file, $relatedLink, $tags);
-			$this->addFlashMessage('Created a new news.', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
+			$packageKey= $this->settings['flashMessage']['packageKey'];
+			$header = 'Created a new news.';
+			$message = $this->translator->translateById('lelesys.plugin.news.add.news', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 			$this->redirect('index');
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Cannot create news at this time!!.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$packageKey= $this->settings['flashMessage']['packageKey'];
+			$header = 'Cannot create news at this time!!.';
+			$message = $this->translator->translateById('lelesys.plugin.news.cannot.add', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
 
@@ -217,7 +229,10 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 			echo json_encode(1);
 			exit;
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$packageKey= $this->settings['flashMessage']['packageKey'];
+			$header = 'Sorry, error occured. Please try again later.';
+			$message = $this->translator->translateById('lelesys.plugin.news.try.again', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
 
@@ -233,11 +248,17 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 	 */
 	public function updateAction(\Lelesys\Plugin\News\Domain\Model\News $news, $media, $file, $relatedLink, $tags) {
 		try {
+			$packageKey= $this->settings['flashMessage']['packageKey'];
 			$this->newsService->update($news, $media, $file, $relatedLink, $tags);
-			$this->addFlashMessage('Updated the news.', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
+			$header = 'Updated the news.';
+			$message = $this->translator->translateById('lelesys.plugin.news.update.news', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 			$this->redirect('index');
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Cannot update news at this time!!.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$packageKey= $this->settings['flashMessage']['packageKey'];
+			$header = 'Cannot update news at this time!!.';
+			$message = $this->translator->translateById('lelesys.plugin.news.cannot.update', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
 
@@ -249,11 +270,17 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 	 */
 	public function deleteAction(\Lelesys\Plugin\News\Domain\Model\News $news) {
 		try {
+			$packageKey= $this->settings['flashMessage']['packageKey'];
 			$this->newsService->delete($news);
-			$this->addFlashMessage('Deleted a news.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$header = 'Deleted a news.';
+			$message = $this->translator->translateById('lelesys.plugin.news.deleted.news', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 			$this->redirect('index');
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$packageKey= $this->settings['flashMessage']['packageKey'];
+			$header = 'Sorry, error occured. Please try again later.';
+			$message = $this->translator->translateById('lelesys.plugin.news.try.again', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
 
@@ -271,7 +298,10 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 			echo json_encode(1);
 			exit;
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$packageKey= $this->settings['flashMessage']['packageKey'];
+			$header = 'Sorry, error occured. Please try again later.';
+			$message = $this->translator->translateById('lelesys.plugin.news.try.again', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
 
@@ -290,7 +320,10 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 			echo json_encode(1);
 			exit;
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$packageKey= $this->settings['flashMessage']['packageKey'];
+			$header = 'Sorry, error occured. Please try again later.';
+			$message = $this->translator->translateById('lelesys.plugin.news.try.again', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
 
@@ -308,7 +341,10 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 			echo json_encode(1);
 			exit;
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$packageKey= $this->settings['flashMessage']['packageKey'];
+			$header = 'Sorry, error occured. Please try again later.';
+			$message = $this->translator->translateById('lelesys.plugin.news.try.again', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
 
@@ -321,12 +357,19 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 	public function hideNewsAction(\Lelesys\Plugin\News\Domain\Model\News $news) {
 		try {
 			$this->newsService->hideNews($news);
-			$this->addFlashMessage('News is Hidden', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
+			$packageKey= $this->settings['flashMessage']['packageKey'];
+			$header = 'News is Hidden';
+			$message = $this->translator->translateById('lelesys.plugin.news.hidden', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 			$this->redirect('index');
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$packageKey= $this->settings['flashMessage']['packageKey'];
+			$header = 'Sorry, error occured. Please try again later.';
+			$message = $this->translator->translateById('lelesys.plugin.news.try.again', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
+
 
 	/**
 	 * show's the hidden news
@@ -337,10 +380,16 @@ class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
 	public function showNewsAction(\Lelesys\Plugin\News\Domain\Model\News $news) {
 		try {
 			$this->newsService->showNews($news);
-			$this->addFlashMessage('News is Visible', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
+			$packageKey= $this->settings['flashMessage']['packageKey'];
+			$header = 'News is Visible';
+			$message = $this->translator->translateById('lelesys.plugin.news.visible', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 			$this->redirect('index');
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$packageKey= $this->settings['flashMessage']['packageKey'];
+			$header = 'Sorry, error occured. Please try again later.';
+			$message = $this->translator->translateById('lelesys.plugin.news.try.again', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
 

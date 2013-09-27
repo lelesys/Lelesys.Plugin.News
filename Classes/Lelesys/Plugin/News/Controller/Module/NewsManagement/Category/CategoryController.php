@@ -22,6 +22,12 @@ class CategoryController extends \TYPO3\Neos\Controller\Module\AbstractModuleCon
 
 	/**
 	 * @Flow\Inject
+	 * @var \TYPO3\Flow\I18n\Translator
+	 */
+	protected $translator;
+
+	/**
+	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Service\CategoryService
 	 */
 	protected $categoryService;
@@ -65,11 +71,17 @@ class CategoryController extends \TYPO3\Neos\Controller\Module\AbstractModuleCon
 	 */
 	public function createAction(\Lelesys\Plugin\News\Domain\Model\Category $newCategory) {
 		try {
+			$packageKey = $this->settings['flashMessage']['packageKey'];
 			$this->categoryService->create($newCategory);
-			$this->addFlashMessage('Created a new category.', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
+			$header = 'Created a new category.';
+			$message = $this->translator->translateById('lelesys.plugin.news.add.category', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 			$this->redirect('index');
 		} catch (Lelesys\NeoNews\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Cannot create category at this time!!.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$packageKey = $this->settings['flashMessage']['packageKey'];
+			$header = 'Cannot create category at this time!!.';
+			$message = $this->translator->translateById('lelesys.plugin.news.cannot.category', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 		}
 	}
 
@@ -94,10 +106,16 @@ class CategoryController extends \TYPO3\Neos\Controller\Module\AbstractModuleCon
 	public function updateAction(\Lelesys\Plugin\News\Domain\Model\Category $category) {
 		try {
 			$this->categoryService->update($category);
-			$this->addFlashMessage('Updated the category.', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
+			$packageKey = $this->settings['flashMessage']['packageKey'];
+			$header = 'Updated the category.';
+			$message = $this->translator->translateById('lelesys.plugin.news.update.category', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 			$this->redirect('index');
 		} catch (Lelesys\NeoNews\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Cannot update category at this time!!.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$packageKey = $this->settings['flashMessage']['packageKey'];
+			$header = 'Cannot update category at this time!!.';
+			$message = $this->translator->translateById('lelesys.plugin.news.cannot.updatecategory', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 		}
 	}
 
@@ -110,10 +128,16 @@ class CategoryController extends \TYPO3\Neos\Controller\Module\AbstractModuleCon
 	public function deleteAction(\Lelesys\Plugin\News\Domain\Model\Category $category) {
 		try {
 			$this->categoryService->delete($category);
-			$this->addFlashMessage('Deleted a category.', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
+			$packageKey = $this->settings['flashMessage']['packageKey'];
+			$header = 'Deleted a category.';
+			$message = $this->translator->translateById('lelesys.plugin.news.delete.category', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 			$this->redirect('index');
 		} catch (Lelesys\NeoNews\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$packageKey = $this->settings['flashMessage']['packageKey'];
+			$header = 'Sorry, error occured. Please try again later.';
+			$message = $this->translator->translateById('lelesys.plugin.news.try.again', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
 
@@ -126,10 +150,16 @@ class CategoryController extends \TYPO3\Neos\Controller\Module\AbstractModuleCon
 	public function hideCategoryAction(\Lelesys\Plugin\News\Domain\Model\Category $category) {
 		try {
 			$this->categoryService->hideCategory($category);
-			$this->addFlashMessage('Category is Hidden', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
+			$packageKey = $this->settings['flashMessage']['packageKey'];
+			$header = 'Category is Hidden';
+			$message = $this->translator->translateById('lelesys.plugin.category.hidden', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 			$this->redirect('index');
 		} catch (Lelesys\NeoNews\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$packageKey = $this->settings['flashMessage']['packageKey'];
+			$header = 'Sorry, error occured. Please try again later.';
+			$message = $this->translator->translateById('lelesys.plugin.news.try.again', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
 
@@ -142,10 +172,16 @@ class CategoryController extends \TYPO3\Neos\Controller\Module\AbstractModuleCon
 	public function showCategoryAction(\Lelesys\Plugin\News\Domain\Model\Category $category) {
 		try {
 			$this->categoryService->showCategory($category);
-			$this->addFlashMessage('Category is Visible', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
+			$packageKey = $this->settings['flashMessage']['packageKey'];
+			$header = 'Category is Visible';
+			$message = $this->translator->translateById('lelesys.plugin.category.visible', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 			$this->redirect('index');
 		} catch (Lelesys\NeoNews\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$packageKey = $this->settings['flashMessage']['packageKey'];
+			$header = 'Sorry, error occured. Please try again later.';
+			$message = $this->translator->translateById('lelesys.plugin.news.try.again', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
 

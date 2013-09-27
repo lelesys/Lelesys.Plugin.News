@@ -22,6 +22,12 @@ class CommentController extends \TYPO3\Neos\Controller\Module\AbstractModuleCont
 
 	/**
 	 * @Flow\Inject
+	 * @var \TYPO3\Flow\I18n\Translator
+	 */
+	protected $translator;
+
+	/**
+	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Service\CommentService
 	 */
 	protected $commentService;
@@ -43,7 +49,10 @@ class CommentController extends \TYPO3\Neos\Controller\Module\AbstractModuleCont
 	 */
 	public function deleteAction(\Lelesys\Plugin\News\Domain\Model\Comment $comment) {
 		$this->commentService->delete($comment);
-		$this->addFlashMessage('Deleted a comment.');
+		$packageKey = $this->settings['flashMessage']['packageKey'];
+		$header = 'Deleted a comment.';
+		$message = $this->translator->translateById('lelesys.plugin.news.delete.comment', array(), NULL, NULL, 'Main', $packageKey);
+		$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 		$this->redirect('index');
 	}
 
@@ -56,10 +65,16 @@ class CommentController extends \TYPO3\Neos\Controller\Module\AbstractModuleCont
 	public function unPublishAction(\Lelesys\Plugin\News\Domain\Model\Comment $comment) {
 		try {
 			$this->commentService->unPublishComment($comment);
-			$this->addFlashMessage('Comment is not published', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
+			$packageKey = $this->settings['flashMessage']['packageKey'];
+			$header = 'Comment is not published.';
+			$message = $this->translator->translateById('lelesys.plugin.news.unpublish.comment', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 			$this->redirect('index');
 		} catch (Lelesys\NeoNews\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$packageKey = $this->settings['flashMessage']['packageKey'];
+			$header = 'Sorry, error occured. Please try again later.';
+			$message = $this->translator->translateById('lelesys.plugin.news.try.again', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
 
@@ -72,10 +87,16 @@ class CommentController extends \TYPO3\Neos\Controller\Module\AbstractModuleCont
 	public function publishAction(\Lelesys\Plugin\News\Domain\Model\Comment $comment) {
 		try {
 			$this->commentService->publishComment($comment);
-			$this->addFlashMessage('Comment is published', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
+			$packageKey = $this->settings['flashMessage']['packageKey'];
+			$header = 'Comment is published.';
+			$message = $this->translator->translateById('lelesys.plugin.news.publish.comment', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 			$this->redirect('index');
 		} catch (Lelesys\NeoNews\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$packageKey = $this->settings['flashMessage']['packageKey'];
+			$header = 'Sorry, error occured. Please try again later.';
+			$message = $this->translator->translateById('lelesys.plugin.news.try.again', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
 

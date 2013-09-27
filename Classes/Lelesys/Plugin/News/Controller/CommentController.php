@@ -1,7 +1,8 @@
 <?php
+
 namespace Lelesys\Plugin\News\Controller;
 
-/*                                                                         *
+/* *
  * This script belongs to the package "Lelesys.Plugin.News".               *
  *                                                                         *
  * It is free software; you can redistribute it and/or modify it under     *
@@ -19,6 +20,12 @@ use \Lelesys\Plugin\News\Domain\Model\Comment;
  * @Flow\Scope("singleton")
  */
 class CommentController extends AbstractNewsController {
+
+	/**
+	 * @Flow\Inject
+	 * @var \TYPO3\Flow\I18n\Translator
+	 */
+	protected $translator;
 
 	/**
 	 * Comment service
@@ -44,7 +51,10 @@ class CommentController extends AbstractNewsController {
 			$array = array("news" => $news);
 			$this->redirect("show", "News", "Lelesys.Plugin.News", $array);
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Cannot add comment at this time!!.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$packageKey = $this->settings['flashMessage']['packageKey'];
+			$header = 'Sorry, error occured. Please try again later.';
+			$message = $this->translator->translateById('lelesys.plugin.news.try.again', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
 

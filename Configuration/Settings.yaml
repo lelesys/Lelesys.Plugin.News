@@ -6,6 +6,8 @@ Lelesys:
       blue: 225
   Plugin:
     News:
+      flashMessage:
+        packageKey: 'Lelesys.Plugin.News'
       # comments configuration
       notifications:
         emailTemplatePath: 'Plugins/Lelesys.Plugin.News/Resources/Private/Templates/Emails/CommentApproval.html'
