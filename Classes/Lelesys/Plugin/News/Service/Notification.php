@@ -66,7 +66,7 @@ class Notification {
 		$emailBody = $this->standaloneView->render();
 		$toEmail = $news->getCreatedBy()->getPrimaryElectronicAddress()->getIdentifier();
 		$mail = new \TYPO3\SwiftMailer\Message();
-		$mail->setFrom(array($comment->getEmail() => $comment->getName()))
+		$mail->setFrom(array($this->settings['notifications']['senderAddress'] => $this->settings['notifications']['senderName']))
 				->setContentType('text/html')
 				->setTo($toEmail)
 				->setSubject('Comment Approval')
