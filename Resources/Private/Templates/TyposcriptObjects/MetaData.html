@@ -9,6 +9,6 @@
 			</f:then>
 		</f:if>
 		<meta property="og:site_name" content="{site}"/>
-		<meta property="og:description" content="{news.description}"/>
+		<meta property="og:description" content="{news.description -> f:format.stripTags()}"/>
 	</f:then>
 </f:if>
