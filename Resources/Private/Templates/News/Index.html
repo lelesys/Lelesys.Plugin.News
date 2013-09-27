@@ -22,7 +22,7 @@
 		</div>
 		<f:if condition="{allNews}">
 			<f:then>
-				<f:widget.paginate objects="{allNews}" as="newsPagination" configuration="{itemsPerPage: 10}">
+				<f:widget.paginate objects="{allNews}" as="newsPagination" configuration="{f:if(condition:'{itemsPerPage}', then: {itemsPerPage: itemsPerPage}, else: {itemsPerPage: 10})}">
 					<f:for each="{newsPagination}" as="news">
 						<div class="clearfix">
 							<f:security.ifHasRole role="Editor">
