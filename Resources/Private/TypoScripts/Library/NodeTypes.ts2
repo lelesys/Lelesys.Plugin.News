@@ -71,3 +71,16 @@ prototype(Lelesys.Plugin.News:SearchResult) {
      action = 'searchResult'
 	 argumentNamespace = 'newsSearchResult'
 }
+
+# Meta Data
+prototype(Lelesys.Plugin.News:MetaData) < prototype(TYPO3.Neos:Template)
+prototype(Lelesys.Plugin.News:MetaData) {
+	@class = 'Lelesys\\Plugin\\News\\TypoScript\\MetaDataImplementation'
+	templatePath = 'resource://Lelesys.Plugin.News/Private/Templates/TyposcriptObjects/MetaData.html'
+		# Provides the name that you would like your website to be recognized by.
+	site = 'your site name'
+		# Provides the type of website that you would like your website to be categorized by.
+	siteType = 'type of your site'
+		# The URL should be the canonical address for the given page
+	currentUri = ${request.httpRequest.uri}
+}

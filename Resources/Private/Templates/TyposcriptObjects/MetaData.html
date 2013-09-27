@@ -1,0 +1,10 @@
+<f:if condition="{news}">
+	<f:then>
+		<meta property="og:title" content="{site} - {news.title}"/>
+		<meta property="og:type" content="{siteType}"/>
+		<meta property="og:url" content="{currentUri}"/>
+		<meta property="og:image" content="{f:uri.resource(resource: news.assets.0.resource)}"/>
+		<meta property="og:site_name" content="{site}"/>
+		<meta property="og:description" content="{news.description}"/>
+	</f:then>
+</f:if>

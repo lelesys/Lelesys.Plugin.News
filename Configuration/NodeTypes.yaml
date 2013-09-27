@@ -568,3 +568,10 @@
               DESC:
                 label: 'DESCENDING'
         reloadIfChanged: true
+
+'Lelesys.Plugin.News:MetaData':
+  superTypes:
+    - 'TYPO3.Neos:Content'
+  ui:
+    label: 'News Meta Data'
+    group: Plugins
