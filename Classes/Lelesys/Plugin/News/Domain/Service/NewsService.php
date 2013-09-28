@@ -425,13 +425,15 @@ class NewsService {
 	/**
 	 * Shows list of news as per month.
 	 *
+	 * @param string $category The category
+	 * @param string $folder The folder
 	 * @param integer $year News year
 	 * @param string $month News month
 	 * @param array $pluginArguments News plugin arguments
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
-	public function archiveNewsList($year, $month, $pluginArguments) {
-		return $this->newsRepository->archiveNewsList($year, $month, $pluginArguments);
+	public function archiveNewsList($category = NULL, $folder = NULL, $year, $month, $pluginArguments) {
+		return $this->newsRepository->archiveNewsList($category, $folder, $year, $month, $pluginArguments);
 	}
 
 	/**

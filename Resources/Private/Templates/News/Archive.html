@@ -23,7 +23,7 @@
 						<f:for each="{archiveView}" as="archiveYearDate" key="year">
 							<ul><b>{year}</b>
 								<f:for each="{archiveYearDate}" as="newsCount" key="month">
-									<li><f:link.action action="index" controller="news" arguments="{year:year, month: month}">{month-> f:format.date(format: 'F')}</f:link.action> &nbsp;&nbsp;({newsCount})</li>
+									<li><f:link.action action="index" controller="news" arguments="{category: archiveCategory, folder: archiveFolder, year:year, month: month}">{month-> f:format.date(format: 'F')}</f:link.action> &nbsp;&nbsp;({newsCount})</li>
 								</f:for>
 							</ul>
 						</f:for>

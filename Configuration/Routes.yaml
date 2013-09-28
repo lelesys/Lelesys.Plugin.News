@@ -20,6 +20,25 @@
       uriPattern: '{dateTime:Y}/{dateTime:m}/{title}'
   appendExceedingArguments: TRUE
 
+# archive
+-
+  name: 'Show Archive News'
+  uriPattern: '{node}/archive/{--newsList.category}/{--newsList.folder}/{--newsList.year}/{--newsList.month}.{@format}'
+  defaults:
+    '@package': 'TYPO3.Neos'
+    '@controller': 'Frontend\Node'
+    '@format': 'html'
+    '@action': 'show'
+    '--newsList':
+      '@package': 'Lelesys.Plugin.News'
+      '@controller': 'News'
+      '@action': 'index'
+      '@format': 'html'
+  routeParts:
+    node:
+      handler: TYPO3\Neos\Routing\FrontendNodeRoutePartHandler
+  appendExceedingArguments: TRUE
+
 -
   name: 'Show Category News'
   uriPattern: '{node}/category/{--newsList.category}.{@format}'
@@ -60,25 +79,6 @@
 -
   name: 'Show Tag News'
   uriPattern: '{node}/tag/{--newsList.tag}.{@format}'
-  defaults:
-    '@package': 'TYPO3.Neos'
-    '@controller': 'Frontend\Node'
-    '@format': 'html'
-    '@action': 'show'
-    '--newsList':
-      '@package': 'Lelesys.Plugin.News'
-      '@controller': 'News'
-      '@action': 'index'
-      '@format': 'html'
-  routeParts:
-    node:
-      handler: TYPO3\Neos\Routing\FrontendNodeRoutePartHandler
-  appendExceedingArguments: TRUE
-
-# archive
--
-  name: 'Show Archive News'
-  uriPattern: '{node}/archive/{--newsList.year}/{--newsList.month}.{@format}'
   defaults:
     '@package': 'TYPO3.Neos'
     '@controller': 'Frontend\Node'

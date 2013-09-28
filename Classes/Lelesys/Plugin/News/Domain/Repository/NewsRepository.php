@@ -177,12 +177,14 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 	/**
 	 * Shows list of news as per year and month.
 	 *
+	 * @param string $category The category
+	 * @param string $folder The folder
 	 * @param integer $year News year
 	 * @param string $month News month
 	 * @param array $pluginArguments news plugin arguments
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
-	public function archiveNewsList($year, $month, $pluginArguments) {
+	public function archiveNewsList($category = NULL, $folder = NULL, $year, $month, $pluginArguments) {
 		$emConfig = $this->entityManager->getConfiguration();
 		$emConfig->addCustomDatetimeFunction('DATEDIFF', 'Lelesys\Plugin\News\Doctrine\Query\Mysql\DateDiff');
 		$emConfig->addCustomDatetimeFunction('YEAR', 'Lelesys\Plugin\News\Doctrine\Query\Mysql\Year');
@@ -191,23 +193,43 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 		$query = $this->createQuery();
 		$queryBuilder = ObjectAccess::getProperty($query, 'queryBuilder', TRUE);
 
+		$constraints = array();
+		if (!empty($folder)) {
+			$constraints[] = 'n.folder = ' . "'" . $folder . "'";
+		}
+		if (!empty($category)) {
+			$constraints[] = 'c.Persistence_Object_Identifier IN (' . "'" . $category . "'" . ')';
+		}
+		$newsConstraints = '';
+		$count = count($constraints);
+		$newCount = 1;
+		foreach ($constraints as $contraint) {
+			if ($count > $newCount) {
+				$newsConstraints .= $contraint . ' OR ';
+			} else {
+				$newsConstraints .= $contraint;
+			}
+			$newCount++;
+		}
+
 		$queryBuilder
 				->resetDQLParts()
 				->select('n')
 				->from('Lelesys\Plugin\News\Domain\Model\News', 'n')
+				->leftjoin('n.categories', 'c')
 				->where('n.startDate is null and n.endDate >= current_date()
 					OR DATEDIFF(n.startDate,current_date())<1 and n.endDate >= current_date()
 					OR n.endDate is null and n.startDate is null
-					OR n.endDate is null and n.startDate <= current_date() and DATEDIFF(n.startDate,current_date())<1 AND n.hidden = 0')
+					OR n.endDate is null and n.startDate <= current_date() and DATEDIFF(n.startDate,current_date())<1')
 				->andWhere('YEAR(n.dateTime) = ' . $year . ' AND MONTH(n.dateTime) = ' . date("n", strtotime($month)) . '');
-
-		if (!empty($pluginArguments['orderBy'])) {
-			if ($pluginArguments['sortBy'] === 'DESC') {
-				$queryBuilder->orderBy('n.dateTime', 'DESC');
-			} else {
-				$queryBuilder->orderBy('n.dateTime', 'ASC');
-			}
+		if ((!empty($category)) || (!empty($folder))) {
+			$queryBuilder->andWhere(
+					$newsConstraints
+			);
 		}
+		$queryBuilder->andWhere('n.hidden = 0');
+		$queryBuilder->orderBy('n.dateTime', 'DESC');
+
 		return $query->execute();
 	}
 

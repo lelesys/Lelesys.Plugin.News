@@ -129,7 +129,7 @@ class NewsController extends AbstractNewsController {
 			$itemsPerPage = '';
 		}
 		if ($month !== NULL) {
-			$allNews = $this->newsService->archiveNewsList($year, $month, $pluginArguments);
+			$allNews = $this->newsService->archiveNewsList($category, $folder, $year, $month, $pluginArguments);
 		} else {
 			if ($this->request->hasArgument('newsBySelection')) {
 				$nodeArgument = $this->request->getArgument('newsBySelection');
@@ -185,6 +185,8 @@ class NewsController extends AbstractNewsController {
 		if ($folderId !== NULL) {
 			$folder = $folderId;
 		}
+		$this->view->assign('archiveFolder', $folder);
+		$this->view->assign('archiveCategory', $category);
 		$this->view->assign('archiveView', $this->newsService->archiveDateView($category, $folder));
 		$this->view->assign('categories', $this->categoryService->getEnabledLatestCategories());
 		$this->view->assign('folders', $this->folderService->listAll());

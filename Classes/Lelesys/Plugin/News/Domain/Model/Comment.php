@@ -307,6 +307,24 @@ class Comment {
 		return $this->Persistence_Object_Identifier;
 	}
 
+	/**
+	 * Returns the visible children comments
+	 *
+	 * @return array $visibleChildrenComments
+	 */
+	public function getVisibleChildren() {
+		$visibleChildrenComments = array();
+		$comments = $this->getChildren();
+		if (count($comments) > 0) {
+			foreach ($comments as $comment) {
+				if ($comment->getSetHidden() !== TRUE) {
+					$visibleChildrenComments[] = $comment;
+				}
+			}
+		}
+		return $visibleChildrenComments;
+	}
+
 }
 
 ?>
