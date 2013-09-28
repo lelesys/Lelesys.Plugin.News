@@ -26,7 +26,7 @@ jQuery(document).ready(function(){
 		       event.preventDefault();
 		       var itemDeleteMessage = confirm(deleteMessage);
 		       if (itemDeleteMessage == true) {
-			var assetId = jQuery('.asset-id').val();
+			var assetId = jQuery(this).parent().parent().find('.asset-id').val();
 			var newsId = jQuery('.news-id').val();
 			var eleobj = this;
 			jQuery.ajax({
@@ -54,7 +54,7 @@ jQuery(document).ready(function(){
 		       event.preventDefault();
 		       var itemDeleteMessage = confirm(deleteMessage);
 		       if (itemDeleteMessage == true) {
-			var tagId = jQuery('.tag-id').val();
+			var tagId = jQuery(this).parent().find('.tag-id').val();
 			var newsId = jQuery('.news-id').val();
 			var eleobj = this;
 			jQuery.ajax({
@@ -82,7 +82,7 @@ jQuery(document).ready(function(){
 		event.preventDefault();
 		       var itemDeleteMessage = confirm(deleteMessage);
 		       if (itemDeleteMessage == true) {
-			var fileId = jQuery('.file-id').val();
+			var fileId = jQuery(this).parent().parent().find('.file-id').val();
 			var newsId = jQuery('.news-id').val();
 			var eleobj = this;
 			jQuery.ajax({
@@ -110,7 +110,7 @@ jQuery(document).ready(function(){
 		event.preventDefault();
 		       var itemDeleteMessage = confirm(deleteMessage);
 		       if (itemDeleteMessage == true) {
-			var linkId = jQuery('.link-id').val();
+			var linkId = jQuery(this).parent().parent().find('.link-id').val();
 			var newsId = jQuery('.news-id').val();
 			var eleobj = this;
 			jQuery.ajax({
