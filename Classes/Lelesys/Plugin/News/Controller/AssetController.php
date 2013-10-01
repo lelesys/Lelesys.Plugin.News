@@ -2,7 +2,7 @@
 
 namespace Lelesys\Plugin\News\Controller;
 
-/*                                                                         *
+/* *
  * This script belongs to the package "Lelesys.Plugin.News".               *
  *                                                                         *
  * It is free software; you can redistribute it and/or modify it under     *
@@ -23,6 +23,12 @@ class AssetController extends AbstractNewsController {
 
 	/**
 	 * @Flow\Inject
+	 * @var \TYPO3\Flow\I18n\Translator
+	 */
+	protected $translator;
+
+	/**
+	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Service\AssetService
 	 */
 	protected $assetService;
@@ -34,10 +40,13 @@ class AssetController extends AbstractNewsController {
 	 * @return void
 	 */
 	public function createAction(\Lelesys\Plugin\News\Domain\Model\Asset $newAsset) {
+		$packageKey = $this->settings['flashMessage']['packageKey'];
 		try {
 			$this->assetService->create($newAsset);
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Cannot create asset at this time!!.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$header = 'Cannot create asset at this time!!.';
+			$message = $this->translator->translateById('lelesys.plugin.news.cannot.createasset', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 		}
 	}
 
@@ -58,10 +67,13 @@ class AssetController extends AbstractNewsController {
 	 * @return void
 	 */
 	public function updateAction(\Lelesys\Plugin\News\Domain\Model\Asset $asset) {
+		$packageKey = $this->settings['flashMessage']['packageKey'];
 		try {
 			$this->assetService->update($asset);
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Cannot update asset at this time!!.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$header = 'Cannot update asset at this time!!.';
+			$message = $this->translator->translateById('lelesys.plugin.news.cannot.updateasset', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 		}
 	}
 
@@ -72,10 +84,13 @@ class AssetController extends AbstractNewsController {
 	 * @return void
 	 */
 	public function deleteAction(\Lelesys\Plugin\News\Domain\Model\Asset $asset) {
+		$packageKey = $this->settings['flashMessage']['packageKey'];
 		try {
 			$this->assetService->delete($asset);
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$header = 'Sorry, error occured. Please try again later.';
+			$message = $this->translator->translateById('lelesys.plugin.news.try.again', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
 

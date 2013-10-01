@@ -23,6 +23,12 @@ class TagController extends AbstractNewsController {
 
 	/**
 	 * @Flow\Inject
+	 * @var \TYPO3\Flow\I18n\Translator
+	 */
+	protected $translator;
+
+	/**
+	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Service\TagService
 	 */
 	protected $tagService;
@@ -61,10 +67,14 @@ class TagController extends AbstractNewsController {
 	public function createAction(\Lelesys\Plugin\News\Domain\Model\Tag $newTag) {
 		try {
 			$this->tagService->create($newTag);
-			$this->addFlashMessage('Created a new tag.', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
+			$header = 'Created a new tag.';
+			$message = $this->translator->translateById('lelesys.plugin.news.create.tag', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 			$this->redirect('index');
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Cannot create tag at this time!!.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$header = 'Cannot create tag at this time!!.';
+			$message = $this->translator->translateById('lelesys.plugin.news.cannot.createtag', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
 
@@ -77,10 +87,14 @@ class TagController extends AbstractNewsController {
 	public function deleteAction(\Lelesys\Plugin\News\Domain\Model\Tag $tag) {
 		try {
 			$this->tagService->delete($tag);
-			$this->addFlashMessage('Deleted a tag.', '', \TYPO3\Flow\Error\Message::SEVERITY_OK);
+			$header = 'Deleted a tag.';
+			$message = $this->translator->translateById('lelesys.plugin.news.delete.tag', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 			$this->redirect('index');
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
-			$this->addFlashMessagTagControllere('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$header = 'Sorry, error occured. Please try again later.';
+			$message = $this->translator->translateById('lelesys.plugin.news.try.again', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
 

@@ -15,13 +15,19 @@ class FolderController extends ActionController {
 
 	/**
 	 * @Flow\Inject
+	 * @var \TYPO3\Flow\I18n\Translator
+	 */
+	protected $translator;
+
+	/**
+	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Service\FolderService
 	 */
 	protected $folderService;
 
 	/**
 	 * List of folders
-	 * 
+	 *
 	 * @return void
 	 */
 	public function indexAction() {
@@ -48,7 +54,10 @@ class FolderController extends ActionController {
 	 */
 	public function createAction(\Lelesys\Plugin\News\Domain\Model\Folder $newFolder) {
 		$this->folderService->add($newFolder);
-		$this->addFlashMessage('Created a new folder.');
+		$packageKey = $this->settings['flashMessage']['packageKey'];
+		$header = 'Created a new folder.';
+		$message = $this->translator->translateById('lelesys.plugin.news.add.folder', array(), NULL, NULL, 'Main', $packageKey);
+		$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 		$this->redirect('index');
 	}
 
@@ -66,7 +75,10 @@ class FolderController extends ActionController {
 	 */
 	public function updateAction(\Lelesys\Plugin\News\Domain\Model\Folder $folder) {
 		$this->folderService->update($folder);
-		$this->addFlashMessage('Updated the folder.');
+		$packageKey = $this->settings['flashMessage']['packageKey'];
+		$header = 'Updated the folder.';
+		$message = $this->translator->translateById('lelesys.plugin.news.update.folder', array(), NULL, NULL, 'Main', $packageKey);
+		$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 		$this->redirect('index');
 	}
 
@@ -76,7 +88,10 @@ class FolderController extends ActionController {
 	 */
 	public function deleteAction(\Lelesys\Plugin\News\Domain\Model\Folder $folder) {
 		$this->folderService->delete($folder);
-		$this->addFlashMessage('Deleted a folder.');
+		$packageKey = $this->settings['flashMessage']['packageKey'];
+		$header = 'Deleted the folder.';
+		$message = $this->translator->translateById('lelesys.plugin.news.delete.folder', array(), NULL, NULL, 'Main', $packageKey);
+		$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 		$this->redirect('index');
 	}
 

@@ -2,7 +2,7 @@
 
 namespace Lelesys\Plugin\News\Controller;
 
-/*                                                                         *
+/* *
  * This script belongs to the package "Lelesys.Plugin.News".               *
  *                                                                         *
  * It is free software; you can redistribute it and/or modify it under     *
@@ -23,6 +23,12 @@ class FileController extends AbstractNewsController {
 
 	/**
 	 * @Flow\Inject
+	 * @var \TYPO3\Flow\I18n\Translator
+	 */
+	protected $translator;
+
+	/**
+	 * @Flow\Inject
 	 * @var \Lelesys\Plugin\News\Domain\Service\FileService
 	 */
 	protected $fileService;
@@ -34,12 +40,17 @@ class FileController extends AbstractNewsController {
 	 * @return void
 	 */
 	public function createAction(\Lelesys\Plugin\News\Domain\Model\File $newFile) {
+		$packageKey = $this->settings['flashMessage']['packageKey'];
 		try {
 			$this->fileService->create($newFile);
-			$this->addFlashMessage('Created a new file.');
+			$header = 'Created a new file.';
+			$message = $this->translator->translateById('lelesys.plugin.news.add.file', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 			$this->redirect('index');
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Cannot create file at this time!!.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$header = 'Cannot create file at this time!!.';
+			$message = $this->translator->translateById('lelesys.plugin.news.cannot.createfile', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 		}
 	}
 
@@ -50,12 +61,17 @@ class FileController extends AbstractNewsController {
 	 * @return void
 	 */
 	public function updateAction(\Lelesys\Plugin\News\Domain\Model\File $file) {
+		$packageKey = $this->settings['flashMessage']['packageKey'];
 		try {
 			$this->fileService->update($file);
-			$this->addFlashMessage('Updated the file.');
+			$header = 'Updated the file.';
+			$message = $this->translator->translateById('lelesys.plugin.news.update.file', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 			$this->redirect('index');
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Cannot update file at this time!!.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$header = 'Cannot update file at this time!!.';
+			$message = $this->translator->translateById('lelesys.plugin.news.cannot.updatefile', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 		}
 	}
 
@@ -66,12 +82,17 @@ class FileController extends AbstractNewsController {
 	 * @return void
 	 */
 	public function deleteAction(\Lelesys\Plugin\News\Domain\Model\File $file) {
+		$packageKey = $this->settings['flashMessage']['packageKey'];
 		try {
 			$this->fileService->delete($file);
-			$this->addFlashMessage('Deleted a file.');
+			$header = 'Deleted a file.';
+			$message = $this->translator->translateById('lelesys.plugin.news.delete.file', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, \TYPO3\Flow\Error\Message::SEVERITY_OK);
 			$this->redirect('index');
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
-			$this->addFlashMessage('Sorry, error occured. Please try again later.', '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
+			$header = 'Sorry, error occured. Please try again later.';
+			$message = $this->translator->translateById('lelesys.plugin.news.try.again', array(), NULL, NULL, 'Main', $packageKey);
+			$this->addFlashMessage($message, $header, '', \TYPO3\Flow\Error\Message::SEVERITY_ERROR);
 		}
 	}
 

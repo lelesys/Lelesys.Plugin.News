@@ -267,8 +267,9 @@ class NewsService {
 	 * @return void
 	 */
 	public function create(\Lelesys\Plugin\News\Domain\Model\News $newNews, $media, $file, $relatedLink, $tags) {
-		$currentUser = $this->securityContext->getAccount()->getParty();
+		$currentUser = $this->securityContext->getAccount();
 		if ($currentUser !== NULL) {
+			$currentUser->getParty();
 			$newNews->setCreatedBy($currentUser);
 		}
 		if (!empty($tags['title'])) {
