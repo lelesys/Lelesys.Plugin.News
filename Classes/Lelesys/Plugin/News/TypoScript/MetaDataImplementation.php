@@ -86,7 +86,8 @@ class MetaDataImplementation extends \TYPO3\TypoScript\TypoScriptObjects\Templat
 		$pluginArguments = $this->tsRuntime->getControllerContext()->getRequest()->getPluginArguments();
 		if (!empty($pluginArguments)) {
 			foreach ($pluginArguments as $arguments) {
-				if ($arguments['@package'] === 'Lelesys.Plugin.News'
+				if (!empty($arguments['@package']) &&
+						$arguments['@package'] === 'Lelesys.Plugin.News'
 						&& $arguments['@controller'] === 'News'
 						&& $arguments['@action'] === 'show'
 						&& !empty($arguments['news']['__identity'])) {
