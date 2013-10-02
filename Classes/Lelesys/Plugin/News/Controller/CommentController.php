@@ -49,6 +49,7 @@ class CommentController extends AbstractNewsController {
 		try {
 			$this->commentService->create($newComment, $news);
 			$array = array("news" => $news);
+			$this->addFlashMessage($this->translator->translateById('lelesys.plugin.news.comment.created', array(), NULL, NULL, 'Main', $this->settings['flashMessage']['packageKey']));
 			$this->redirect("show", "News", "Lelesys.Plugin.News", $array);
 		} catch (Lelesys\Plugin\News\Domain\Service\Exception $exception) {
 			$packageKey = $this->settings['flashMessage']['packageKey'];

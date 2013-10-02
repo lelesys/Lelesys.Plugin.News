@@ -591,6 +591,10 @@
 				<source>Please specify a valid email address</source>
 				<target>Please specify a valid email addresss</target>
 			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.comment.created" approved="no">
+				<source>Created a comment</source>
+				<target>Created a comment</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
