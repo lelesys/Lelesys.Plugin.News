@@ -122,13 +122,6 @@ class CommentService {
 	 * @return void
 	 */
 	public function delete(\Lelesys\Plugin\News\Domain\Model\Comment $comment) {
-		if (count($comment->getChildren()) > 0) {
-			foreach ($comment->getChildren() as $child) {
-				$child->setReplyTo(NULL);
-				$this->commentRepository->update($child);
-				$this->commentRepository->remove($child);
-			}
-		}
 		$this->commentRepository->remove($comment);
 		$this->emitCommentDeleted($comment);
 	}

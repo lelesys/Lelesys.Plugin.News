@@ -78,7 +78,7 @@ class Comment {
 	 * The children comment
 	 *
 	 * @var \Doctrine\Common\Collections\Collection<\Lelesys\Plugin\News\Domain\Model\Comment>
-	 * @ORM\OneToMany(mappedBy="replyTo", cascade={"persist", "detach"})
+	 * @ORM\OneToMany(mappedBy="replyTo", cascade={"persist" , "remove"})
 	 */
 	protected $children;
 
@@ -86,7 +86,7 @@ class Comment {
 	 * The Reply to comment
 	 *
 	 * @var \Lelesys\Plugin\News\Domain\Model\Comment
-	 * @ORM\ManyToOne(inversedBy="children", cascade={"persist", "detach"})
+	 * @ORM\ManyToOne(inversedBy="children", cascade={"persist"})
 	 */
 	protected $replyTo;
 
