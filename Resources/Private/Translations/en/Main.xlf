@@ -143,6 +143,10 @@
 				<source>New Folder</source>
 				<target>New Folder</target>
 			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.comment" approved="no">
+				<source>Comment</source>
+				<target>Comment</target>
+			</trans-unit>
 			<trans-unit id="lelesys.plugin.news.commentTitle" approved="no">
 				<source>Comment title</source>
 				<target>Comment title</target>

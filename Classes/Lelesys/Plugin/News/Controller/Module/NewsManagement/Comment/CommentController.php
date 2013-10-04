@@ -35,10 +35,15 @@ class CommentController extends \TYPO3\Neos\Controller\Module\AbstractModuleCont
 	/**
 	 * Shows a list of comments
 	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\News $news The News
 	 * @return void
 	 */
-	public function indexAction() {
-		$this->view->assign('comments', $this->commentService->listAll());
+	public function indexAction(\Lelesys\Plugin\News\Domain\Model\News $news = NULL) {
+		if ($news !== NULL) {
+			$this->view->assign('comments', $this->commentService->getCommentsByNews($news));
+		} else {
+			$this->view->assign('comments', $this->commentService->listAll());
+		}
 	}
 
 	/**

@@ -63,6 +63,16 @@ class CommentService {
 	}
 
 	/**
+	 * Shows a list of comments
+	 *
+	 * @param \Lelesys\Plugin\News\Domain\Model\News $news The news
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
+	 */
+	public function getCommentsByNews(\Lelesys\Plugin\News\Domain\Model\News $news) {
+		return $this->commentRepository->findByNews($news);
+	}
+
+	/**
 	 * Returns non hidden comments of news
 	 *
 	 * @param \Lelesys\Plugin\News\Domain\Model\News $newsObj The news object
@@ -112,6 +122,13 @@ class CommentService {
 	 * @return void
 	 */
 	public function delete(\Lelesys\Plugin\News\Domain\Model\Comment $comment) {
+		if (count($comment->getChildren()) > 0) {
+			foreach ($comment->getChildren() as $child) {
+				$child->setReplyTo(NULL);
+				$this->commentRepository->update($child);
+				$this->commentRepository->remove($child);
+			}
+		}
 		$this->commentRepository->remove($comment);
 		$this->emitCommentDeleted($comment);
 	}
