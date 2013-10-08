@@ -130,8 +130,6 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 	 */
 	public function getNewsAdmin(\Lelesys\Plugin\News\Domain\Model\Category $category = NULL, \Lelesys\Plugin\News\Domain\Model\Folder $folder = NULL) {
 
-		$emConfig = $this->entityManager->getConfiguration();
-		$emConfig->addCustomDatetimeFunction('DATEDIFF', 'Lelesys\Plugin\News\Doctrine\Query\Mysql\DateDiff');
 		$query = $this->createQuery();
 
 		$queryBuilder = ObjectAccess::getProperty($query, 'queryBuilder', TRUE);
@@ -158,14 +156,9 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 				->resetDQLParts()
 				->select('n')
 				->from('Lelesys\Plugin\News\Domain\Model\News', 'n')
-				->leftjoin('n.categories', 'c')
-				->leftjoin('n.tags', 't')
-				->where('n.startDate is null and n.endDate >= current_date()
-					OR DATEDIFF(n.startDate,current_date())<1 and n.endDate >= current_date()
-					OR n.endDate is null and n.startDate is null
-					OR n.endDate is null and n.startDate <= current_date() and DATEDIFF(n.startDate,current_date())<1');
+				->leftjoin('n.categories', 'c');
 		if ((!empty($category)) || (!empty($folder))) {
-			$queryBuilder->andWhere(
+			$queryBuilder->where(
 					$newsConstraints
 			);
 		}
