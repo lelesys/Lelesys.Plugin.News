@@ -269,8 +269,7 @@ class NewsService {
 	public function create(\Lelesys\Plugin\News\Domain\Model\News $newNews, $media, $file, $relatedLink, $tags) {
 		$currentUser = $this->securityContext->getAccount();
 		if ($currentUser !== NULL) {
-			$currentUser->getParty();
-			$newNews->setCreatedBy($currentUser);
+			$newNews->setCreatedBy($currentUser->getParty());
 		}
 		if (!empty($tags['title'])) {
 			$tagsArray = array_unique(\TYPO3\Flow\Utility\Arrays::trimExplode(',', strtolower($tags['title'])));
