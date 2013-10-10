@@ -6,7 +6,7 @@
 	<div id="sub-nav" class="span7">
 		<h2><f:translate id="lelesys.plugin.news.categoryList"></f:translate></h2>
 		<f:render partial="FlashMessage" arguments="{severityName: flashmessage}" />
-		<f:security.ifHasRole role="Editor">
+		<f:security.ifHasRole role="Lelesys.Plugin.News:NewsAdmin">
 			<f:link.action action="new"><i class="icon-plus-sign icon-plus-image"></i> &nbsp; <f:translate id="lelesys.plugin.news.addCategory"></f:translate></f:link.action>
 		</f:security.ifHasRole>
 	</div>
@@ -24,7 +24,7 @@
 							<tbody>
 							<f:for each="{categoriesPagination}" as="category">
 								<tr>
-								<f:security.ifHasRole role="Editor">
+								<f:security.ifHasRole role="Lelesys.Plugin.News:NewsAdmin">
 									<f:then>
 										<td><f:link.action action="index" controller="news" arguments="{category: category.title}">{category.title}</f:link.action></td>
 

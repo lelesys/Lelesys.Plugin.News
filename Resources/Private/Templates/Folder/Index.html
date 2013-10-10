@@ -6,7 +6,7 @@
 	<div id="sub-nav" class="span7">
 		<h2><f:translate id="lelesys.plugin.news.folderList"></f:translate></h2>
 		<f:render partial="FlashMessage" arguments="{severityName: flashmessage}" />
-		<f:security.ifHasRole role="Editor">
+		<f:security.ifHasRole role="Lelesys.Plugin.News:NewsAdmin">
 			<f:link.action action="new"><i class="icon-plus-sign icon-plus-image"></i> &nbsp; <f:translate id="lelesys.plugin.news.addFolder"></f:translate></f:link.action>
 		</f:security.ifHasRole>
 	</div>
@@ -25,7 +25,7 @@
 							<f:for each="{foldersPagination}" as="folder">
 								<tr>
 									<td><f:link.action action="index" controller="news" arguments="{folder: folder.uuid}">{folder.title}</f:link.action></td>
-								<f:security.ifHasRole role="Editor">
+								<f:security.ifHasRole role="Lelesys.Plugin.News:NewsAdmin">
 								<td class="edit-delete">
 									<div class="btn-group">
 										<button class="btn"><f:translate id="lelesys.plugin.news.action"></f:translate></button>
