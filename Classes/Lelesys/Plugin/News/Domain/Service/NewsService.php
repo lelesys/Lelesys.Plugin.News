@@ -530,6 +530,7 @@ class NewsService {
 	public function hideNews(\Lelesys\Plugin\News\Domain\Model\News $news) {
 		$news->setHidden(1);
 		$this->newsRepository->update($news);
+		$this->emitNewsUpdated($news);
 	}
 
 	/**
@@ -541,6 +542,7 @@ class NewsService {
 	public function showNews(\Lelesys\Plugin\News\Domain\Model\News $news) {
 		$news->setHidden(0);
 		$this->newsRepository->update($news);
+		$this->emitNewsUpdated($news);
 	}
 
 	/**
