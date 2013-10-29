@@ -3,13 +3,14 @@
     - 'TYPO3.Neos:Plugin'
   ui:
     label: 'News List'
-    group: Plugins
+    group: plugins
     inlineEditable: true
     icon: 'icon-puzzle-piece'
     inspector:
       groups:
         newsoption:
           label: 'News Options'
+          position: 10
   properties:
     limitNews:
       type: string
@@ -79,13 +80,37 @@
         inspector:
           group: newsoption
         reloadIfChanged: true
+  options:
+    pluginViews:
+      'Latest':
+        label: 'Latest View'
+        controllerActions:
+          'Lelesys\Plugin\News\Controller\NewsController': ['latestNews']
+      'Detail':
+        label: 'Detail View'
+        controllerActions:
+          'Lelesys\Plugin\News\Controller\NewsController': ['show']
+      'Archive':
+        label: 'Archive View'
+        ui:
+          inlineEditable: true
+        controllerActions:
+          'Lelesys\Plugin\News\Controller\NewsController': ['archive']
+      'Search':
+        label: 'Search View'
+        controllerActions:
+          'Lelesys\Plugin\News\Controller\NewsController': ['searchNews']
+      'SearchResult':
+        label: 'Search Result View'
+        controllerActions:
+          'Lelesys\Plugin\News\Controller\NewsController': ['searchResult']
 
 'Lelesys.Plugin.News:LatestNews':
   superTypes:
     - 'TYPO3.Neos:Plugin'
   ui:
     label: 'Latest News'
-    group: Plugins
+    group: plugins
     inlineEditable: true
     icon: 'icon-puzzle-piece'
     inspector:
@@ -305,7 +330,7 @@
     - 'TYPO3.Neos:Plugin'
   ui:
     label: 'Folder List'
-    group: Plugins
+    group: plugins
     inlineEditable: true
     icon: 'icon-puzzle-piece'
     inspector:
@@ -379,7 +404,7 @@
     - 'TYPO3.Neos:Plugin'
   ui:
     label: 'Search News'
-    group: Plugins
+    group: plugins
     inlineEditable: true
     icon: 'icon-puzzle-piece'
     inspector:
@@ -454,7 +479,7 @@
     - 'TYPO3.Neos:Plugin'
   ui:
     label: 'News Detail'
-    group: Plugins
+    group: plugins
     inlineEditable: true
     icon: 'icon-puzzle-piece'
     inspector:
@@ -492,7 +517,7 @@
     - 'TYPO3.Neos:Plugin'
   ui:
     label: 'News Search Result'
-    group: Plugins
+    group: plugins
     inlineEditable: true
     icon: 'icon-puzzle-piece'
     inspector:
@@ -574,4 +599,4 @@
     - 'TYPO3.Neos:Content'
   ui:
     label: 'News Meta Data'
-    group: Plugins
+    group: plugins

@@ -27,3 +27,11 @@
     margin-right: 32px;
     margin-top: -25px;
 }
+
+/*alpha6 neos*/
+.module-tab .tab-content {
+	overflow: hidden;
+}
+.module-accordian .accordion-inner {
+	padding: 9px 15px;
+}

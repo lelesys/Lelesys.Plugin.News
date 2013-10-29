@@ -14,7 +14,7 @@ jQuery(document).ready(function() {
 			jQuery(this).next('.error').remove();
 		} else {
 			if (jQuery(this).next('.error').length < 1) {
-				jQuery(this).after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>'+validEmail+'</div>');
+				jQuery(this).after('<div class="neos-alert neos-alert-error form-error error"><button type="button" class="neos-close" data-dismiss="alert">×</button>'+validEmail+'</div>');
 			}
 			return false;
 		}
@@ -23,7 +23,7 @@ jQuery(document).ready(function() {
 	jQuery('.newsTitle').focusout(function() {
 		if (!jQuery(this).val()) {
 			if (jQuery(this).next('.error').length < 1) {
-				jQuery(this).after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>'+requiredField+'</div>');
+				jQuery(this).after('<div class="neos-alert neos-alert-error form-error error"><button type="button" class="neos-close" data-dismiss="alert">×</button>'+requiredField+'</div>');
 			}
 			return false;
 		}	else {
@@ -35,7 +35,7 @@ jQuery(document).ready(function() {
 		var email = jQuery('#authorEmail').val(), className = this, emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
 		if (!jQuery('.newsTitle').val()) {
 			if (jQuery('.newsTitle').next('.error').length < 1) {
-				jQuery('.newsTitle').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>'+requiredField+'</div>');
+				jQuery('.newsTitle').after('<div class="neos-alert neos-alert-error form-error error"><button type="button" class="neos-close" data-dismiss="alert">×</button>'+requiredField+'</div>');
 			}
 			return false;
 		} else {
@@ -52,7 +52,7 @@ jQuery(document).ready(function() {
 			jQuery('#authorEmail').next('.error').remove();
 		} else {
 			if (jQuery('#authorEmail').next('.error').length < 1) {
-				jQuery('#authorEmail').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>'+validEmail+'</div>');
+				jQuery('#authorEmail').after('<div class="neos-alert neos-alert-error form-error error"><button type="button" class="neos-close" data-dismiss="alert">×</button>'+validEmail+'</div>');
 			}
 			return false
 		}
@@ -67,7 +67,7 @@ jQuery(document).ready(function() {
 			if ((validUrl == true) || (validEmail == true)) {
 			} else {
 				if (jQuery('.text-added').next('.error').length < 1) {
-					jQuery('.text-added').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>'+validUrl+'</div>');
+					jQuery('.text-added').after('<div class="neos-alert neos-alert-error form-error error"><button type="button" class="neos-close" data-dismiss="alert">×</button>'+validUrl+'</div>');
 				}
 			}
 		}
@@ -81,7 +81,7 @@ jQuery(document).ready(function() {
 			if ((validUrl == true)) {
 			} else {
 				if (jQuery('.comment-url').next('.error').length < 1) {
-					jQuery('.comment-url').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>'+Url+'</div>');
+					jQuery('.comment-url').after('<div class="neos-alert neos-alert-error form-error error"><button type="button" class="neos-close" data-dismiss="alert">×</button>'+Url+'</div>');
 				}
 			}
 		}
@@ -96,7 +96,7 @@ jQuery(document).ready(function() {
 				success : function (data){
 					if(data > 0){
 						if (jQuery('.title-category').next('.error').length < 1) {
-							jQuery('.title-category').after('<div class="alert alert-error form-error error category-title-error"><button type="button" class="close" data-dismiss="alert">×</button>'+checkCatTitle+'</div>');
+							jQuery('.title-category').after('<div class="neos-alert neos-alert-error form-error error category-title-error"><button type="button" class="neos-close" data-dismiss="alert">×</button>'+checkCatTitle+'</div>');
 						}
 						return false;
 					} else {
@@ -106,7 +106,7 @@ jQuery(document).ready(function() {
 			});
 		} else {
 			if (jQuery('.title-category').next('.error').length < 1) {
-				jQuery('.title-category').after('<div class="alert alert-error form-error error category-title-error"><button type="button" class="close" data-dismiss="alert">×</button>'+requiredField+'</div>');
+				jQuery('.title-category').after('<div class="neos-alert neos-alert-error form-error error category-title-error"><button type="button" class="neos-close" data-dismiss="alert">×</button>'+requiredField+'</div>');
 			}
 			return false
 		}
@@ -120,7 +120,7 @@ jQuery(document).ready(function() {
 				success : function (data) {
 					if(data > 0){
 						if (jQuery('.title-category').next('.error').length < 1) {
-							jQuery('.title-category').after('<div class="alert alert-error form-error error category-title-error"><button type="button" class="close" data-dismiss="alert">×</button>'+checkCatTitle+'</div>');
+							jQuery('.title-category').after('<div class="neos-alert neos-alert-error form-error error category-title-error"><button type="button" class="neos-close" data-dismiss="alert">×</button>'+checkCatTitle+'</div>');
 						}
 						return false;
 					} else {
@@ -131,7 +131,7 @@ jQuery(document).ready(function() {
 			});
 		} else {
 			if (jQuery('.title-category').next('.error').length < 1) {
-				jQuery('.title-category').after('<div class="alert alert-error form-error error category-title-error"><button type="button" class="close" data-dismiss="alert">×</button>'+requiredField+'</div>');
+				jQuery('.title-category').after('<div class="neos-alert neos-alert-error form-error error category-title-error"><button type="button" class="neos-close" data-dismiss="alert">×</button>'+requiredField+'</div>');
 			}
 			return false
 		}
@@ -142,21 +142,21 @@ jQuery(document).ready(function() {
 		var email = jQuery('#email').val();
 		if (!jQuery('#name').val()) {
 			if (jQuery('#name').next('.error').length < 1) {
-				jQuery('#name').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>'+requiredField+'</div>');
+				jQuery('#name').after('<div class="neos-alert neos-alert-error form-error error"><button type="button" class="neos-close" data-dismiss="alert">×</button>'+requiredField+'</div>');
 			}
 		} else {
 			jQuery('#name').next('.error').remove();
 		}
 		if (!jQuery('#email').val()) {
 			if (jQuery('#email').next('.error').length < 1) {
-				jQuery('#email').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>'+requiredField+'</div>');
+				jQuery('#email').after('<div class="neos-alert neos-alert-error form-error error"><button type="button" class="neos-close" data-dismiss="alert">×</button>'+requiredField+'</div>');
 			}
 		} else {
 			jQuery('#message').next('.error').remove();
 		}
 		if (!jQuery('#message').val()) {
 			if (jQuery('#message').next('.error').length < 1) {
-				jQuery('#message').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>'+requiredField+'</div>');
+				jQuery('#message').after('<div class="neos-alert neos-alert-error form-error error"><button type="button" class="neos-close" data-dismiss="alert">×</button>'+requiredField+'</div>');
 			}
 			return false;
 		} else {
@@ -174,7 +174,7 @@ jQuery(document).ready(function() {
 			jQuery('#email').next('.error').remove();
 		} else {
 			if (jQuery('#email').next('.error').length < 1) {
-				jQuery('#email').after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>'+validEmail+'</div>');
+				jQuery('#email').after('<div class="neos-alert neos-alert-error form-error error"><button type="button" class="neos-close" data-dismiss="alert">×</button>'+validEmail+'</div>');
 			}
 			return false;
 		}
@@ -193,7 +193,7 @@ jQuery(document).ready(function() {
 			jQuery(this).next('.error').remove();
 		} else {
 			if (jQuery(this).next('.error').length < 1) {
-				jQuery(this).after('<div class="alert alert-error form-error error"><button type="button" class="close" data-dismiss="alert">×</button>'+validEmail+'</div>');
+				jQuery(this).after('<div class="neos-alert neos-alert-error form-error error"><button type="button" class="neos-close" data-dismiss="alert">×</button>'+validEmail+'</div>');
 			}
 			return false;
 		}
@@ -203,7 +203,7 @@ jQuery(document).ready(function() {
 	jQuery('.create-tag').click(function() {
 		if (!jQuery('.tagTitle').val()) {
 			if (jQuery('.tagTitle').next('.error').length < 1) {
-				jQuery('.tagTitle').after('<div class="alert alert-error form-error error category-title-error"><button type="button" class="close" data-dismiss="alert">×</button>'+requiredField+'</div>');
+				jQuery('.tagTitle').after('<div class="neos-alert neos-alert-error form-error error category-title-error"><button type="button" class="neos-close" data-dismiss="alert">×</button>'+requiredField+'</div>');
 			}
 			return false;
 		} else {

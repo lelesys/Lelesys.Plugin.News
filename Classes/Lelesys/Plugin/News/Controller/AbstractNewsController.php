@@ -47,7 +47,8 @@ abstract class AbstractNewsController extends ActionController {
 	 * @api
 	 */
 	protected function initializeView(\TYPO3\Flow\Mvc\View\ViewInterface $view) {
-		$pluginArguments = $this->request->getPluginArguments();
+		$currentNode = $this->request->getInternalArgument('__node');
+		$pluginArguments = $currentNode->getProperties();
 		// set the template paths from the Settings
 		// so that it can be changed per project
 		// do this only if it is a TemplateView to avoid FATAL errors

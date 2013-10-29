@@ -1,3 +1,4 @@
+{namespace assets=TYPO3\Asset\ViewHelpers}
 <f:layout name="DefaultBackend" />
 
 <f:section name="Content">
@@ -14,13 +15,13 @@
 				</div>
 			</fieldset>
 		</div>
-		<div class="form-actions form-footer">
-			<f:link.action action="index" class="btn neos-button"><f:translate id="lelesys.plugin.news.cancel"></f:translate></f:link.action>
+		<div class="neos-form-actions neos-form-footer">
+			<f:link.action action="index" class="neos-btn neos-button"><f:translate id="lelesys.plugin.news.cancel"></f:translate></f:link.action>
 			<div class="pull-right">
-				<f:form.submit class="btn btn-primary neos-button" value='<f:translate id="lelesys.plugin.news.save"></f:translate>' />
+				<f:form.submit class="neos-btn neos-btn-primary neos-button" value='<f:translate id="lelesys.plugin.news.save"></f:translate>' />
 			</div>
 		</div>
 	</f:form>
-	<script src="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/js/jquery-2.0.3.min.js')}" type="text/javascript"></script>
-	<script src="{f:uri.resource(path: 'resource://Lelesys.Plugin.News/Public/js/form-validation-backend.js')}" type="text/javascript"></script>
+	<assets:bundle.css name="Lelesys.Plugin.News:defaultStyles" />
+	<assets:bundle.js name="Lelesys.Plugin.News:BackendJs" />
 </f:section>

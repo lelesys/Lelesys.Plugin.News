@@ -128,7 +128,7 @@ class NewsController extends AbstractNewsController {
 	 */
 	public function indexAction($category = NULL, $folder = NULL, $tag = NULL, $year = NULL, $month = NULL) {
 		$currentNode = $this->request->getInternalArgument('__node');
-		$pluginArguments = $this->request->getPluginArguments();
+		$pluginArguments = $currentNode->getProperties();
 		if (isset($pluginArguments['itemsPerPage'])) {
 			$itemsPerPage = (int) $pluginArguments['itemsPerPage'];
 		} else {
@@ -205,7 +205,7 @@ class NewsController extends AbstractNewsController {
 	 */
 	public function latestNewsAction() {
 		$currentNode = $this->request->getInternalArgument('__node');
-		$pluginArguments = $this->request->getPluginArguments();
+		$pluginArguments = $currentNode->getProperties();
 		if ($this->request->hasArgument('newsBySelection')) {
 			$nodeArgument = $this->request->getArgument('newsBySelection');
 			$currentNode->setProperty('categoryId', $nodeArgument['category']);

@@ -34,7 +34,7 @@ class MetaDataImplementation extends \TYPO3\TypoScript\TypoScriptObjects\Templat
 	 * @return string
 	 */
 	public function evaluate() {
-		$fluidTemplate = new \TYPO3\TypoScript\View\FluidView(($this->tsRuntime->getControllerContext()->getRequest() instanceof \TYPO3\Flow\Mvc\ActionRequest) ? $this->tsRuntime->getControllerContext()->getRequest() : NULL);
+		$fluidTemplate = new \TYPO3\TypoScript\TypoScriptObjects\Helpers\FluidView(($this->tsRuntime->getControllerContext()->getRequest() instanceof \TYPO3\Flow\Mvc\ActionRequest) ? $this->tsRuntime->getControllerContext()->getRequest() : NULL);
 
 		$templatePath = $this->tsValue('templatePath');
 		if ($templatePath === NULL) {
@@ -58,12 +58,10 @@ class MetaDataImplementation extends \TYPO3\TypoScript\TypoScriptObjects\Templat
 			$fluidTemplate->setResourcePackage($templateResourcePathParts['host']);
 		}
 
-		foreach ($this->variables as $key => $value) {
-			$evaluatedValue = $this->tsRuntime->evaluateProcessor($key, $this, $value);
-			$fluidTemplate->assign($key, $evaluatedValue);
-		}
 			// Assign news to template
 		$fluidTemplate->assign('news', $this->getNewsFromCurrentRequest());
+
+		$this->initializeView($fluidTemplate);
 
 			// TODO this should be done differently lateron
 		$fluidTemplate->assign('fluidTemplateTsObject', $this);

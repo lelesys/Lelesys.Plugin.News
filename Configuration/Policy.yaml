@@ -25,7 +25,7 @@ resources:
     'Lelesys_Plugin_News_Controller_Rating': 'method(Lelesys\Plugin\News\Controller\RatingController->deleteAction())'
     'Lelesys_Plugin_News_Controller_Tag': 'class(Lelesys\Plugin\News\Controller\TagController)'
     'Lelesys_Plugin_News_Controller_User': 'class(Lelesys\Plugin\News\Controller\UserController)'
-
+    'Lelesys_Plugin_News_Controller_Frontend_News': 'method(Lelesys\Plugin\News\Controller\NewsController->(archive|index|latestNews|searchNews|searchResult|show)Action())'
 acls:
    'NewsAdmin':
      methods:
@@ -43,3 +43,6 @@ acls:
        'Lelesys_Plugin_News_Controller_Rating': GRANT
        'Lelesys_Plugin_News_Controller_Tag': GRANT
        'Lelesys_Plugin_News_Controller_User': GRANT
+   'Everybody':
+     methods:
+       'Lelesys_Plugin_News_Controller_Frontend_News': GRANT
