@@ -1,5 +1,4 @@
 {namespace neos=TYPO3\Neos\ViewHelpers}
-{namespace assets=TYPO3\Asset\ViewHelpers}
 <f:layout name="DefaultBackend" />
 
 <f:section name="Content">
@@ -52,6 +51,6 @@
 			<f:link.action action="new" class="neos-btn neos-button neos-btn-primary" title="Create new folder"><i class="icon-plus-sign icon-plus-image"></i> &nbsp; <f:translate id="lelesys.plugin.news.addFolder"></f:translate></f:link.action>
 		</div>
 	</div>
-	<assets:bundle.css name="Lelesys.Plugin.News:defaultStyles" />
-	<assets:bundle.js name="Lelesys.Plugin.News:BackendJs" />
+	<f:render partial="Module/JavaScripts"/>
+	<f:render partial="Module/StyleSheets"/>
 </f:section>
