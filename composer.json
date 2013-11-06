@@ -1,18 +1,19 @@
 {
 	"name": "lelesys/plugin-news",
 	"description": "News plugin for TYPO3 Neos",
-	"type":"typo3-flow-plugin",
+	"type": "typo3-flow-plugin",
 	"license": "GPL-3.0+",
 	"authors": [
-	{
-		"name": "Pankaj Lele",
-		"email": "pankaj@lelesys.com"
-	}
+		{
+			"name": "Pankaj Lele",
+			"email": "pankaj@lelesys.com"
+		}
 	],
 	"require": {
-		"typo3/flow":"*",
-		"typo3/neos":"*",
-		"typo3/swiftmailer": "dev-master"
+		"typo3/flow": "*",
+		"typo3/neos": "*",
+		"typo3/swiftmailer": "dev-master",
+		"lelesys/captcha": "dev-master"
 	},
 	"autoload": {
 		"psr-0": {
