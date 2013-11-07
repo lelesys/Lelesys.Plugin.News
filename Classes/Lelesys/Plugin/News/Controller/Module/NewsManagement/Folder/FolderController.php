@@ -10,7 +10,7 @@ namespace Lelesys\Plugin\News\Controller\Module\NewsManagement\Folder;
 use TYPO3\Flow\Annotations as Flow;
 use Lelesys\Plugin\News\Domain\Model\Folder;
 
-class FolderController extends \TYPO3\Neos\Controller\Module\AbstractModuleController {
+class FolderController extends \Lelesys\Plugin\News\Controller\Module\NewsManagementController {
 
 	/**
 	 * @Flow\Inject

@@ -18,7 +18,7 @@ use \Lelesys\Plugin\News\Domain\Model\News;
  *
  * @Flow\Scope("singleton")
  */
-class NewsController extends \TYPO3\Neos\Controller\Module\AbstractModuleController {
+class NewsController extends \Lelesys\Plugin\News\Controller\Module\NewsManagementController {
 
 	/**
 	 * @Flow\Inject
