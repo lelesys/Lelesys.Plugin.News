@@ -36,13 +36,16 @@ class CommentController extends \TYPO3\Neos\Controller\Module\AbstractModuleCont
 	 * Shows a list of comments
 	 *
 	 * @param \Lelesys\Plugin\News\Domain\Model\News $news The News
+	 * @param array $filterFlag The active flag
+	 * @param string $selected The select value for comment filter
 	 * @return void
 	 */
-	public function indexAction(\Lelesys\Plugin\News\Domain\Model\News $news = NULL) {
+	public function indexAction(\Lelesys\Plugin\News\Domain\Model\News $news = NULL, $filterFlag = NULL, $selected = NULL) {
+		$this->view->assign('selectVal', $selected);
 		if ($news !== NULL) {
 			$this->view->assign('comments', $this->commentService->getCommentsByNews($news));
 		} else {
-			$this->view->assign('comments', $this->commentService->listAll());
+			$this->view->assign('comments', $this->commentService->listAllCommentsAdmin($filterFlag));
 		}
 	}
 

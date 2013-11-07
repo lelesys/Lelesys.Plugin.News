@@ -1,6 +1,10 @@
 <f:layout name="DefaultBackend" />
 <f:section name="Content">
 	<div class="row neos-module-container indented">
+		<f:form action="index" controller="Comment">
+			<f:form.hidden value="" name="selected" class="comment-value" />
+			<f:form.select id="module-comment" value="{selectVal}" name="filterFlag" options="{ select :'Select Filter', 0: 'Active', 1: 'In-Active'}" />
+		</f:form>
 		<f:render partial="FlashMessage" arguments="{severityName: flashmessage}" />
 		<f:if condition="{comments}">
 			<f:then>

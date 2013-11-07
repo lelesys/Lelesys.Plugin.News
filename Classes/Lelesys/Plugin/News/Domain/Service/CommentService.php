@@ -127,12 +127,30 @@ class CommentService {
 	}
 
 	/**
+	 * Shows the list of news by category
+	 *
+	 * @param array $filterFlag The active flag
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
+	 */
+	public function listAllCommentsAdmin($filterFlag) {
+		if ($filterFlag[0] !== NULL) {
+			if ($filterFlag[0] === 'select') {
+				return $this->commentRepository->findAll();
+			} else {
+				return $this->commentRepository->findBySetHidden($filterFlag[0]);
+			}
+		} else {
+			return $this->commentRepository->findAll();
+		}
+	}
+
+	/**
 	 * Return asset for given identifier
 	 *
 	 * @param string $identifier comment identifier
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
-	public function findById($identifier) {
+	public function filterComment($identifier) {
 		$comment = $this->commentRepository->findByIdentifier($identifier);
 		return $comment;
 	}
