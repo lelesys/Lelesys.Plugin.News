@@ -6,15 +6,6 @@
 	<div class="news-list-container container-fluid">
 		<div class="horizontal">
 			<h2><f:translate id="lelesys.plugin.news.newsList"></f:translate></h2>
-			<f:security.ifAccess resource="TYPO3_Neos_Backend_GeneralAccess">
-				<f:then>
-					<f:form action="index" controller="News" name="newsBySelection" id="newsBySelection">
-						<f:form.select options="{categories}" optionLabelField="title" value="{categoryId}" property="category" prependOptionLabel="Select category" id="category" name="category"  />
-						<f:form.select options="{folders}" optionLabelField="title" value="{folderId}" property="folder" prependOptionLabel="Select folder" id="folder" name="folder"  />
-						<f:form.submit class="neos-btn" value="Update"/>
-					</f:form>
-				</f:then>
-			</f:security.ifAccess>
 			<f:render partial="FlashMessage" arguments="{severityName: flashmessage}" />
 			<f:security.ifHasRole role="Lelesys.Plugin.News:NewsAdmin">
 				<f:link.action action="new"><i class="icon-plus-sign icon-plus-image"></i> &nbsp; <f:translate id="lelesys.plugin.news.addNews"></f:translate></f:link.action>

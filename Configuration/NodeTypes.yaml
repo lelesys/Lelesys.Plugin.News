@@ -1,6 +1,72 @@
+# abstract news plugin config for having folderId and categoryId selection
+'Lelesys.Plugin.News:Filterable':
+  abstract: TRUE
+  postprocessors:
+    'CategoryFolderListPostprocessor':
+      postprocessor: 'Lelesys\Plugin\News\NodeTypePostprocessor\CategoryFolderListPostprocessor'
+  properties:
+    folderId:
+      type: string
+      defaultValue: ''
+      ui:
+        label: 'Folder'
+        inspector:
+          group: 'newsoption'
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              '':
+                label: 'Select folder'
+        reloadIfChanged: true
+    categoryId:
+      type: string
+      defaultValue: ''
+      ui:
+        label: 'Category'
+        inspector:
+          group: 'newsoption'
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              '':
+                label: 'Select category'
+        reloadIfChanged: true
+
+# abstract news plugin config for having configurable template paths
+'Lelesys.Plugin.News:Templatable':
+  abstract: TRUE
+  properties:
+    templatePath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Templates/News/Index.html'
+      ui:
+        label: 'Template Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    partialRootPath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Partials/'
+      ui:
+        label: 'Partial Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+    layoutRootPath:
+      type: string
+      defaultValue: 'resource://Lelesys.Plugin.News/Private/Layouts/'
+      ui:
+        label: 'Layout Path'
+        inspector:
+          group: newsoption
+        reloadIfChanged: true
+
+# TODO move common configurations to an abstract type like inspector group, sortby orderby etc.
 'Lelesys.Plugin.News:NewsList':
   superTypes:
     - 'TYPO3.Neos:Plugin'
+    - 'Lelesys.Plugin.News:Filterable'
+    - 'Lelesys.Plugin.News:Templatable'
   ui:
     label: 'News List'
     group: plugins
@@ -56,58 +122,12 @@
               DESC:
                 label: 'DESCENDING'
         reloadIfChanged: true
-    templatePath:
-      type: string
-      defaultValue: 'resource://Lelesys.Plugin.News/Private/Templates/News/Index.html'
-      ui:
-        label: 'Set Template Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
-    partialRootPath:
-      type: string
-      defaultValue: 'resource://Lelesys.Plugin.News/Private/Partials/'
-      ui:
-        label: 'Set Partial Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
-    layoutRootPath:
-      type: string
-      defaultValue: 'resource://Lelesys.Plugin.News/Private/Layouts/'
-      ui:
-        label: 'Set Layout Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
-  options:
-    pluginViews:
-      'Latest':
-        label: 'Latest View'
-        controllerActions:
-          'Lelesys\Plugin\News\Controller\NewsController': ['latestNews']
-      'Detail':
-        label: 'Detail View'
-        controllerActions:
-          'Lelesys\Plugin\News\Controller\NewsController': ['show']
-      'Archive':
-        label: 'Archive View'
-        ui:
-          inlineEditable: true
-        controllerActions:
-          'Lelesys\Plugin\News\Controller\NewsController': ['archive']
-      'Search':
-        label: 'Search View'
-        controllerActions:
-          'Lelesys\Plugin\News\Controller\NewsController': ['searchNews']
-      'SearchResult':
-        label: 'Search Result View'
-        controllerActions:
-          'Lelesys\Plugin\News\Controller\NewsController': ['searchResult']
 
 'Lelesys.Plugin.News:LatestNews':
   superTypes:
     - 'TYPO3.Neos:Plugin'
+    - 'Lelesys.Plugin.News:Filterable'
+    - 'Lelesys.Plugin.News:Templatable'
   ui:
     label: 'Latest News'
     group: plugins
@@ -127,29 +147,7 @@
           group: newsoption
         reloadIfChanged: true
     templatePath:
-      type: string
       defaultValue: 'resource://Lelesys.Plugin.News/Private/Templates/News/LatestNews.html'
-      ui:
-        label: 'Set Template Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
-    partialRootPath:
-      type: string
-      defaultValue: 'resource://Lelesys.Plugin.News/Private/Partials/'
-      ui:
-        label: 'Set Partial Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
-    layoutRootPath:
-      type: string
-      defaultValue: 'resource://Lelesys.Plugin.News/Private/Layouts/'
-      ui:
-        label: 'Set Layout Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
     orderBy:
       type: string
       defaultValue: 'dateTime'
@@ -182,6 +180,7 @@
 'Lelesys.Plugin.News:CategoryList':
   superTypes:
     - 'TYPO3.Neos:Plugin'
+    - 'Lelesys.Plugin.News:Templatable'
   ui:
     label: 'Category List'
     inlineEditable: true
@@ -200,29 +199,7 @@
           group: newsoption
         reloadIfChanged: true
     templatePath:
-      type: string
       defaultValue: 'resource://Lelesys.Plugin.News/Private/Templates/Category/Index.html'
-      ui:
-        label: 'Set Template Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
-    partialRootPath:
-      type: string
-      defaultValue: 'resource://Lelesys.Plugin.News/Private/Partials/'
-      ui:
-        label: 'Set Partial Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
-    layoutRootPath:
-      type: string
-      defaultValue: 'resource://Lelesys.Plugin.News/Private/Layouts/'
-      ui:
-        label: 'Set Layout Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
     orderBy:
       type: string
       defaultValue: createDate
@@ -255,6 +232,7 @@
 'Lelesys.Plugin.News:TagList':
   superTypes:
     - 'TYPO3.Neos:Plugin'
+    - 'Lelesys.Plugin.News:Templatable'
   ui:
     label: 'Tag List'
     inlineEditable: true
@@ -273,29 +251,7 @@
           group: newsoption
         reloadIfChanged: true
     templatePath:
-      type: string
       defaultValue: 'resource://Lelesys.Plugin.News/Private/Templates/Tag/Index.html'
-      ui:
-        label: 'Set Template Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
-    partialRootPath:
-      type: string
-      defaultValue: 'resource://Lelesys.Plugin.News/Private/Partials/'
-      ui:
-        label: 'Set Partial Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
-    layoutRootPath:
-      type: string
-      defaultValue: 'resource://Lelesys.Plugin.News/Private/Layouts/'
-      ui:
-        label: 'Set Layout Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
     orderBy:
       type: string
       defaultValue: 'createDate'
@@ -328,6 +284,7 @@
 'Lelesys.Plugin.News:FolderList':
   superTypes:
     - 'TYPO3.Neos:Plugin'
+    - 'Lelesys.Plugin.News:Templatable'
   ui:
     label: 'Folder List'
     group: plugins
@@ -347,29 +304,7 @@
           group: newsoption
         reloadIfChanged: true
     templatePath:
-      type: string
       defaultValue: 'resource://Lelesys.Plugin.News/Private/Templates/Folder/Index.html'
-      ui:
-        label: 'Set Template Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
-    partialRootPath:
-      type: string
-      defaultValue: 'resource://Lelesys.Plugin.News/Private/Partials/'
-      ui:
-        label: 'Set Partial Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
-    layoutRootPath:
-      type: string
-      defaultValue: 'resource://Lelesys.Plugin.News/Private/Layouts/'
-      ui:
-        label: 'Set Layout Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
     orderBy:
       type: string
       defaultValue: 'dateTime'
@@ -402,6 +337,7 @@
 'Lelesys.Plugin.News:SearchNews':
   superTypes:
     - 'TYPO3.Neos:Plugin'
+    - 'Lelesys.Plugin.News:Templatable'
   ui:
     label: 'Search News'
     group: plugins
@@ -413,33 +349,13 @@
           label: 'News Options'
   properties:
     templatePath:
-      type: string
       defaultValue: 'resource://Lelesys.Plugin.News/Private/Templates/News/SearchNews.html'
-      ui:
-        label: 'Set Template Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
-    partialRootPath:
-      type: string
-      defaultValue: 'resource://Lelesys.Plugin.News/Private/Partials/'
-      ui:
-        label: 'Set Partial Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
-    layoutRootPath:
-      type: string
-      defaultValue: 'resource://Lelesys.Plugin.News/Private/Layouts/'
-      ui:
-        label: 'Set Layout Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
 
 'Lelesys.Plugin.News:Archive':
   superTypes:
     - 'TYPO3.Neos:Plugin'
+    - 'Lelesys.Plugin.News:Filterable'
+    - 'Lelesys.Plugin.News:Templatable'
   ui:
     label: 'Archive'
     inlineEditable: true
@@ -450,33 +366,12 @@
           label: 'News Options'
   properties:
     templatePath:
-      type: string
       defaultValue: 'resource://Lelesys.Plugin.News/Private/Templates/News/Archive.html'
-      ui:
-        label: 'Set Template Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
-    partialRootPath:
-      type: string
-      defaultValue: 'resource://Lelesys.Plugin.News/Private/Partials/'
-      ui:
-        label: 'Set Partial Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
-    layoutRootPath:
-      type: string
-      defaultValue: 'resource://Lelesys.Plugin.News/Private/Layouts/'
-      ui:
-        label: 'Set Layout Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
 
 'Lelesys.Plugin.News:DetailNews':
   superTypes:
     - 'TYPO3.Neos:Plugin'
+    - 'Lelesys.Plugin.News:Templatable'
   ui:
     label: 'News Detail'
     group: plugins
@@ -488,33 +383,12 @@
           label: 'News Options'
   properties:
     templatePath:
-      type: string
       defaultValue: 'resource://Lelesys.Plugin.News/Private/Templates/News/Show.html'
-      ui:
-        label: 'Set Template Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
-    partialRootPath:
-      type: string
-      defaultValue: 'resource://Lelesys.Plugin.News/Private/Partials/'
-      ui:
-        label: 'Set Partial Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
-    layoutRootPath:
-      type: string
-      defaultValue: 'resource://Lelesys.Plugin.News/Private/Layouts/'
-      ui:
-        label: 'Set Layout Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
 
 'Lelesys.Plugin.News:SearchResult':
   superTypes:
     - 'TYPO3.Neos:Plugin'
+    - 'Lelesys.Plugin.News:Templatable'
   ui:
     label: 'News Search Result'
     group: plugins
@@ -542,29 +416,7 @@
           group: newsoption
         reloadIfChanged: true
     templatePath:
-      type: string
       defaultValue: 'resource://Lelesys.Plugin.News/Private/Templates/News/SearchResult.html'
-      ui:
-        label: 'Set Template Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
-    partialRootPath:
-      type: string
-      defaultValue: 'resource://Lelesys.Plugin.News/Private/Partials/'
-      ui:
-        label: 'Set Partial Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
-    layoutRootPath:
-      type: string
-      defaultValue: 'resource://Lelesys.Plugin.News/Private/Layouts/'
-      ui:
-        label: 'Set Layout Path'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
     orderBy:
       type: string
       defaultValue: 'dateTime'
