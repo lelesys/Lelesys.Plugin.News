@@ -57,7 +57,18 @@ class MetaDataImplementation extends \TYPO3\TypoScript\TypoScriptObjects\Templat
 			$templateResourcePathParts = parse_url($templatePath);
 			$fluidTemplate->setResourcePackage($templateResourcePathParts['host']);
 		}
-
+		foreach ($this->properties as $key => $value) {
+			if (!is_array($value)) {
+					// if a value is a SIMPLE TYPE, e.g. neither an Eel expression nor a TypoScript object,
+					// we can just evaluate it (to handle processors) and then assign it to the template.
+				$evaluatedValue = $this->tsValue($key);
+				$fluidTemplate->assign($key, $evaluatedValue);
+			} else {
+					// It is an array; so we need to create a "proxy" for lazy evaluation, as it could be a
+					// nested TypoScript object, Eel expression or simple value.
+				$fluidTemplate->assign($key, new \TYPO3\TypoScript\TypoScriptObjects\Helpers\TypoScriptPathProxy($this, $this->path . '/' . $key, $value));
+			}
+		}
 			// Assign news to template
 		$fluidTemplate->assign('news', $this->getNewsFromCurrentRequest());
 
