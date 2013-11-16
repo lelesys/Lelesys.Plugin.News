@@ -26,7 +26,7 @@
 								<tr>
 								<f:security.ifHasRole role="Lelesys.Plugin.News:NewsAdmin">
 									<f:then>
-										<td><f:link.action action="index" controller="news" arguments="{category: category.title}">{category.title}</f:link.action></td>
+										<td><f:link.action action="index" controller="news" arguments="{category: category}">{category.title}</f:link.action></td>
 
 										<td class="edit-delete">
 											<div class="btn-group">
@@ -73,7 +73,7 @@
 									<f:else>
 										<f:if condition="{category.hidden} != 1">
 											<f:then>
-												<td><f:link.action action="index" controller="News" arguments="{category: category}">{category.title}</f:link.action></td>
+												<td><f:link.action action="index" controller="News" arguments="{category: category.uuid}">{category.title}</f:link.action></td>
 											</f:then>
 										</f:if>
 									</f:else>

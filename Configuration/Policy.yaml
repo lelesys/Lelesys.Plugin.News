@@ -26,6 +26,7 @@ resources:
     'Lelesys_Plugin_News_Controller_Tag': 'class(Lelesys\Plugin\News\Controller\TagController)'
     'Lelesys_Plugin_News_Controller_User': 'class(Lelesys\Plugin\News\Controller\UserController)'
     'Lelesys_Plugin_News_Controller_Frontend_News': 'method(Lelesys\Plugin\News\Controller\NewsController->(archive|index|latestNews|searchNews|searchResult|show)Action())'
+    'Lelesys_Plugin_News_Controller_Frontend_Category': 'method(Lelesys\Plugin\News\Controller\CategoryController->(index|checkTitle)Action())'
     'Lelesys_Plugin_News_Controller_Frontend_Comment': 'method(Lelesys\Plugin\News\Controller\CommentController->createAction())'
 acls:
    'NewsAdmin':
@@ -48,3 +49,4 @@ acls:
      methods:
        'Lelesys_Plugin_News_Controller_Frontend_News': GRANT
        'Lelesys_Plugin_News_Controller_Frontend_Comment': GRANT
+       'Lelesys_Plugin_News_Controller_Frontend_Category': GRANT
