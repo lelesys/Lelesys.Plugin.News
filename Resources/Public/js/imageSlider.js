@@ -3,10 +3,10 @@ jQuery(document).ready(function() {
 	//function to show lightbox
 	jQuery('.carousel').each(function() {
 		jQuery(this).carousel({
-			interval: 5000
+			interval: 4000
 		});
 	});
-	jQuery('.carousel .carousel-inner').each(function() {
+	jQuery('.carousel .carousel-lightbox').each(function() {
 		jQuery(this).children().children('a').lightBox({
 			imageLoading: '/_Resources/Static/Packages/Lelesys.Plugin.News/images/lightbox-ico-loading.gif',
 			imageBtnPrev: '/_Resources/Static/Packages/Lelesys.Plugin.News/images/lightbox-btn-prev.gif',
