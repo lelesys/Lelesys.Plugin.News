@@ -181,6 +181,9 @@
   superTypes:
     - 'TYPO3.Neos:Plugin'
     - 'Lelesys.Plugin.News:Templatable'
+  postprocessors:
+    'CategoryFolderListPostprocessor':
+      postprocessor: 'Lelesys\Plugin\News\NodeTypePostprocessor\CategoryFolderListPostprocessor'
   ui:
     label: 'Category List'
     inlineEditable: true
@@ -190,14 +193,6 @@
         newsoption:
           label: 'News Options'
   properties:
-    itemsPerPage:
-      type: string
-      defaultValue: '10'
-      ui:
-        label: 'Add items per page'
-        inspector:
-          group: newsoption
-        reloadIfChanged: true
     templatePath:
       defaultValue: 'resource://Lelesys.Plugin.News/Private/Templates/Category/Index.html'
     orderBy:
@@ -227,6 +222,19 @@
                 label: 'ASCENDING'
               DESC:
                 label: 'DESCENDING'
+        reloadIfChanged: true
+    folderId:
+      type: string
+      defaultValue: ''
+      ui:
+        label: 'Folder'
+        inspector:
+          group: 'newsoption'
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              '':
+                label: ''
         reloadIfChanged: true
 
 'Lelesys.Plugin.News:TagList':

@@ -43,6 +43,16 @@ class CategoryService {
 	}
 
 	/**
+	 * Shows a list of categories by folder
+	 *
+	 * @param string $folderId Folder Id to search its categories
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
+	 */
+	public function listAllByFolder($folderId = NULL) {
+		return $this->categoryRepository->listAllByFolder($folderId);
+	}
+
+	/**
 	 * Shows a list of categories for admin
 	 *
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result

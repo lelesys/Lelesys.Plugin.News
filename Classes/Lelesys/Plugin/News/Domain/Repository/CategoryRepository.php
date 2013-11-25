@@ -61,6 +61,20 @@ class CategoryRepository extends \TYPO3\Flow\Persistence\Repository {
 	/**
 	 * Get latest categories
 	 *
+	 * @param string $folderId Plugin arguments
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
+	 */
+	public function listAllByFolder($folderId = NULL) {
+		$query = $this->createQuery();
+		return $query->matching(
+								$query->equals('folder', $folderId)
+						)
+						->execute();
+	}
+
+	/**
+	 * Get latest categories
+	 *
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function getEnabledLatestCategories() {

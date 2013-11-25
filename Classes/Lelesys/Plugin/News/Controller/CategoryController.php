@@ -45,14 +45,16 @@ class CategoryController extends AbstractNewsController {
 	 * @return void
 	 */
 	public function indexAction() {
+		$currentNode = $this->request->getInternalArgument('__node');
 		$pluginArguments = $this->request->getPluginArguments();
-		if (isset($pluginArguments['itemsPerPage'])) {
-			$itemsPerPage = (int) $pluginArguments['itemsPerPage'];
-		} else {
-			$itemsPerPage = '';
+		$folderId = $currentNode->getproperty('folderId');
+		if($folderId == '') {
+			$categories = $this->categoryService->listAll($pluginArguments);
 		}
-		$this->view->assign('itemsPerPage', $itemsPerPage);
-		$this->view->assign('categories', $this->categoryService->listAll($pluginArguments));
+		else {
+			$categories = $this->categoryService->listAllByFolder($folderId);
+		}
+		$this->view->assign('categories', $categories);
 	}
 
 	/**
