@@ -75,6 +75,14 @@ class NewsController extends \Lelesys\Plugin\News\Controller\Module\NewsManageme
 	protected $folderService;
 
 	/**
+	 * Injection for security context
+	 *
+	 * @Flow\Inject
+	 * @var \TYPO3\Flow\Security\Context
+	 */
+	protected $securityContext;
+
+	/**
 	 * Shows a list of news
 	 *
 	 * @param \Lelesys\Plugin\News\Domain\Model\Category $category The Category
@@ -121,6 +129,7 @@ class NewsController extends \Lelesys\Plugin\News\Controller\Module\NewsManageme
 		$this->view->assign('related', $this->newsService->getEnabledNews());
 		$this->view->assign('newsCategories', $this->categoryService->getEnabledLatestCategories());
 		$this->view->assign('tags', $this->tagService->listAll());
+		$this->view->assign('user', $this->securityContext->getParty());
 	}
 
 	/**

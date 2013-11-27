@@ -146,7 +146,7 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 		$newCount = 1;
 		foreach ($constraints as $contraint) {
 			if ($count > $newCount) {
-				$newsConstraints .= $contraint . ' OR ';
+				$newsConstraints .= $contraint . ' AND ';
 			} else {
 				$newsConstraints .= $contraint;
 			}

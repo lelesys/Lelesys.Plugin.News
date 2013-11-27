@@ -204,8 +204,8 @@
 				<target>Author Email</target>
 			</trans-unit>
 			<trans-unit id="lelesys.plugin.news.dateTime" approved="no">
-				<source>Date time</source>
-				<target>Date time</target>
+				<source>Date</source>
+				<target>Date</target>
 			</trans-unit>
 			<trans-unit id="lelesys.plugin.news.categories" approved="no">
 				<source>Categories</source>
@@ -256,8 +256,8 @@
 				<target>Add more Files</target>
 			</trans-unit>
 			<trans-unit id="lelesys.plugin.news.uri" approved="no">
-				<source>Uri</source>
-				<target>Uri</target>
+				<source>Url</source>
+				<target>Url</target>
 			</trans-unit>
 			<trans-unit id="lelesys.plugin.news.addMoreRelatedLinks" approved="no">
 				<source>Add more Related Links</source>

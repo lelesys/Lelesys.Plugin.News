@@ -22,6 +22,15 @@ jQuery(document).ready(function() {
 		}
 
 	});
+
+	if (jQuery("#newNews").length > 0) {
+		jQuery("#newNews").validate();
+		//validations
+		notEmptyValidation("#newNews .not-empty", 'Please enter this field');
+	} else {
+			jQuery(this).next('.error').remove();
+		}
+
 	jQuery('.newsTitle').focusout(function() {
 		if (!jQuery(this).val()) {
 			if (jQuery(this).next('.error').length < 1) {
@@ -248,3 +257,21 @@ jQuery(document).ready(function() {
 		jQuery(this).parent('form').submit();
 	});
 });
+
+var notEmptyValidation = function(selector, message) {
+	var errMessage;
+	jQuery(selector).each(function() {
+		var msg = jsTranslate(this, 'notEmpty');
+		if (msg) {
+			errMessage = msg;
+		} else {
+			errMessage = message;
+		}
+		jQuery(this).rules("add", {
+			required: true,
+			messages: {
+				required: errMessage
+			}
+		});
+	});
+};
