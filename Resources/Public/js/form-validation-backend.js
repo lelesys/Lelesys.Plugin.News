@@ -28,8 +28,8 @@ jQuery(document).ready(function() {
 		//validations
 		notEmptyValidation("#newNews .not-empty", 'Please enter this field');
 	} else {
-			jQuery(this).next('.error').remove();
-		}
+		jQuery(this).next('.error').remove();
+	}
 
 	jQuery('.newsTitle').focusout(function() {
 		if (!jQuery(this).val()) {
@@ -256,8 +256,49 @@ jQuery(document).ready(function() {
 		jQuery('.comment-value').attr('value', selectVal);
 		jQuery(this).parent('form').submit();
 	});
-});
 
+	jQuery('#folders').change(function(event) {
+		event.preventDefault();
+		var folderId = jQuery('#folders :selected').val();
+		jQuery.ajax({
+			url: categoryUrl,
+			data: {
+				folderId: folderId
+			},
+			async: true,
+			dataType: 'html',
+			success: function(response) {
+				if (response !== 'null') {
+					categories = JSON.parse(response);
+					jQuery('#categories').empty();
+					var selectBox = '',
+						categoryCount = categories.length;
+					for (var i = 0; i < categoryCount; i++) {
+						var subCategoryArry = categories[i]['subCatagories'],
+							subCount = 0,
+							subCategoryCount = subCategoryArry.length;
+						selectBox += '<option value='+categories[i]['persistence_object_identifier']+'>'+categories[i]['title']+'</option>';
+						if (categories[i]['subCatagories'].length > 0) {
+							if (subCategoryArry[subCount][0] != '') {
+							// optgroup
+							selectBox += '<optgroup>';
+							for (var j = 0; j < subCategoryCount; j++) {
+								selectBox += '<option value='+subCategoryArry[j][0]+'>'+subCategoryArry[j][1]+'</option>';
+							}
+							selectBox += '</optgroup>';
+							subCount++;
+							}
+						}
+					}
+					jQuery('#categories').append(selectBox);
+					console.log(selectBox);
+				} else {
+					jQuery('#categories').empty();
+				}
+			}
+		});
+	});
+});
 var notEmptyValidation = function(selector, message) {
 	var errMessage;
 	jQuery(selector).each(function() {

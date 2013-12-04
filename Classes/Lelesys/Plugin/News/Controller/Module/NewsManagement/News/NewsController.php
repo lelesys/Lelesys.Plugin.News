@@ -412,6 +412,17 @@ class NewsController extends \Lelesys\Plugin\News\Controller\Module\NewsManageme
 		$this->newsService->downloadFile($file);
 	}
 
+	/**
+	 * Shows a list of categories belonging to a parent folder
+	 *
+	 * @return void
+	 */
+	public function categoriesByFolderAction() {
+		$folderId = $this->request->getHttpRequest()->getArgument('folderId');
+		$categories = $this->categoryService->getCategoriesByFolder($folderId);
+		echo json_encode($categories);
+		exit();
+	}
 }
 
 ?>

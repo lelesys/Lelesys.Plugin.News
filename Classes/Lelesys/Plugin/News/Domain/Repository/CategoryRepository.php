@@ -17,7 +17,22 @@ use TYPO3\Flow\Annotations as Flow;
  *
  * @Flow\Scope("singleton")
  */
-class CategoryRepository extends \TYPO3\Flow\Persistence\Repository {
+class CategoryRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
+
+	/**
+	 * DBAL connection
+	 *
+	 * @var \Doctrine\DBAL\Driver\PDOConnection
+	 */
+	protected $connection;
+
+	/**
+	 * Injected configuration manager dependency
+	 *
+	 * @Flow\Inject
+	 * @var \TYPO3\Flow\Configuration\ConfigurationManager
+	 */
+	protected $configurationManager;
 
 	/**
 	 *
@@ -69,6 +84,24 @@ class CategoryRepository extends \TYPO3\Flow\Persistence\Repository {
 		return $query->matching(
 								$query->equals('folder', $folderId)
 						)
+						->setOrderings(array('createDate' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING))
+						->execute();
+	}
+
+	/**
+	 * Get latest sub categories from folder and parent category
+	 *
+	 * @param string $folderId Plugin arguments
+	 * @param string $parentCategoryId Plugin arguments
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
+	 */
+	public function listAllByFolderAndCategory($folderId = NULL, $parentCategoryId = NULL) {
+		$query = $this->createQuery();
+		return $query->matching($query->logicalAnd(
+										$query->equals('folder', $folderId),
+										$query->equals('parentCategory', $parentCategoryId))
+						)
+						->setOrderings(array('createDate' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING))
 						->execute();
 	}
 
@@ -86,6 +119,38 @@ class CategoryRepository extends \TYPO3\Flow\Persistence\Repository {
 						->execute();
 	}
 
-}
+	/**
+	 * Get parent categories
+	 *
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
+	 */
+	public function getEnabledParentCategories() {
+		$query = $this->createQuery();
+		return $query->matching(
+								$query->equals('parentCategory', NULL)
+						)
+						->setOrderings(array('createDate' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING))
+						->execute();
+	}
 
+	/**
+	 * Get latest categories
+	 *
+	 * @param string $folderId The folder id
+	 * @return array The query result
+	 */
+	public function getCategoriesByFolder($folderId) {
+		// Connect to DB
+		$backendOptions = $this->configurationManager->getConfiguration('Settings', 'TYPO3.Flow.persistence.backendOptions');
+		$config = new \Doctrine\DBAL\Configuration();
+		$this->connection = \Doctrine\DBAL\DriverManager::getConnection($backendOptions, $config);
+		// Run query to get categories
+		$statement = "SELECT a.`persistence_object_identifier`, a.`title`,( "
+				. "SELECT group_concat(concat(`persistence_object_identifier`,',',`title`) separator ';') "
+				. "FROM `lelesys_plugin_news_domain_model_category` WHERE `parentcategory` = a.persistence_object_identifier) as value "
+				. "FROM `lelesys_plugin_news_domain_model_category` as a where a.`parentcategory`is null AND `folder` ='" . $folderId . "' group by `persistence_object_identifier`";
+		$result = $this->connection->query($statement)->fetchAll();
+		return $result;
+	}
+}
 ?>

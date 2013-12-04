@@ -60,5 +60,14 @@ class CategoryFolderListPostprocessor implements NodeTypePostprocessorInterface 
 				);
 			}
 		}
+		$parentCategories = $this->categoryService->getEnabledParentCategories();
+		if ($parentCategories->count()) {
+			foreach ($parentCategories as $category) {
+				/** @var $category \Lelesys\Plugin\News\Domain\Model\Category */
+				$configuration['properties']['parentCategoryId']['ui']['inspector']['editorOptions']['values'][$category->getUuid()] = array(
+					'label' => $category->getTitle()
+				);
+			}
+		}
 	}
 }

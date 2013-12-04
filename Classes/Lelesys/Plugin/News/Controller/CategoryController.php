@@ -48,11 +48,13 @@ class CategoryController extends AbstractNewsController {
 		$currentNode = $this->request->getInternalArgument('__node');
 		$pluginArguments = $this->request->getPluginArguments();
 		$folderId = $currentNode->getproperty('folderId');
-		if($folderId == '') {
+		$parentCategoryId = $currentNode->getproperty('parentCategoryId');
+		if($folderId == '' && $parentCategoryId == '') {
 			$categories = $this->categoryService->listAll($pluginArguments);
-		}
-		else {
+		} elseif($folderId != '' && $parentCategoryId == '') {
 			$categories = $this->categoryService->listAllByFolder($folderId);
+		} else {
+			$categories = $this->categoryService->listAllByFolderAndCategory($folderId, $parentCategoryId);
 		}
 		$this->view->assign('categories', $categories);
 	}

@@ -46,6 +46,17 @@ class CategoryService {
 	 * Shows a list of categories by folder
 	 *
 	 * @param string $folderId Folder Id to search its categories
+	 * @param string $parentCategoryId ParentCategory id
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
+	 */
+	public function listAllByFolderAndCategory($folderId = NULL, $parentCategoryId = NULL) {
+		return $this->categoryRepository->listAllByFolderAndCategory($folderId, $parentCategoryId);
+	}
+
+	/**
+	 * Shows a list of categories by folder and lists the sub-categories if parent category is also selected.
+	 *
+	 * @param string $folderId Folder Id to search its categories
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function listAllByFolder($folderId = NULL) {
@@ -59,6 +70,15 @@ class CategoryService {
 	 */
 	public function getEnabledLatestCategories() {
 		return $this->categoryRepository->getEnabledLatestCategories();
+	}
+
+	/**
+	 * Shows a list of categories for admin
+	 *
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
+	 */
+	public function getEnabledParentCategories() {
+		return $this->categoryRepository->getEnabledParentCategories();
 	}
 
 	/**
@@ -136,7 +156,6 @@ class CategoryService {
 		foreach ($allCategory as $singleCategory) {
 			if ($category != $singleCategory) {
 				if (in_array($singleCategory, $children)) {
-
 				} else {
 					$listCategory[] = $singleCategory;
 				}
@@ -207,6 +226,31 @@ class CategoryService {
 	 */
 	protected function emitCategoryDeleted(\Lelesys\Plugin\News\Domain\Model\Category $category) {
 
+	}
+
+	/**
+	 * Shows a list of categories for admin
+	 *
+	 * @param $folderId Folder id
+	 * @return array The array of parents-categories and its sub-categories
+	 */
+	public function getCategoriesByFolder($folderId) {
+		$results = $this->categoryRepository->getCategoriesByFolder($folderId);
+		if (!empty($results)) {
+			$categoryTree = array();
+			foreach ($results as $result) {
+				$subCategories = array();
+				$category = array();
+				$subCategories = explode(';', $result['value']);
+				foreach ($subCategories as $subCategory) {
+					$category[] = explode(',', $subCategory);
+				}
+				unset($result['value']);
+				$result['subCatagories'] = $category;
+				$categoryTree[] = $result;
+			}
+			return $categoryTree;
+		}
 	}
 
 }

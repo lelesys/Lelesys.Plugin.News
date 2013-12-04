@@ -232,6 +232,21 @@
           group: 'newsoption'
           editor: Content/Inspector/Editors/SelectBoxEditor
           editorOptions:
+            placeholder: 'Select folder'
+            values:
+              '':
+                label: ''
+        reloadIfChanged: true
+    parentCategoryId:
+      type: string
+      defaultValue: ''
+      ui:
+        label: 'Parent Category'
+        inspector:
+          group: 'newsoption'
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            placeholder: 'Select parent category'
             values:
               '':
                 label: ''
