@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="" date=" " product-name=" ">
+		<header/>
+		<body>
+			<trans-unit id="lelesys.plugin.news.categoryList" approved="no">
+				<source>Category List</source>
+				<target>Category List</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.noCategory" approved="no">
+				<source>No categories created yet.</source>
+				<target>No categories created yet.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.addCategory" approved="no">
+				<source>Add Category</source>
+				<target>Add Category</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.categoryName" approved="no">
+				<source>Category name</source>
+				<target>Category name</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.action" approved="no">
+				<source>Action</source>
+				<target>Action</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.edit" approved="no">
+				<source>Edit</source>
+				<target>Edit</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.show" approved="no">
+				<source>Show</source>
+				<target>Show</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.hide" approved="no">
+				<source>Hide</source>
+				<target>Hide</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.delete" approved="no">
+				<source>Delete</source>
+				<target>Delete</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.confirmDelete" approved="no">
+				<source>Are you sure you want to delete?</source>
+				<target>Are you sure you want to delete?</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.title" approved="no">
+				<source>Title</source>
+				<target>Title</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.image" approved="no">
+				<source>Image</source>
+				<target>Image</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.parentCategory" approved="no">
+				<source>Parent Category</source>
+				<target>Parent Category</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.selectCategory" approved="no">
+				<source>select category</source>
+				<target>select category</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.description" approved="no">
+				<source>Description</source>
+				<target>Description</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.folder" approved="no">
+				<source>Folder</source>
+				<target>Folder</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.selectFolder" approved="no">
+				<source>select folder</source>
+				<target>select folder</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.create" approved="no">
+				<source>Create</source>
+				<target>Create</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.editCategory" approved="no">
+				<source>Edit Category</source>
+				<target>Edit Category</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.update" approved="no">
+				<source>Update</source>
+				<target>Update</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.addFolder" approved="no">
+				<source>Add Folder</source>
+				<target>Add Folder</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.folderList" approved="no">
+				<source>Folder List</source>
+				<target>Folder List</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.editFolder" approved="no">
+				<source>Edit Folder</source>
+				<target>Edit Folder</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.folderTitle" approved="no">
+				<source>Folder Title</source>
+				<target>Folder Title</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.noFolder" approved="no">
+				<source>No Folder created yet.</source>
+				<target>No Folder created yet.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.tagList" approved="no">
+				<source>Tag List</source>
+				<target>Tag List</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.tagName" approved="no">
+				<source>Tag Name</source>
+				<target>Tag Name</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.noTag" approved="no">
+				<source>No tags created yet.</source>
+				<target>No tags created yet.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.addTag" approved="no">
+				<source>Add Tag</source>
+				<target>Add Tag</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.editTag" approved="no">
+				<source>Edit tag</source>
+				<target>Edit tag</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.categoryTitle" approved="no">
+				<source>Category title</source>
+				<target>Category title</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.cancel" approved="no">
+				<source>Cancel</source>
+				<target>Cancel</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.newCategory" approved="no">
+				<source>New Category</source>
+				<target>New Category</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.save" approved="no">
+				<source>Save</source>
+				<target>Save</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.newFolder" approved="no">
+				<source>New Folder</source>
+				<target>New Folder</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.comment" approved="no">
+				<source>Comment</source>
+				<target>Comment</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.commentTitle" approved="no">
+				<source>Comment title</source>
+				<target>Comment title</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.relatedNews" approved="no">
+				<source>Related News</source>
+				<target>Related News</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.state" approved="no">
+				<source>State</source>
+				<target>State</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.inActive" approved="no">
+				<source>Inactive</source>
+				<target>Inactive</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.active" approved="no">
+				<source>Active</source>
+				<target>Active</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.noComment" approved="no">
+				<source>No comments created yet.</source>
+				<target>No comments created yet.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.archive" approved="no">
+				<source>Archive</source>
+				<target>Archive</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.general" approved="no">
+				<source>General</source>
+				<target>General</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.options" approved="no">
+				<source>Options</source>
+				<target>Options</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.relations" approved="no">
+				<source>Relations</source>
+				<target>Relations</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.subTitle" approved="no">
+				<source>Sub title</source>
+				<target>Sub title</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.alternativeTitle" approved="no">
+				<source>Alternative title</source>
+				<target>Alternative title</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.authorName" approved="no">
+				<source>Author Name</source>
+				<target>Author Name</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.authorEmail" approved="no">
+				<source>Author Email</source>
+				<target>Author Email</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.dateTime" approved="no">
+				<source>Date</source>
+				<target>Date</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.categories" approved="no">
+				<source>Categories</source>
+				<target>Categories</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.tags" approved="no">
+				<source>Tags</source>
+				<target>Tags</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.keywords" approved="no">
+				<source>keywords</source>
+				<target>keywords</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.mediaElement" approved="no">
+				<source>Media Element</source>
+				<target>Media Element</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.relatedMedia" approved="no">
+				<source>Related Media</source>
+				<target>Related Media</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.caption" approved="no">
+				<source>Caption</source>
+				<target>Caption</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.copyRight" approved="no">
+				<source>Copy right</source>
+				<target>Copy right</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.addMoreMedia" approved="no">
+				<source>Add more Media</source>
+				<target>Add more Media</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.relatedFiles" approved="no">
+				<source>Related Files</source>
+				<target>Related Files</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.relatedFile" approved="no">
+				<source>Related File</source>
+				<target>Related File</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.file" approved="no">
+				<source>File</source>
+				<target>File</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.addMoreFiles" approved="no">
+				<source>Add more Files</source>
+				<target>Add more Files</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.uri" approved="no">
+				<source>Url</source>
+				<target>Url</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.addMoreRelatedLinks" approved="no">
+				<source>Add more Related Links</source>
+				<target>Add more Related Links</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.relatedLinks" approved="no">
+				<source>Related links</source>
+				<target>Related links</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.relatedLink" approved="no">
+				<source>Related link</source>
+				<target>Related link</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.editNews" approved="no">
+				<source>Edit News</source>
+				<target>Edit News</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.newsList" approved="no">
+				<source>News List</source>
+				<target>News List</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.addNews" approved="no">
+				<source>Add News</source>
+				<target>Add News</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.noNewsCreatedYet" approved="no">
+				<source>No news created yet.</source>
+				<target>No news created yet.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.latestNews" approved="no">
+				<source>Latest news</source>
+				<target>Latest news</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.searchNews" approved="no">
+				<source>Search News</source>
+				<target>Search News</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.searchResults" approved="no">
+				<source>Search Results</source>
+				<target>Search Results</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.noSearchResultsFound" approved="no">
+				<source>No search results found.</source>
+				<target>No search results found.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.comments" approved="no">
+				<source>Comments</source>
+				<target>Comments</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.name" approved="no">
+				<source>Name</source>
+				<target>Name</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.email" approved="no">
+				<source>Email</source>
+				<target>Email</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.message" approved="no">
+				<source>Message</source>
+				<target>Message</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.back" approved="no">
+				<source>Back</source>
+				<target>Back</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.noNewsToDisplay" approved="no">
+				<source>No news to display!!</source>
+				<target>No news to display!!</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.publishedOn" approved="no">
+				<source>Published On</source>
+				<target>Published On</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.createNews" approved="no">
+				<source>Create News</source>
+				<target>Create News</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.category" approved="no">
+				<source>Category</source>
+				<target>Category</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.commentedBy" approved="no">
+				<source>commented by</source>
+				<target>commented by</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.yourComment" approved="no">
+				<source>Your Comment</source>
+				<target>Your Comment</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.readMore" approved="no">
+				<source>Read More</source>
+				<target>Read More</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.folder" approved="no">
+				<source>Folder</source>
+				<target>Folder</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.startDate" approved="no">
+				<source>Start Date</source>
+				<target>Start Date</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.endDate" approved="no">
+				<source>End Date</source>
+				<target>End Date</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.captcha" approved="no">
+				<source>Captcha</source>
+				<target>Captcha</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.hide" approved="no">
+				<source>Hide news</source>
+				<target>Hide news</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.validEmail" approved="no">
+				<source>Please specify a valid email address</source>
+				<target>Please specify a valid email address.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.requiredField" approved="no">
+				<source>This field is required.</source>
+				<target>This field is required.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.validUrl" approved="no">
+				<source>Please specify a valid Url.</source>
+				<target>Please specify a valid Url.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.checkCatTitle" approved="no">
+				<source>Category title already exist.</source>
+				<target>Category title already exist.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.unpublish" approved="no">
+				<source>Click to unpublish</source>
+				<target>Click to unpublish</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.clickToView" approved="no">
+				<source>Click to view</source>
+				<target>Click to view</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.clickToEdit" approved="no">
+				<source>Click to edit</source>
+				<target>Click to edit</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.clickToDelete" approved="no">
+				<source>Click to delete</source>
+				<target>Click to delete</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.clickToHide" approved="no">
+				<source>Click to Hide</source>
+				<target>Click to Hide</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.clickToShow" approved="no">
+				<source>Click to Show</source>
+				<target>Click to Show</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.createFolder" approved="no">
+				<source>Create new folder</source>
+				<target>Create new folder</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.createNews" approved="no">
+				<source>Create News</source>
+				<target>Create News</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.createCategory" approved="no">
+				<source>Create new category</source>
+				<target>Create new category</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.add.news" approved="yes">
+				<source>Created a new news</source>
+				<target>Created a new news</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.cannot.add" approved="yes">
+				<source>Cannot create news at this time!!.</source>
+				<target>Cannot create news at this time!!.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.try.again" approved="yes">
+				<source>Sorry, error occured. Please try again later.</source>
+				<target>Sorry, error occured. Please try again later.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.update.news" approved="yes">
+				<source>Updated the news.</source>
+				<target>Updated the news.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.cannot.update" approved="yes">
+				<source>Cannot update news at this time!!.</source>
+				<target>Cannot update news at this time!!.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.deleted.news" approved="yes">
+				<source>Deleted a news.</source>
+				<target>Deleted a news.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.hidden" approved="yes">
+				<source>News is Hidden</source>
+				<target>News is Hidden</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.visible" approved="yes">
+				<source>News is Visible</source>
+				<target>News is Visible</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.add.category" approved="yes">
+				<source>Created a new category.</source>
+				<target>Created a new category.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.cannot.category" approved="yes">
+				<source>Cannot create category at this time!!.</source>
+				<target>Cannot create category at this time!!.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.update.category" approved="yes">
+				<source>Updated the category.</source>
+				<target>Updated the category.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.cannot.updatecategory" approved="yes">
+				<source>Cannot update category at this time!!.</source>
+				<target>Cannot update category at this time!!.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.delete.category" approved="yes">
+				<source>Deleted a category.</source>
+				<target>Deleted a category.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.category.hidden" approved="yes">
+				<source>Category is Hidden</source>
+				<target>Category is Hidden</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.category.visible" approved="yes">
+				<source>Category is Visible</source>
+				<target>Category is Visible</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.delete.comment" approved="yes">
+				<source>Deleted a comment.</source>
+				<target>Deleted a comment.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.unpublish.comment" approved="yes">
+				<source>Comment is not published.</source>
+				<target>Comment is not published.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.publish.comment" approved="yes">
+				<source>Comment is published.</source>
+				<target>Comment is published.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.add.folder" approved="yes">
+				<source>Created a new folder.</source>
+				<target>Created a new folder.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.update.folder" approved="yes">
+				<source>Updated the folder.</source>
+				<target>Updated the folder.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.delete.folder" approved="yes">
+				<source>Deleted the folder.</source>
+				<target>Deleted the folder.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.create.link" approved="yes">
+				<source>Created a new link.</source>
+				<target>Created a new link.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.cannot.createlink" approved="yes">
+				<source>Cannot create link at this time!!.</source>
+				<target>Cannot create link at this time!!.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.update.link" approved="yes">
+				<source>Updated the link.</source>
+				<target>Updated the link.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.cannot.updatelink" approved="yes">
+				<source>Cannot update link at this time!!.</source>
+				<target>Cannot update link at this time!!.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.delete.link" approved="yes">
+				<source>Deleted a link.</source>
+				<target>Deleted a link.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.create.rating" approved="yes">
+				<source>Created a new rating.</source>
+				<target>Created a new rating.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.cannot.createrating" approved="yes">
+				<source>Cannot create rating at this time!!.</source>
+				<target>Cannot create rating at this time!!.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.update.rating" approved="yes">
+				<source>Updated the rating.</source>
+				<target>Updated the rating.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.cannot.updaterating" approved="yes">
+				<source>Cannot update rating at this time!!.</source>
+				<target>Cannot update rating at this time!!.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.delete.rating" approved="yes">
+				<source>Deleted a rating.</source>
+				<target>Deleted a rating.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.create.tag" approved="yes">
+				<source>Created a new tag.</source>
+				<target>Created a new tag.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.cannot.createtag" approved="yes">
+				<source>Cannot create tag at this time!!.</source>
+				<target>Cannot create tag at this time!!.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.delete.tag" approved="yes">
+				<source>Deleted a tag.</source>
+				<target>Deleted a tag.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.add.file" approved="yes">
+				<source>Created a new file.</source>
+				<target>Created a new file.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.cannot.createfile" approved="yes">
+				<source>Cannot create file at this time!!.</source>
+				<target>Cannot create file at this time!!.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.update.file" approved="yes">
+				<source>Updated the file.</source>
+				<target>Updated the file.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.cannot.updatefile" approved="yes">
+				<source>Cannot update file at this time!!.</source>
+				<target>Cannot update file at this time!!.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.delete.file" approved="yes">
+				<source>Deleted a file.</source>
+				<target>Deleted a file.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.cannot.updateasset" approved="yes">
+				<source>Cannot update asset at this time!!.</source>
+				<target>Cannot update asset at this time!!.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.cannot.createasset" approved="yes">
+				<source>Cannot create asset at this time!!.</source>
+				<target>Cannot create asset at this time!!.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.error.1221560718" approved="no">
+				<source>This field is required.</source>
+				<target>This field is required.</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.error.1221559976" approved="no">
+				<source>Please specify a valid email address</source>
+				<target>Please specify a valid email addresss</target>
+			</trans-unit>
+			<trans-unit id="lelesys.plugin.news.comment.created" approved="no">
+				<source>Created a comment</source>
+				<target>Created a comment</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
