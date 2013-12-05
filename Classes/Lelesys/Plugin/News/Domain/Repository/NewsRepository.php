@@ -38,6 +38,14 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 	protected $settings;
 
 	/**
+	 * Persistence manager
+	 *
+	 * @Flow\Inject
+	 * @var \TYPO3\Flow\Persistence\PersistenceManagerInterface
+	 */
+	protected $persistenceManager;
+
+	/**
 	 * Get news entries
 	 *
 	 * @return \TYPO3\FLOW3\Persistence\QueryResultInterface The query result
@@ -135,8 +143,15 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 		$queryBuilder = ObjectAccess::getProperty($query, 'queryBuilder', TRUE);
 
 		$constraints = array();
+		$user = '';
+		if ($this->securityContext->hasRole('Lelesys.Plugin.News:NewsAdmin')) {
 		if (!empty($folder)) {
 			$constraints[] = 'n.folder = ' . "'" . $folder->getUuid() . "'";
+		}
+		} else {
+			$party = $this->securityContext->getParty();
+			$user = $this->persistenceManager->getIdentifierByObject($party);
+			$constraints[] = 'n.createdBy = ' . "'" . $user . "'";
 		}
 		if (!empty($category)) {
 			$constraints[] = 'c.Persistence_Object_Identifier IN (' . "'" . $category->getUuid() . "'" . ')';
@@ -157,7 +172,7 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 				->select('n')
 				->from('Lelesys\Plugin\News\Domain\Model\News', 'n')
 				->leftjoin('n.categories', 'c');
-		if ((!empty($category)) || (!empty($folder))) {
+		if ((!empty($category)) || (!empty($folder)) || ($user !== '')) {
 			$queryBuilder->where(
 					$newsConstraints
 			);

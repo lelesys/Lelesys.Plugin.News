@@ -23,14 +23,6 @@ jQuery(document).ready(function() {
 
 	});
 
-	if (jQuery("#newNews").length > 0) {
-		jQuery("#newNews").validate();
-		//validations
-		notEmptyValidation("#newNews .not-empty", 'Please enter this field');
-	} else {
-		jQuery(this).next('.error').remove();
-	}
-
 	jQuery('.newsTitle').focusout(function() {
 		if (!jQuery(this).val()) {
 			if (jQuery(this).next('.error').length < 1) {
@@ -53,6 +45,14 @@ jQuery(document).ready(function() {
 			return false;
 		} else {
 			jQuery('.newsTitle').next('.error').remove();
+		}
+		if (jQuery('#folders').val().length < 1) {
+			if (jQuery('#folders').next('.error').length < 1) {
+				jQuery('#folders').after('<div class="neos-alert neos-alert-error form-error error"><button type="button" class="neos-close" data-dismiss="alert">×</button>' + requiredField + '</div>');
+			}
+			return false;
+		} else {
+			jQuery('#folders').next('.error').remove();
 		}
 		if (!jQuery('#authorEmail').val()) {
 			if (jQuery('#authorEmail').next('.error').length < 1) {

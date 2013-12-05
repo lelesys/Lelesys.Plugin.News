@@ -1,7 +1,7 @@
 <f:layout name="DefaultBackend" />
 
 <f:section name="Content">
-    <f:form action="create" name="newNews" enctype="multipart/form-data">
+    <f:form action="create" name="newNews" id="newNews" enctype="multipart/form-data">
         <div class="row neos-module-container">
             <div class="tabbable tab tab-size module-tab">
                 <ul class="nav nav-tabs">
@@ -74,7 +74,8 @@
                                 <label for="folder"><f:translate id="lelesys.plugin.news.folder"></f:translate></label>
                                 <div class="controls">
                                     <f:form.select options="{folders}" optionLabelField="title" id="folders" prependOptionLabel="Select folder" property="folder"></f:form.select>
-                                </div>
+									<f:render partial="FormErrors" arguments="{for: 'newNews.folder'}" />
+								</div>
                             </div>
                             <div class="control-group">
                                 <label for="hidden"><f:translate id="lelesys.plugin.news.hidden"></f:translate></label>
