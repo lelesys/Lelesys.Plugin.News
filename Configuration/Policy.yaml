@@ -25,7 +25,7 @@ resources:
     'Lelesys_Plugin_News_Controller_Rating': 'method(Lelesys\Plugin\News\Controller\RatingController->deleteAction())'
     'Lelesys_Plugin_News_Controller_Tag': 'class(Lelesys\Plugin\News\Controller\TagController)'
     'Lelesys_Plugin_News_Controller_User': 'class(Lelesys\Plugin\News\Controller\UserController)'
-    'Lelesys_Plugin_News_Controller_Frontend_News': 'method(Lelesys\Plugin\News\Controller\NewsController->(archive|index|latestNews|searchNews|searchResult|show)Action())'
+    'Lelesys_Plugin_News_Controller_Frontend_News': 'method(Lelesys\Plugin\News\Controller\NewsController->(archive|index|latestNews|searchNews|searchResult|show|downloadFile)Action())'
     'Lelesys_Plugin_News_Controller_Frontend_Category': 'method(Lelesys\Plugin\News\Controller\CategoryController->(index|checkTitle)Action())'
     'Lelesys_Plugin_News_Controller_Frontend_Comment': 'method(Lelesys\Plugin\News\Controller\CommentController->createAction())'
 acls:
