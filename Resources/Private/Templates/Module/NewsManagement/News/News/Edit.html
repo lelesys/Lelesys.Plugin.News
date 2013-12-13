@@ -79,7 +79,7 @@
 							<div class="control-group">
 								<label for="folder"><f:translate id="lelesys.plugin.news.folder"></f:translate></label>
 								<div class="controls">
-									<f:form.select options="{folders}" optionLabelField="title" id="folders" prependOptionLabel="Select folder" property="folder"></f:form.select>
+									<f:form.select options="{folders}" optionLabelField="title" id="folders" class="folderSelect" prependOptionLabel="Select folder" property="folder"></f:form.select>
 								</div>
 							</div>
 						</fieldset>
@@ -361,6 +361,7 @@
 		hideFile= "{f:uri.action(package:'Lelesys.Plugin.News', action:'hideFile', controller:'News')}";
 		showLink= "{f:uri.action(package:'Lelesys.Plugin.News', action:'showLink', controller:'News')}";
 		hideLink= "{f:uri.action(package:'Lelesys.Plugin.News', action:'hideLink', controller:'News')}";
+		var categoryUrl = "{f:uri.action(package:'Lelesys.Plugin.News', action:'categoriesByFolder', controller:'news')}";
 	</script>
 	<f:render partial="Module/JavaScripts"/>
 	<f:render partial="Module/StyleSheets"/>

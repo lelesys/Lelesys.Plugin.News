@@ -73,7 +73,7 @@
                             <div class="control-group">
                                 <label for="folder"><f:translate id="lelesys.plugin.news.folder"></f:translate></label>
                                 <div class="controls">
-                                    <f:form.select options="{folders}" optionLabelField="title" id="folders" prependOptionLabel="Select folder" property="folder"></f:form.select>
+                                    <f:form.select options="{folders}" optionLabelField="title" id="folders" class="folderSelect" prependOptionLabel="Select folder" property="folder"></f:form.select>
 									<f:render partial="FormErrors" arguments="{for: 'newNews.folder'}" />
 								</div>
                             </div>

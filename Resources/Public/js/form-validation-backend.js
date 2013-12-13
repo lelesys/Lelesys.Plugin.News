@@ -71,54 +71,36 @@ jQuery(document).ready(function() {
 		}
 	});
 
-	//Validation for category form
+
 	jQuery('.title-category').focusout(function() {
-		var title = jQuery('.title-category').val();
-		if (jQuery('.title-category').val()) {
-			jQuery.ajax({
-				url: checkTitle + '?moduleArguments[%40package]=lelesys.plugin.news&moduleArguments[%40controller]=category&moduleArguments[%40action]=checkTitle&moduleArguments[categoryTitle]=' + title,
-				success: function(data) {
-					if (data > 0) {
-						if (jQuery('.title-category').next('.error').length < 1) {
-							jQuery('.title-category').after('<div class="alert alert-error form-error error category-title-error"><button type="button" class="close" data-dismiss="alert">×</button>' + checkCatTitle + '</div>');
-						}
-						return false;
-					} else {
-						jQuery('.title-category').next('.error').remove();
-					}
-				}
-			});
-		} else {
-			if (jQuery('.title-category').next('.error').length < 1) {
-				jQuery('.title-category').after('<div class="neos-alert neos-alert-error form-error error category-title-error"><button type="button" class="neos-close" data-dismiss="alert">×</button>' + requiredField + '</div>');
+		if (!jQuery(this).val()) {
+			if (jQuery(this).next('.error').length < 1) {
+				jQuery(this).after('<div class="neos-alert neos-alert-error form-error error"><button type="button" class="neos-close" data-dismiss="alert">×</button>' + requiredField + '</div>');
 			}
-			return false
+			return false;
+		} else {
+			jQuery(this).next('.error').remove();
 		}
 	});
 
 	jQuery('.createCategory').click(function() {
-		var title = jQuery('.title-category').val();
-		if (jQuery('.title-category').val()) {
-			jQuery.ajax({
-				url: checkTitle + '?moduleArguments[%40package]=lelesys.plugin.news&moduleArguments[%40controller]=category&moduleArguments[%40action]=checkTitle&moduleArguments[categoryTitle]=' + title,
-				success: function(data) {
-					if (data > 0) {
-						if (jQuery('.title-category').next('.error').length < 1) {
-							jQuery('.title-category').after('<div class="neos-alert neos-alert-error form-error error category-title-error"><button type="button" class="neos-close" data-dismiss="alert">×</button>' + checkCatTitle + '</div>');
-						}
-						return false;
-					} else {
-						jQuery('.title-category').next('.error').remove();
-						jQuery('#news-category-form').submit();
-					}
-				}
-			});
-		} else {
+		if (!jQuery('.title-category').val()) {
 			if (jQuery('.title-category').next('.error').length < 1) {
-				jQuery('.title-category').after('<div class="neos-alert neos-alert-error form-error error category-title-error"><button type="button" class="neos-close" data-dismiss="alert">×</button>' + requiredField + '</div>');
+				jQuery('.title-category').after('<div class="neos-alert neos-alert-error form-error error"><button type="button" class="neos-close" data-dismiss="alert">×</button>' + requiredField + '</div>');
 			}
-			return false
+			return false;
+		} else {
+			jQuery('.title-category').next('.error').remove();
 		}
+		if (jQuery('#folders').val().length < 1) {
+			if (jQuery('#folders').next('.error').length < 1) {
+				jQuery('#folders').after('<div class="neos-alert neos-alert-error form-error error"><button type="button" class="neos-close" data-dismiss="alert">×</button>' + requiredField + '</div>');
+			}
+			return false;
+		} else {
+			jQuery('#folders').next('.error').remove();
+		}
+		jQuery('#news-category-form').submit();
 	});
 
 	//Validdation for comment form
@@ -257,9 +239,9 @@ jQuery(document).ready(function() {
 		jQuery(this).parent('form').submit();
 	});
 
-	jQuery('#folders').change(function(event) {
+	jQuery('.folderSelect').change(function(event) {
 		event.preventDefault();
-		var folderId = jQuery('#folders :selected').val();
+		var folderId = jQuery('.folderSelect :selected').val();
 		jQuery.ajax({
 			url: categoryUrl,
 			data: {
