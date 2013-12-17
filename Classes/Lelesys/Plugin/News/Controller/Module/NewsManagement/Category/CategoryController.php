@@ -51,6 +51,7 @@ class CategoryController extends \Lelesys\Plugin\News\Controller\Module\NewsMana
 	 */
 	public function indexAction() {
 		$this->view->assign('categories', $this->categoryService->listAll());
+		$this->view->assign('folders', $this->folderService->listAll());
 	}
 
 	/**

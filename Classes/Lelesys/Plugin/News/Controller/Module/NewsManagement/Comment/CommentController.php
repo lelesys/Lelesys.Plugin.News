@@ -33,6 +33,12 @@ class CommentController extends \Lelesys\Plugin\News\Controller\Module\NewsManag
 	protected $commentService;
 
 	/**
+	 * @Flow\Inject
+	 * @var \Lelesys\Plugin\News\Domain\Service\FolderService
+	 */
+	protected $folderService;
+
+	/**
 	 * Shows a list of comments
 	 *
 	 * @param \Lelesys\Plugin\News\Domain\Model\News $news The News
@@ -47,6 +53,7 @@ class CommentController extends \Lelesys\Plugin\News\Controller\Module\NewsManag
 		} else {
 			$this->view->assign('comments', $this->commentService->listAllCommentsAdmin($filterFlag));
 		}
+		$this->view->assign('folders', $this->folderService->listAll());
 	}
 
 	/**
