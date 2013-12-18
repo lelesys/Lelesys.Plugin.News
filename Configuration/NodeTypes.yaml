@@ -207,6 +207,8 @@
             values:
               createDate:
                 label: 'Created Date'
+              title:
+                label: 'Title'
         reloadIfChanged: true
     sortBy:
       type: string

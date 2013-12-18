@@ -63,12 +63,14 @@ class CategoryRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 	 */
 	public function listAll($pluginArguments = NULL) {
 		$query = $this->createQuery();
-		if (!empty($pluginArguments['orderBy'])) {
+		if ($pluginArguments['orderBy'] == "createDate") {
 			if ($pluginArguments['sortBy'] === 'DESC') {
 				$query->setOrderings(array($pluginArguments['orderBy'] => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING));
 			} else {
 				$query->setOrderings(array($pluginArguments['orderBy'] => \TYPO3\Flow\Persistence\Generic\Query::ORDER_ASCENDING));
 			}
+		} elseif ($pluginArguments['orderBy'] == "title") {
+			$query->setOrderings(array($pluginArguments['orderBy'] => \TYPO3\Flow\Persistence\Generic\Query::ORDER_ASCENDING));
 		}
 		return $query->execute();
 	}
@@ -84,7 +86,7 @@ class CategoryRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 		return $query->matching(
 								$query->equals('folder', $folderId)
 						)
-						->setOrderings(array('createDate' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING))
+						->setOrderings(array('title' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_ASCENDING))
 						->execute();
 	}
 
@@ -98,10 +100,9 @@ class CategoryRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 	public function listAllByFolderAndCategory($folderId = NULL, $parentCategoryId = NULL) {
 		$query = $this->createQuery();
 		return $query->matching($query->logicalAnd(
-										$query->equals('folder', $folderId),
-										$query->equals('parentCategory', $parentCategoryId))
+										$query->equals('folder', $folderId), $query->equals('parentCategory', $parentCategoryId))
 						)
-						->setOrderings(array('createDate' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING))
+						->setOrderings(array('title' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_ASCENDING))
 						->execute();
 	}
 
@@ -115,7 +116,7 @@ class CategoryRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 		return $query->matching(
 								$query->equals('hidden', 0)
 						)
-						->setOrderings(array('createDate' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING))
+						->setOrderings(array('title' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_ASCENDING))
 						->execute();
 	}
 
@@ -129,7 +130,7 @@ class CategoryRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 		return $query->matching(
 								$query->equals('parentCategory', NULL)
 						)
-						->setOrderings(array('createDate' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING))
+						->setOrderings(array('title' => \TYPO3\Flow\Persistence\Generic\Query::ORDER_ASCENDING))
 						->execute();
 	}
 
@@ -152,5 +153,7 @@ class CategoryRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 		$result = $this->connection->query($statement)->fetchAll();
 		return $result;
 	}
+
 }
+
 ?>
