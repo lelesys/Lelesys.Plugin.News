@@ -38,7 +38,7 @@ class CategoryRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 	 *
 	 * @var array
 	 */
-	protected $defaultOrderings = array('createDate' => \TYPO3\Flow\Persistence\QueryInterface::ORDER_DESCENDING);
+	protected $defaultOrderings = array('title' => \TYPO3\Flow\Persistence\QueryInterface::ORDER_ASCENDING);
 
 	/**
 	 * Function to see if category already exists
