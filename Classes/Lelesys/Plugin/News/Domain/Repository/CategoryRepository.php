@@ -63,14 +63,12 @@ class CategoryRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 	 */
 	public function listAll($pluginArguments = NULL) {
 		$query = $this->createQuery();
-		if ($pluginArguments['orderBy'] == "createDate") {
+		if (!empty($pluginArguments['orderBy'])) {
 			if ($pluginArguments['sortBy'] === 'DESC') {
 				$query->setOrderings(array($pluginArguments['orderBy'] => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING));
 			} else {
 				$query->setOrderings(array($pluginArguments['orderBy'] => \TYPO3\Flow\Persistence\Generic\Query::ORDER_ASCENDING));
 			}
-		} elseif ($pluginArguments['orderBy'] == "title") {
-			$query->setOrderings(array($pluginArguments['orderBy'] => \TYPO3\Flow\Persistence\Generic\Query::ORDER_ASCENDING));
 		}
 		return $query->execute();
 	}
