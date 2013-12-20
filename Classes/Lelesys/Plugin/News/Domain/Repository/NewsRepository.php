@@ -69,7 +69,6 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
 	 */
 	public function getEnabledNewsBySelection($category = NULL, $folder = NULL, $pluginArguments = array(), $tag = NULL) {
-		$currentUser = $this->securityContext->getAccount();
 		$limitNews = (int) $pluginArguments['limitNews'];
 		$emConfig = $this->entityManager->getConfiguration();
 		$emConfig->addCustomDatetimeFunction('DATEDIFF', 'Lelesys\Plugin\News\Doctrine\Query\Mysql\DateDiff');
@@ -108,7 +107,7 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 					OR DATEDIFF(n.startDate,current_date())<1 and n.endDate >= current_date()
 					OR n.endDate is null and n.startDate is null
 					OR n.endDate is null and n.startDate <= current_date() and DATEDIFF(n.startDate,current_date())<1');
-		if ($currentUser === NULL) {
+		if ($this->securityContext->hasRole('Lelesys.Plugin.News:NewsAdmin') === FALSE) {
 			$queryBuilder->andWhere('n.hidden = 0');
 		}
 		if ((!empty($category)) || (!empty($folder)) || (!empty($tag))) {
@@ -145,9 +144,9 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 		$constraints = array();
 		$user = '';
 		if ($this->securityContext->hasRole('Lelesys.Plugin.News:NewsAdmin')) {
-		if (!empty($folder)) {
-			$constraints[] = 'n.folder = ' . "'" . $folder->getUuid() . "'";
-		}
+			if (!empty($folder)) {
+				$constraints[] = 'n.folder = ' . "'" . $folder->getUuid() . "'";
+			}
 		} else {
 			$party = $this->securityContext->getParty();
 			$user = $this->persistenceManager->getIdentifierByObject($party);
