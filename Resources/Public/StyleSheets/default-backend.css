@@ -8,6 +8,7 @@
 }
 .nice-edit-size {
 	color: #555555;
+	margin-left: 0 !important;
 }
 .datepicker-days,
 .datepicker-months,
@@ -34,4 +35,16 @@
 }
 .module-accordian .accordion-inner {
 	padding: 9px 15px;
+}
+.newsRelations {
+	margin-bottom: 30px !important;
+	margin-top: 10px !important;
+}
+label.newslabel {
+	cursor: text;
+    font-weight: bolder;
+    text-decoration: underline;
+}
+legend.newsHeader {
+	color: #fff;
 }

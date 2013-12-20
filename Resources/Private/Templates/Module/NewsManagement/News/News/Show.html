@@ -3,8 +3,8 @@
 <f:layout name="DefaultBackend" />
 
 <f:section name="Content">
-	<div class="row neos-module-container">
-		<div class="span7">
+	<div class="neos-content neos-indented neos-fluid-container">
+		<div class="row-fluid">
 			<legend>{news.title}</legend>
 			<br />
 			<p class="date">
@@ -103,16 +103,16 @@
 			</f:if>
 		</div>
 	</div>
-	<div class="neos-form-actions neos-form-footer">
-		<div class="pull-left">
-			<a href="javascript:history.back()" class="neos-btn neos-button"> <f:translate id="lelesys.plugin.news.back"></f:translate> </a>
+	<div class="neos-form-footer">
+		<div class="neos-pull-left">
+			<a href="javascript:history.back()" class="neos-button neos-button-warning"> <f:translate id="lelesys.plugin.news.back"></f:translate> </a>
 		</div>
-		<div class="pull-right">
-			<f:link.action action="edit" arguments="{news: news}" class="neos-btn neos-button" title="Click to edit">
+		<div class="neos-pull-right">
+			<f:link.action action="edit" arguments="{news: news}" class="neos-button neos-button-freeze" title="Click to edit">
 				<i class="icon-pencil icon-white"></i>
 				<f:translate id="lelesys.plugin.news.edit"></f:translate>
 			</f:link.action>
-			<f:link.action action="delete" arguments="{news: news}" class="neos-btn neos-button delete" title="Click to delete">
+			<f:link.action action="delete" arguments="{news: news}" class="neos-button neos-button-danger delete" title="Click to delete">
 				<i class="icon-trash icon-white"></i>
 				<f:translate id="lelesys.plugin.news.delete"></f:translate>
 			</f:link.action>

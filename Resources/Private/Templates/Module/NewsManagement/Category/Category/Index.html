@@ -2,7 +2,7 @@
 <f:layout name="DefaultBackend" />
 
 <f:section name="Content">
-	<div class="row neos-module-container indented">
+	<div class="neos-content neos-indented neos-fluid-container">
 		<f:render partial="FlashMessage" arguments="{severityName: flashmessage}" />
 		<f:if condition="{categories}">
 			<f:then>
@@ -26,8 +26,8 @@
 								</f:else>
 							</f:if>
 							&nbsp;{category.title}</td>
-							<td>
-								<div class="pull-right">
+							<td class="neos-action">
+								<div class="neos-pull-right">
 									<neos:link.module action="index" path="newsmanagement/news" arguments="{category: category}" class="neos-btn neos-button" title="Click to view">
 										<i class="icon-info-sign icon-white"></i>
 									</neos:link.module>
@@ -69,9 +69,9 @@
 			</f:else>
 		</f:if>
 	</div>
-	<div class="neos-form-actions neos-form-footer">
-		<div class="pull-right">
-			<f:link.action action="new" class="neos-btn neos-button neos-btn-primary" title="Create new category"><i class="icon-plus-sign icon-plus-image"></i> &nbsp; <f:translate id="lelesys.plugin.news.addCategory"></f:translate></f:link.action>
+	<div class="neos-form-footer">
+		<div class="neos-pull-right">
+			<f:link.action action="new" class="neos-button neos-button-success neos-btn-primary" title="Create new category"><i class="icon-plus-sign icon-plus-image"></i> &nbsp; <f:translate id="lelesys.plugin.news.addCategory"></f:translate></f:link.action>
 		</div>
 	</div>
 	<f:render partial="Module/JavaScripts"/>

@@ -1,6 +1,6 @@
 <f:layout name="DefaultBackend" />
 <f:section name="Content">
-	<div class="row neos-module-container indented">
+	<div class="neos-content neos-indented neos-fluid-container">
 		<f:form action="index" controller="Comment">
 			<f:form.hidden value="" name="selected" class="comment-value" />
 			<f:form.select id="module-comment" value="{selectVal}" name="filterFlag" options="{ select :'Select Filter', 0: 'Active', 1: 'In-Active'}" />
@@ -34,8 +34,8 @@
 								</f:else>
 							</f:if>
 							</td>
-							<td>
-								<div class="pull-right">
+							<td class="neos-action">
+								<div class="neos-pull-right">
 									<f:if condition="{comment.setHidden} == 1">
 										<f:then>
 											<f:link.action class="neos-btn neos-btn-success neos-button show-hide-item show-news" title="Click to publish" action="publish" arguments="{comment: comment}"><i class="icon-plus-sign icon-white"></i></f:link.action>
@@ -73,7 +73,7 @@
 			</f:else>
 		</f:if>
 	</div>
-	<div class="neos-form-actions neos-form-footer"></div>
+	<div class="neos-form-footer"></div>
 	<f:render partial="Module/JavaScripts"/>
 	<f:render partial="Module/StyleSheets"/>
 </f:section>
