@@ -1,55 +1,55 @@
 <f:layout name="DefaultBackend" />
 <f:section name="Content">
 	<f:section name="subtitle">
-		<div class="row neos-module-container indented">
+		<div class="neos-content neos-indented neos-fluid-container">
 			<h2><f:translate id="lelesys.plugin.news.edit"></f:translate> "{category.title}"</h2>
 		</div>
 	</f:section>
 	<div class="main-container">
 		<f:form action="update" object="{category}" name="category" id="news-category-form" enctype="multipart/form-data">
-			<div class="row neos-module-container">
-				<fieldset class="span5">
-					<legend><f:translate id="lelesys.plugin.news.editCategory"></f:translate></legend>
-					<div class="control-group">
+			<div class="neos-row-fluid neos-module-container">
+				<fieldset class="neos-span5">
+					<legend class="newsHeader"><f:translate id="lelesys.plugin.news.editCategory"></f:translate></legend>
+					<div class="neos-control-group">
 						<label for="title"><f:translate id="lelesys.plugin.news.title"></f:translate></label>
 						<div class="controls">
-							<f:form.textfield property="title" id="title" class="span3 title-category1"/>
+							<f:form.textfield property="title" id="title" class="neos-span10 title-category1"/>
 							<f:render partial="FormErrors" arguments="{for: 'category.title'}" />
 						</div>
 					</div>
-					<div class="control-group">
+					<div class="neos-control-group">
 						<label for="image"><f:translate id="lelesys.plugin.news.image"></f:translate></label>
 						<div class="controls">
 							<f:if condition="{category.image}">
 								<img src="{f:uri.resource(resource: category.image)}" class="thumbnail" alt="image" width="100" />
 							</f:if>
-							<f:form.upload property="image" id="image" />
+							<f:form.upload property="image" id="image" class="neos-span10" />
 						</div>
 					</div>
-					<div class="control-group">
+					<div class="neos-control-group">
 						<label for="parentcategory"><f:translate id="lelesys.plugin.news.parentCategory"></f:translate></label>
 						<div class="controls">
-							<f:form.select options="{newsParentCategory}" optionLabelField="title" prependOptionLabel='<f:translate id="lelesys.plugin.news.selectCategory"></f:translate>' id="parentCategory" property="parentCategory" class="span3" ></f:form.select>
+							<f:form.select options="{newsParentCategory}" optionLabelField="title" prependOptionLabel='<f:translate id="lelesys.plugin.news.selectCategory"></f:translate>' id="parentCategory" property="parentCategory" class="neos-span10" ></f:form.select>
 						</div>
 					</div>
-					<div class="control-group">
+					<div class="neos-control-group">
 						<label for="description"><f:translate id="lelesys.plugin.news.description"></f:translate></label>
 						<div class="controls">
-							<f:form.textarea rows="4" cols="8" property="description" id="description" class="span3"/>
+							<f:form.textarea rows="4" cols="8" property="description" id="description" class="neos-span10"/>
 						</div>
 					</div>
-					<div class="control-group">
+					<div class="neos-control-group">
 						<label for="folder"><f:translate id="lelesys.plugin.news.folder"></f:translate></label>
 						<div class="controls">
-							<f:form.select options="{folders}" optionLabelField="title" id="folders" prependOptionLabel='<f:translate id="lelesys.plugin.news.selectFolder"></f:translate>' property="folder"></f:form.select>
+							<f:form.select options="{folders}" optionLabelField="title" id="folders" prependOptionLabel='<f:translate id="lelesys.plugin.news.selectFolder"></f:translate>' property="folder" class="neos-span10" ></f:form.select>
 						</div>
 					</div>
 				</fieldset>
 			</div>
-			<div class="neos-form-actions neos-form-footer">
+			<div class="neos-form-footer">
 				<f:link.action action="index" class="neos-btn neos-button"><f:translate id="lelesys.plugin.news.cancel"></f:translate></f:link.action>
-				<div class="pull-right">
-					<input  class="neos-btn neos-btn-primary neos-button createCategory1" type="submit" value='<f:translate id="lelesys.plugin.news.update"></f:translate>'>
+				<div class="neos-pull-right">
+					<input  class="neos-button neos-btn-primary neos-button-success createCategory1" type="submit" value='<f:translate id="lelesys.plugin.news.update"></f:translate>'>
 				</div>
 			</div>
 		</f:form>

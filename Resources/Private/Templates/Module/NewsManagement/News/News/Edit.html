@@ -3,12 +3,12 @@
 <f:section name="Content">
 	<f:render partial="FlashMessage" arguments="{severityName: flashmessage}" />
 	<f:section name="subtitle">
-		<div class="row neos-module-container indented">
-			<h2><f:translate id="lelesys.plugin.news.edit"></f:translate>"{news.title}"</h2>
+		<div class="neos-content neos-indented neos-fluid-container">
+			<h2><f:translate id="lelesys.plugin.news.edit"></f:translate> "{news.title}"</h2>
 		</div>
 	</f:section>
 	<f:form action="update" object="{news}" name="news" enctype="multipart/form-data">
-		<div class="row neos-module-container">
+		<div class="neos-row-fluid neos-module-container">
 			<div class="tabbable tab tab-size module-tab">
 				<ul class="nav nav-tabs">
 					<li class="active"><a href="#tab1" data-toggle="tab"><f:translate id="lelesys.plugin.news.general"></f:translate></a></li>
@@ -17,89 +17,89 @@
 				</ul>
 				<div class="tab-content">
 					<div class="tab-pane active" id="tab1">
-						<fieldset class="span6">
-							<div class="control-group">
+						<fieldset class="neos-span6">
+							<div class="neos-control-group">
 								<label for="title"><f:translate id="lelesys.plugin.news.title"></f:translate></label>
-								<div class="controls">
-									<f:form.textfield class="newsTitle" property="title" id="title" />
+								<div class="neos-control">
+									<f:form.textfield class="newsTitle neos-span10" property="title" id="title" />
 									<f:render partial="FormErrors" arguments="{for: 'newNews.title'}" />
 								</div>
 							</div>
-							<div class="control-group">
+							<div class="neos-control-group">
 								<label for="subTitle"><f:translate id="lelesys.plugin.news.subTitle"></f:translate></label>
-								<div class="controls">
-									<f:form.textarea rows="4" cols="5" property="subTitle" id="subTitle" />
+								<div class="neos-control">
+									<f:form.textarea rows="4" cols="5" property="subTitle" id="subTitle" class="neos-span10" />
 								</div>
 							</div>
-							<div class="control-group">
+							<div class="neos-control-group">
 								<label for="news-description"><f:translate id="lelesys.plugin.news.description"></f:translate></label>
-								<div class="controls nice-edit-size span5">
-									<f:form.textarea cols="43" rows="10" property="description" id="news-description" />
+								<div class="controls nice-edit-size neos-span10">
+									<f:form.textarea cols="43" rows="10" property="description" id="news-description" class="neos-span10" />
 								</div>
 							</div>
 						</fieldset>
-						<fieldset class="span5">
-							<div class="control-group">
+						<fieldset class="neos-span5">
+							<div class="neos-control-group">
 								<label for="alternativeTitle"><f:translate id="lelesys.plugin.news.alternativeTitle"></f:translate></label>
-								<div class="controls">
-									<f:form.textfield class="" property="alternativeTitle" id="alternativeTitle" />
+								<div class="neos-control">
+									<f:form.textfield class="neos-span10" property="alternativeTitle" id="alternativeTitle" />
 								</div>
 							</div>
-							<div class="control-group">
+							<div class="neos-control-group">
 								<label for="authorName"><f:translate id="lelesys.plugin.news.authorName"></f:translate></label>
-								<div class="controls">
-									<f:form.textfield class="" property="authorName" id="authorName" />
+								<div class="neos-control">
+									<f:form.textfield class="neos-span10" property="authorName" id="authorName" />
 								</div>
 							</div>
-							<div class="control-group">
+							<div class="neos-control-group">
 								<label for="authorEmail"><f:translate id="lelesys.plugin.news.authorEmail"></f:translate></label>
-								<div class="controls">
-									<f:form.textfield class="" property="authorEmail" id="authorEmail" />
+								<div class="neos-control">
+									<f:form.textfield class="neos-span10" property="authorEmail" id="authorEmail" />
 									<f:render partial="FormErrors" arguments="{for: 'newNews.authorEmail'}" />
 								</div>
 							</div>
-							<div class="control-group">
+							<div class="neos-control-group">
 								<label for="dateTime"><f:translate id="lelesys.plugin.news.dateTime"></f:translate></label>
-								<div class="controls">
-									<f:form.textfield type="text" value="{news.dateTime -> f:format.date(format: 'm/d/Y')}" property="dateTime" id="dateTime" class="datepicker "/>
+								<div class="neos-control">
+									<f:form.textfield type="text" value="{news.dateTime -> f:format.date(format: 'm/d/Y')}" property="dateTime" id="dateTime" class="datepicker neos-span10"/>
 								</div>
 							</div>
-							<div class="control-group">
+							<div class="neos-control-group">
 								<label for="startDate"><f:translate id="lelesys.plugin.news.startDate"></f:translate></label>
-								<div class="controls">
-									<f:form.textfield type="text" value="{news.startDate -> f:format.date(format: 'm/d/Y')}" property="startDate" id="startDate" class="datepicker"/>
+								<div class="neos-control">
+									<f:form.textfield type="text" value="{news.startDate -> f:format.date(format: 'm/d/Y')}" property="startDate" id="startDate" class="datepicker neos-span10"/>
 								</div>
 							</div>
-							<div class="control-group">
+							<div class="neos-control-group">
 								<label for="endDate"><f:translate id="lelesys.plugin.news.endDate"></f:translate></label>
-								<div class="controls">
-									<f:form.textfield type="text" value="{news.endDate -> f:format.date(format: 'm/d/Y')}" property="endDate" id="endDate" class="datepicker"/>
+								<div class="neos-control">
+									<f:form.textfield type="text" value="{news.endDate -> f:format.date(format: 'm/d/Y')}" property="endDate" id="endDate" class="datepicker neos-span10"/>
 								</div>
 							</div>
-							<div class="control-group">
+							<div class="neos-control-group">
 								<label for="folder"><f:translate id="lelesys.plugin.news.folder"></f:translate></label>
-								<div class="controls">
-									<f:form.select options="{folders}" optionLabelField="title" id="folders" class="folderSelect" prependOptionLabel="Select folder" property="folder"></f:form.select>
+								<div class="neos-control">
+									<f:form.select options="{folders}" optionLabelField="title" id="folders" class="folderSelect neos-span10" prependOptionLabel="Select folder" property="folder"></f:form.select>
 								</div>
 							</div>
 						</fieldset>
 					</div>
 					<div class="tab-pane" id="tab2">
-						<fieldset class="span5">
-							<div class="control-group">
+						<fieldset class="neos-span6">
+							<div class="neos-control-group">
 								<label for="categories"><f:translate id="lelesys.plugin.news.categories"></f:translate></label>
-								<div class="controls">
+								<div class="neos-control">
 									<f:if condition="{newsCategories}">
 										<f:then>
-											<f:form.select class="" options="{newsCategories}" optionLabelField="title" id="categories" property="categories" multiple="true" size="7"></f:form.select>
+											<f:form.select class="neos-span10" options="{newsCategories}" optionLabelField="title" id="categories" property="categories" multiple="true" size="7"></f:form.select>
 										</f:then>
 										<f:else>
-											<f:form.select disabled="disabled" class="" options="{newsCategories}" optionLabelField="title" id="categories" property="categories" size="7"></f:form.select>
+											<f:form.select disabled="disabled" class="neos-span10" options="{newsCategories}" optionLabelField="title" id="categories" property="categories" size="7"></f:form.select>
 										</f:else>
 									</f:if>
 								</div>
 							</div>
-							<div class="control-group">
+							<div class="neos-control-group">
 								<label for="tags"><f:translate id="lelesys.plugin.news.tags"></f:translate></label>
 								<f:if condition="{newsTags}">
 									<f:then>
@@ -114,38 +114,38 @@
 										</f:for>
 									</f:then>
 								</f:if>
-								<div class="controls">
-									<f:form.textfield name="tags[title]" id="tags"/>
+								<div class="neos-control">
+									<f:form.textfield name="tags[title]" id="tags" class="neos-span10"/>
 								</div>
 							</div>
 						</fieldset>
-						<fieldset class="span5">
-							<div class="control-group">
+						<fieldset class="neos-span5">
+							<div class="neos-control-group">
 								<label for="relatedNews"><f:translate id="lelesys.plugin.news.relatedNews"></f:translate></label>
-								<div class="controls">
+								<div class="neos-control">
 									<f:if condition="{relatedNews}">
 										<f:then>
-											<f:form.select class="" options="{relatedNews}" optionLabelField="title" id="relatedNews" property="relatedNews" multiple="true" size="7"></f:form.select>
+											<f:form.select class="neos-span10" options="{relatedNews}" optionLabelField="title" id="relatedNews" property="relatedNews" multiple="true" size="7"></f:form.select>
 										</f:then>
 										<f:else>
-											<f:form.select disabled="disabled" class="" options="{relatedNews}" optionLabelField="title" id="relatedNews" property="relatedNews" size="7"></f:form.select>
+											<f:form.select disabled="disabled" class="neos-span10" options="{relatedNews}" optionLabelField="title" id="relatedNews" property="relatedNews" size="7"></f:form.select>
 										</f:else>
 									</f:if>
 								</div>
 							</div>
-							<div class="control-group">
+							<div class="neos-control-group">
 								<label for="keywords"><f:translate id="lelesys.plugin.news.keywords"> ( , )</f:translate></label>
-								<div class="controls">
-									<f:form.textarea class="" rows="4" cols="5" property="keywords" id="keywords" />
+								<div class="neos-control">
+									<f:form.textarea class="neos-span10" rows="4" cols="5" property="keywords" id="keywords" />
 								</div>
 							</div>
 						</fieldset>
 					</div>
 					<f:form.hidden value="{news.uuid}" class="news-id" />
 					<div class="tab-pane module-accordian" id="tab3">
-						<fieldset class="span5">
-							<label><f:translate id="lelesys.plugin.news.mediaElement"></f:translate></label>
-							<div class="accordion" id="accordionOne">
+						<fieldset class="neos-span5">
+							<label class="newslabel"><f:translate id="lelesys.plugin.news.mediaElement"></f:translate></label>
+							<div class="accordion newsRelations" id="accordionOne">
 								<div class="accordion-group" style="display: none;">
 									<div class="accordion-heading">
 										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionOne" href="#collapse-media-0">
@@ -154,15 +154,15 @@
 									</div>
 									<div id="collapse-media-0" class="accordion-body collapse in">
 										<div class="accordion-inner">
-											<div class="control-group">
-												<label class="control-label" for="resource-0"><f:translate id="lelesys.plugin.news.image"></f:translate></label>
-												<div class="controls">
+											<div class="neos-control-group">
+												<label class="neos-control-label" for="resource-0"><f:translate id="lelesys.plugin.news.image"></f:translate></label>
+												<div class="neos-control">
 													<f:form.upload name="media[0][resource]" id="resource-0" />
 												</div>
 											</div>
-											<div class="control-group">
-												<label class="control-label" for="caption-0"><f:translate id="lelesys.plugin.news.caption"></f:translate></label>
-												<div class="controls">
+											<div class="neos-control-group">
+												<label class="neos-control-label" for="caption-0"><f:translate id="lelesys.plugin.news.caption"></f:translate></label>
+												<div class="neos-control">
 													<f:form.textfield name="media[0][caption]" id="caption-0" />
 												</div>
 											</div>
@@ -175,21 +175,21 @@
 											<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionOne" href="#collapse-media-{indexIteration.cycle}">
 												{asset.resource.fileName}
 											</a>
-											<div class="loader pull-right remove-file" style="display: none; margin-right: 50px;  margin-top: -26px;"><img src="{f:uri.resource(path: 'images/ajax-loader.gif')}"/></div>
-											<f:link.external uri="javascript:void(0)" class="pull-right remove-file remove-media tooltip-demo" rel="tooltip" title="Delete"><i class="icon-trash"></i></f:link.external>
+											<div class="loader neos-pull-right remove-file" style="display: none; margin-right: 50px;  margin-top: -26px;"><img src="{f:uri.resource(path: 'images/ajax-loader.gif')}"/></div>
+											<f:link.external uri="javascript:void(0)" class="neos-pull-right remove-file remove-media tooltip-demo" rel="tooltip" title="Delete"><i class="icon-trash"></i></f:link.external>
 										</div>
 										<div id="collapse-media-{indexIteration.cycle}" class="accordion-body collapse">
 											<div class="accordion-inner">
-												<div class="control-group">
-													<label class="control-label" for="resource-{indexIteration.cycle}"><f:translate id="lelesys.plugin.news.image"></f:translate></label>
-													<div class="controls">
+												<div class="neos-control-group">
+													<label class="neos-control-label" for="resource-{indexIteration.cycle}"><f:translate id="lelesys.plugin.news.image"></f:translate></label>
+													<div class="neos-control">
 														<f:form.upload style="display: none;" name="media[{indexIteration.cycle}][resource]" id="resource-{indexIteration.cycle}" />
 														<img class="thumbnail" src="{f:uri.resource(resource: asset.resource)}" alt="{asset.caption}" width="100"/>
 													</div>
 												</div>
-												<div class="control-group">
-													<label class="control-label" for="caption-{indexIteration.cycle}"><f:translate id="lelesys.plugin.news.caption"></f:translate></label>
-													<div class="controls">
+												<div class="neos-control-group">
+													<label class="neos-control-label" for="caption-{indexIteration.cycle}"><f:translate id="lelesys.plugin.news.caption"></f:translate></label>
+													<div class="neos-control">
 														<f:form.textfield value="{asset.caption}" name="media[{indexIteration.cycle}][caption]" id="caption-{indexIteration.cycle}" />
 													</div>
 													<f:form.hidden value="{asset}" class="asset-id" name="media[{indexIteration.cycle}][uuid]" />
@@ -200,8 +200,8 @@
 								</f:for>
 								<f:link.external uri="javascript:void(0)" class="add-more-media"><f:translate id="lelesys.plugin.news.addMoreMedia"></f:translate></f:link.external>
 							</div>
-							<label><f:translate id="lelesys.plugin.news.relatedFiles"></f:translate></label>
-							<div class="accordion" id="accordionTwo">
+							<label class="newslabel"><f:translate id="lelesys.plugin.news.relatedFiles"></f:translate></label>
+							<div class="accordion newsRelations" id="accordionTwo">
 								<div class="accordion-group" style="display: none;">
 									<div class="accordion-heading">
 										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionTwo" href="#collapse-file-0">
@@ -210,15 +210,15 @@
 									</div>
 									<div id="collapse-file-0" class="accordion-body collapse in">
 										<div class="accordion-inner">
-											<div class="control-group">
-												<label class="control-label" for="file-resource-0"><f:translate id="lelesys.plugin.news.file"></f:translate></label>
-												<div class="controls">
+											<div class="neos-control-group">
+												<label class="neos-control-label" for="file-resource-0"><f:translate id="lelesys.plugin.news.file"></f:translate></label>
+												<div class="neos-control">
 													<f:form.upload name="file[0][resource]" id="file-resource-0" />
 												</div>
 											</div>
-											<div class="control-group">
-												<label class="control-label" for="file-title-0"><f:translate id="lelesys.plugin.news.title"></f:translate></label>
-												<div class="controls">
+											<div class="neos-control-group">
+												<label class="neos-control-label" for="file-title-0"><f:translate id="lelesys.plugin.news.title"></f:translate></label>
+												<div class="neos-control">
 													<f:form.textfield  name="file[0][title]" id="file-title-0" />
 												</div>
 											</div>
@@ -231,21 +231,21 @@
 											<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionTwo" href="#collapse-file-{indexIteration.cycle}">
 												{file.resource.fileName}
 											</a>
-											<div class="loader pull-right remove-file" style="display: none; margin-right: 50px;  margin-top: -26px;"><img src="{f:uri.resource(path: 'images/ajax-loader.gif')}"/></div>
-											<f:link.external uri="javascript:void(0)" class="pull-right remove-file delete-file tooltip-demo" rel="tooltip" title="Delete"><i class="icon-trash"></i></f:link.external>
+											<div class="loader neos-pull-right remove-file" style="display: none; margin-right: 50px;  margin-top: -26px;"><img src="{f:uri.resource(path: 'images/ajax-loader.gif')}"/></div>
+											<f:link.external uri="javascript:void(0)" class="neos-pull-right remove-file delete-file tooltip-demo" rel="tooltip" title="Delete"><i class="icon-trash"></i></f:link.external>
 										</div>
 										<div id="collapse-file-{indexIteration.cycle}" class="accordion-body collapse">
 											<div class="accordion-inner">
-												<div class="control-group">
-													<label class="control-label" for="file-resource-{indexIteration.cycle}"><f:translate id="lelesys.plugin.news.file"></f:translate></label>
-													<div class="controls">
+												<div class="neos-control-group">
+													<label class="neos-control-label" for="file-resource-{indexIteration.cycle}"><f:translate id="lelesys.plugin.news.file"></f:translate></label>
+													<div class="neos-control">
 														<f:form.upload style="display: none;" name="file[{indexIteration.cycle}][resource]" id="file-resource-{indexIteration.cycle}" />
 														<f:link.action action="downloadFile" arguments="{file: file.resource}" controller="news">{file.resource.fileName}</f:link.action>
 													</div>
 												</div>
-												<div class="control-group">
-													<label class="control-label" for="file-title-{indexIteration.cycle}"><f:translate id="lelesys.plugin.news.title"></f:translate></label>
-													<div class="controls">
+												<div class="neos-control-group">
+													<label class="neos-control-label" for="file-title-{indexIteration.cycle}"><f:translate id="lelesys.plugin.news.title"></f:translate></label>
+													<div class="neos-control">
 														<f:form.textfield value="{file.title}" name="file[{indexIteration.cycle}][title]" id="file-title-{indexIteration.cycle}" />
 														<f:form.hidden value="{file}" class="file-id" name="file[{indexIteration.cycle}][uuid]" />
 													</div>
@@ -256,33 +256,33 @@
 								</f:for>
 								<f:link.external uri="javascript:void(0)" class="add-more-files"><f:translate id="lelesys.plugin.news.addMoreFiles"></f:translate></f:link.external>
 							</div>
-							<label><f:translate id="lelesys.plugin.news.relatedLinks"></f:translate></label>
-							<div class="accordion" id="collapseThree">
+							<label class="newslabel"><f:translate id="lelesys.plugin.news.relatedLinks"></f:translate></label>
+							<div class="accordion newsRelations" id="collapseThree">
 								<div class="accordion-group" style="display: none;">
 									<div class="accordion-heading">
 										<a class="accordion-toggle" data-toggle="collapse" data-parent="#collapseThree" href="#collapse-link-0">
 											<f:translate id="lelesys.plugin.news.relatedLink"></f:translate> #0
 										</a>
 										<f:form.hidden class="show-hide-value" value="0" name="relatedLink[0][hidden]" />
-										<f:link.external uri="javascript:void(0)" class="asset-toggle hide-asset pull-right hide-show-file tooltip-demo" rel="tooltip" title="Hide"><i class="icon-eye-close"></i> </f:link.external>
+										<f:link.external uri="javascript:void(0)" class="asset-toggle hide-asset neos-pull-right hide-show-file tooltip-demo" rel="tooltip" title="Hide"><i class="icon-eye-close"></i> </f:link.external>
 									</div>
 									<div id="collapse-link-0" class="accordion-body collapse in">
 										<div class="accordion-inner">
-											<div class="control-group">
-												<label class="control-label" for="relatedLinks-0"><f:translate id="lelesys.plugin.news.uri"></f:translate></label>
-												<div class="controls">
+											<div class="neos-control-group">
+												<label class="neos-control-label" for="relatedLinks-0"><f:translate id="lelesys.plugin.news.uri"></f:translate></label>
+												<div class="neos-control">
 													<f:form.textfield class=" text-added"  name="relatedLink[0][relatedUri]" id="relatedLinks-0" />
 												</div>
 											</div>
-											<div class="control-group">
-												<label class="control-label" for="relatedLinks-title-0"><f:translate id="lelesys.plugin.news.title"></f:translate></label>
-												<div class="controls">
+											<div class="neos-control-group">
+												<label class="neos-control-label" for="relatedLinks-title-0"><f:translate id="lelesys.plugin.news.title"></f:translate></label>
+												<div class="neos-control">
 													<f:form.textfield class=""  name="relatedLink[0][relatedUriTitle]" id="relatedLinks-title-0" />
 												</div>
 											</div>
-											<div class="control-group">
-												<label class="control-label" for="relatedLinks-description-0"><f:translate id="lelesys.plugin.news.description"></f:translate></label>
-												<div class="controls">
+											<div class="neos-control-group">
+												<label class="neos-control-label" for="relatedLinks-description-0"><f:translate id="lelesys.plugin.news.description"></f:translate></label>
+												<div class="neos-control">
 													<f:form.textarea class="" rows="4" cols="5" name="relatedLink[0][relatedUriDescription]" id="relatedLinks-description-0" />
 												</div>
 											</div>
@@ -295,36 +295,36 @@
 											<a class="accordion-toggle" data-toggle="collapse" data-parent="#collapseThree" href="#collapse-link-{indexIteration.cycle}">
 												{link.uri}
 											</a>
-											<div class="loader pull-right remove-file" style="display: none; margin-right: 50px;  margin-top: -26px;"><img src="{f:uri.resource(path: 'images/ajax-loader.gif')}"/></div>
-											<f:link.external uri="javascript:void(0)" class="pull-right remove-file remove-related-link tooltip-demo" rel="tooltip" title="Delete"><i class="icon-trash"></i></f:link.external>
+											<div class="loader neos-pull-right remove-file" style="display: none; margin-right: 50px;  margin-top: -26px;"><img src="{f:uri.resource(path: 'images/ajax-loader.gif')}"/></div>
+											<f:link.external uri="javascript:void(0)" class="neos-pull-right remove-file remove-related-link tooltip-demo" rel="tooltip" title="Delete"><i class="icon-trash"></i></f:link.external>
 											<f:if condition="{link.hidden} == 1">
 												<f:then>
 													<f:form.hidden class="show-hide-value" value="1" name="relatedLink[{indexIteration.cycle}][hidden]" />
-													<f:link.external uri="javascript:void(0)" class="asset-toggle show-asset tooltip-demo pull-right hide-show-file" rel="tooltip" title="Show"><i class="icon-eye-open"></i></f:link.external>
+													<f:link.external uri="javascript:void(0)" class="asset-toggle show-asset tooltip-demo neos-pull-right hide-show-file" rel="tooltip" title="Show"><i class="icon-eye-open"></i></f:link.external>
 												</f:then>
 												<f:else>
 													<f:form.hidden class="show-hide-value" value="0" name="relatedLink[{indexIteration.cycle}][hidden]" />
-													<f:link.external uri="javascript:void(0)" class="asset-toggle hide-asset tooltip-demo pull-right hide-show-file" rel="tooltip" title="Hide"><i class="icon-eye-close"></i> </f:link.external>
+													<f:link.external uri="javascript:void(0)" class="asset-toggle hide-asset tooltip-demo neos-pull-right hide-show-file" rel="tooltip" title="Hide"><i class="icon-eye-close"></i> </f:link.external>
 												</f:else>
 											</f:if>
 										</div>
 										<div id="collapse-link-{indexIteration.cycle}" class="accordion-body collapse">
 											<div class="accordion-inner">
-												<div class="control-group">
-													<label class="control-label" for="relatedLinks-1"><f:translate id="lelesys.plugin.news.uri"></f:translate></label>
-													<div class="controls">
+												<div class="neos-control-group">
+													<label class="neos-control-label" for="relatedLinks-1"><f:translate id="lelesys.plugin.news.uri"></f:translate></label>
+													<div class="neos-control">
 														<f:form.textfield class=" text-added" value="{link.uri}" name="relatedLink[{indexIteration.cycle}][relatedUri]" id="relatedLinks-{indexIteration.cycle}" />
 													</div>
 												</div>
-												<div class="control-group">
-													<label class="control-label" for="relatedLinks-title-1"><f:translate id="lelesys.plugin.news.title"></f:translate></label>
-													<div class="controls">
+												<div class="neos-control-group">
+													<label class="neos-control-label" for="relatedLinks-title-1"><f:translate id="lelesys.plugin.news.title"></f:translate></label>
+													<div class="neos-control">
 														<f:form.textfield class="" value="{link.title}" name="relatedLink[{indexIteration.cycle}][relatedUriTitle]" id="relatedLinks-title-{indexIteration.cycle}" />
 													</div>
 												</div>
-												<div class="control-group">
-													<label class="control-label" for="relatedLinks-description-{indexIteration.cycle}"><f:translate id="lelesys.plugin.news.description"></f:translate></label>
-													<div class="controls">
+												<div class="neos-control-group">
+													<label class="neos-control-label" for="relatedLinks-description-{indexIteration.cycle}"><f:translate id="lelesys.plugin.news.description"></f:translate></label>
+													<div class="neos-control">
 														<f:form.textarea class="" value="{link.description}" rows="4" cols="5" name="relatedLink[{indexIteration.cycle}][relatedUriDescription]" id="relatedLinks-description-{indexIteration.cycle}" />
 														<f:form.hidden value="{link.uuid}" class="link-id" name="relatedLink[{indexIteration.cycle}][uuid]" />
 													</div>
@@ -340,10 +340,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="neos-form-actions neos-form-footer">
+		<div class="neos-form-footer">
 			<f:link.action action="index" class="neos-btn neos-button"><f:translate id="lelesys.plugin.news.cancel"></f:translate></f:link.action>
-			<div class="pull-right">
-				<f:form.submit value='<f:translate id="lelesys.plugin.news.update"></f:translate>' class="neos-btn createNews neos-btn-primary neos-button" />
+			<div class="neos-pull-right">
+				<f:form.submit value='<f:translate id="lelesys.plugin.news.update"></f:translate>' class="neos-button createNews neos-btn-primary neos-button-success" />
 			</div>
 		</div>
 	</f:form>

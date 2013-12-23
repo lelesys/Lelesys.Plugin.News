@@ -2,7 +2,7 @@
 {namespace neos=TYPO3\Neos\ViewHelpers}
 
 <f:section name="Content">
-	<div class="row neos-module-container indented">
+	<div class="neos-content neos-indented neos-fluid-container">
 		<f:form action="index" controller="News" name="listAllNewsAdmin">
 			<f:form.hidden value="{filter.folderId}" name="filterId[folderId]" class="folder-id"/>
 			<f:form.hidden value="{filter.catId}" name="filterId[catId]" class="cat-id"/>
@@ -40,8 +40,8 @@
 							&nbsp;{news.title}
 							</td>
 							<td>{news.dateTime -> f:format.date(format: 'j M y, h:i A')}</td>
-							<td>
-								<div class="pull-right">
+							<td class="neos-action">
+								<div class="neos-pull-right">
 									<neos:link.module action="index" path="newsmanagement/comment" arguments="{news: news}" class="neos-btn neos-button" title='<f:translate id="lelesys.plugin.news.clickToView"></f:translate>'>
 										<i class="icon-comment icon-white"></i>
 									</neos:link.module>
@@ -87,9 +87,9 @@
 		</f:if>
 
 	</div>
-	<div class="neos-form-actions neos-form-footer">
-		<div class="pull-right">
-			<f:link.action action="new" class="neos-btn neos-button neos-btn-primary" title="Create news">
+	<div class="neos-form-footer">
+		<div class="neos-pull-right">
+			<f:link.action action="new" class="neos-button neos-button-success neos-btn-primary" title="Create news">
 				<i class="icon-user icon-white"></i>
 				<f:translate id="lelesys.plugin.news.createNews"></f:translate>
 			</f:link.action>

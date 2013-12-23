@@ -73,7 +73,7 @@ prototype(Lelesys.Plugin.News:SearchResult) {
 }
 
 # Meta Data
-prototype(Lelesys.Plugin.News:MetaData) < prototype(TYPO3.Neos:Template)
+prototype(Lelesys.Plugin.News:MetaData) < prototype(TYPO3.TypoScript:Template)
 prototype(Lelesys.Plugin.News:MetaData) {
 	@class = 'Lelesys\\Plugin\\News\\TypoScript\\MetaDataImplementation'
 	templatePath = 'resource://Lelesys.Plugin.News/Private/Templates/TyposcriptObjects/MetaData.html'
