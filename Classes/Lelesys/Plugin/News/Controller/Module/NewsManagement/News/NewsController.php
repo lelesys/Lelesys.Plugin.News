@@ -197,6 +197,7 @@ class NewsController extends \Lelesys\Plugin\News\Controller\Module\NewsManageme
 		$this->view->assign('media', $news->getAssets());
 		$this->view->assign('files', $news->getFiles());
 		$this->view->assign('relatedLinks', $news->getRelatedLinks());
+		$this->view->assign('tags', $this->tagService->listAll());
 	}
 
 	/**
@@ -221,6 +222,7 @@ class NewsController extends \Lelesys\Plugin\News\Controller\Module\NewsManageme
 				->setTypeConverterOption(
 						'TYPO3\Flow\Property\TypeConverter\DateTimeConverter', \TYPO3\Flow\Property\TypeConverter\DateTimeConverter::CONFIGURATION_DATE_FORMAT, 'm/d/Y'
 		);
+		$this->arguments['news']->getPropertyMappingConfiguration()->allowProperties('tags');
 	}
 
 	/**

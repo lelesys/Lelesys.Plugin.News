@@ -33,6 +33,7 @@ class TagRepository extends \TYPO3\Flow\Persistence\Repository {
 	 */
 	public function listAll($pluginArguments = NULL) {
 		$query = $this->createQuery();
+		$query->matching($query->equals('hidden', 0));
 		if (!empty($pluginArguments['orderBy'])) {
 			if ($pluginArguments['sortBy'] === 'DESC') {
 				$query->setOrderings(array($pluginArguments['orderBy'] => \TYPO3\Flow\Persistence\Generic\Query::ORDER_DESCENDING));
