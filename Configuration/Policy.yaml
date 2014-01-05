@@ -28,6 +28,9 @@ resources:
     'Lelesys_Plugin_News_Controller_Frontend_News': 'method(Lelesys\Plugin\News\Controller\NewsController->(archive|index|latestNews|searchNews|searchResult|show|downloadFile)Action())'
     'Lelesys_Plugin_News_Controller_Frontend_Category': 'method(Lelesys\Plugin\News\Controller\CategoryController->(index|checkTitle)Action())'
     'Lelesys_Plugin_News_Controller_Frontend_Comment': 'method(Lelesys\Plugin\News\Controller\CommentController->createAction())'
+    # this is a replacement for TYPO3_Neos_Backend_GeneralAccess
+    'Lelesys_Plugin_News_General_Module_Access': 'method(TYPO3\Neos\Controller\Backend\BackendController->indexAction()) || method(TYPO3\Neos\Controller\Backend\ModuleController->indexAction()) || method(TYPO3\Neos\Controller\LoginController->logoutAction()) || method(TYPO3\Flow\Security\Authentication\Controller\AbstractAuthenticationController->logoutAction()) || method(TYPO3\Neos\Controller\Module\AbstractModuleController->indexAction()) || method(TYPO3\Neos\Controller\Backend\SchemaController->(nodeTypeSchema|vieSchema)Action()) || method(TYPO3\Neos\Controller\Backend\MenuController->indexAction()) || method(TYPO3\Neos\Controller\Backend\SettingsController->editPreviewAction())'
+    ## ^^ this is a replacement for TYPO3_Neos_Backend_GeneralAccess
 acls:
    'NewsAdmin':
      methods:
@@ -45,6 +48,12 @@ acls:
        'Lelesys_Plugin_News_Controller_Rating': GRANT
        'Lelesys_Plugin_News_Controller_Tag': GRANT
        'Lelesys_Plugin_News_Controller_User': GRANT
+       'Lelesys_Plugin_News_General_Module_Access': GRANT
+       # grant access to user module
+       'TYPO3_Neos_Backend_Module_User': GRANT
+       'TYPO3_Neos_Backend_Module_User_UserSettings': GRANT
+       'TYPO3_Neos_Backend_Module_User_UserSettings_UpdateOwnSettings': GRANT
+       'TYPO3_Neos_Backend_EditUserPreferences': GRANT
    'Everybody':
      methods:
        'Lelesys_Plugin_News_Controller_Frontend_News': GRANT
