@@ -28,6 +28,7 @@ resources:
     'Lelesys_Plugin_News_Controller_Frontend_News': 'method(Lelesys\Plugin\News\Controller\NewsController->(archive|index|latestNews|searchNews|searchResult|show|downloadFile)Action())'
     'Lelesys_Plugin_News_Controller_Frontend_Category': 'method(Lelesys\Plugin\News\Controller\CategoryController->(index|checkTitle)Action())'
     'Lelesys_Plugin_News_Controller_Frontend_Comment': 'method(Lelesys\Plugin\News\Controller\CommentController->createAction())'
+    'Lelesys_Plugin_News_Controller_Rating': 'method(Lelesys\Plugin\News\Controller\RatingController->(create|show)Action())'
     # this is a replacement for TYPO3_Neos_Backend_GeneralAccess
     'Lelesys_Plugin_News_General_Module_Access': 'method(TYPO3\Neos\Controller\Backend\BackendController->indexAction()) || method(TYPO3\Neos\Controller\Backend\ModuleController->indexAction()) || method(TYPO3\Neos\Controller\LoginController->logoutAction()) || method(TYPO3\Flow\Security\Authentication\Controller\AbstractAuthenticationController->logoutAction()) || method(TYPO3\Neos\Controller\Module\AbstractModuleController->indexAction()) || method(TYPO3\Neos\Controller\Backend\SchemaController->(nodeTypeSchema|vieSchema)Action()) || method(TYPO3\Neos\Controller\Backend\MenuController->indexAction()) || method(TYPO3\Neos\Controller\Backend\SettingsController->editPreviewAction())'
     ## ^^ this is a replacement for TYPO3_Neos_Backend_GeneralAccess
@@ -59,3 +60,4 @@ acls:
        'Lelesys_Plugin_News_Controller_Frontend_News': GRANT
        'Lelesys_Plugin_News_Controller_Frontend_Comment': GRANT
        'Lelesys_Plugin_News_Controller_Frontend_Category': GRANT
+       'Lelesys_Plugin_News_Controller_Rating': GRANT
