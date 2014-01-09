@@ -106,7 +106,7 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 				->where('n.startDate is null and n.endDate >= current_date()
 					OR DATEDIFF(n.startDate,current_date())<1 and n.endDate >= current_date()
 					OR n.endDate is null and n.startDate is null
-					OR n.endDate is null and n.startDate <= current_date() and DATEDIFF(n.startDate,current_date())<1');
+					OR n.endDate is null and DATEDIFF(n.startDate,current_date())<=0');
 		if ($this->securityContext->hasRole('Lelesys.Plugin.News:NewsAdmin') === FALSE) {
 			$queryBuilder->andWhere('n.hidden = 0');
 		}
@@ -227,7 +227,7 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 				->where('n.startDate is null and n.endDate >= current_date()
 					OR DATEDIFF(n.startDate,current_date())<1 and n.endDate >= current_date()
 					OR n.endDate is null and n.startDate is null
-					OR n.endDate is null and n.startDate <= current_date() and DATEDIFF(n.startDate,current_date())<1')
+					OR n.endDate is null and DATEDIFF(n.startDate,current_date())<=0')
 				->andWhere('YEAR(n.dateTime) = ' . $year . ' AND MONTH(n.dateTime) = ' . date("n", strtotime($month)) . '');
 		if ((!empty($category)) || (!empty($folder))) {
 			$queryBuilder->andWhere(
@@ -260,7 +260,7 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 				->where('(n.startDate is null and n.endDate >= current_date()
 					OR DATEDIFF(n.startDate,current_date())<1 and n.endDate >= current_date()
 					OR n.endDate is null and n.startDate is null
-					OR n.endDate is null and n.startDate <= current_date() and DATEDIFF(n.startDate,current_date())<1) AND n.hidden = 0')
+					OR n.endDate is null and DATEDIFF(n.startDate,current_date())<=0) AND n.hidden = 0')
 				->andWhere('n.title like :searchterm OR n.subTitle like :searchterm OR n.description like :searchterm')
 				->setParameter('searchterm', '%' . $searchval . '%');
 
@@ -315,7 +315,7 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 				->where('(n.startDate is null and n.endDate >= current_date()
 					OR DATEDIFF(n.startDate,current_date())<1 and n.endDate >= current_date()
 					OR n.endDate is null and n.startDate is null
-					OR n.endDate is null and n.startDate <= current_date() and DATEDIFF(n.startDate,current_date())<1) AND n.hidden = 0');
+					OR n.endDate is null and DATEDIFF(n.startDate,current_date())<=0) AND n.hidden = 0');
 		if ((!empty($category)) || (!empty($folder))) {
 			$queryBuilder->andWhere(
 					$newsConstraints
