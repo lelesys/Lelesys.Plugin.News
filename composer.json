@@ -10,10 +10,10 @@
 		}
 	],
 	"require": {
-		"typo3/flow": "*",
-		"typo3/neos": "*",
-		"typo3/swiftmailer": "dev-master",
-		"lelesys/captcha": "dev-master"
+		"typo3/flow": "2.1.*",
+		"typo3/neos": "1.0.*",
+		"typo3/swiftmailer": "4.1.5",
+		"lelesys/captcha": "1.0.1"
 	},
 	"autoload": {
 		"psr-0": {
