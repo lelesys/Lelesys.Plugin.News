@@ -11,6 +11,7 @@ namespace Lelesys\Plugin\News\TypoScript;
  *                                                                              */
 
 use TYPO3\Flow\Annotations as Flow;
+use TYPO3\TypoScript\TypoScriptObjects\Helpers;
 
 /**
  * MetaData TypoScript object implementation
@@ -27,63 +28,8 @@ class MetaDataImplementation extends \TYPO3\TypoScript\TypoScriptObjects\Templat
 	 */
 	protected $newsService;
 
-	/**
-	 * Overide the parent evaluate method to get news object
-	 * and assign to template
-	 *
-	 * @return string
-	 */
-	public function evaluate() {
-		$fluidTemplate = new \TYPO3\TypoScript\TypoScriptObjects\Helpers\FluidView(($this->tsRuntime->getControllerContext()->getRequest() instanceof \TYPO3\Flow\Mvc\ActionRequest) ? $this->tsRuntime->getControllerContext()->getRequest() : NULL);
-
-		$templatePath = $this->tsValue('templatePath');
-		if ($templatePath === NULL) {
-			throw new \Exception('Template path "' . $templatePath . '" at path "' . $this->path . '"  not found');
-		}
-		$fluidTemplate->setTemplatePathAndFilename($templatePath);
-
-		$partialRootPath = $this->tsValue('partialRootPath');
-		if ($partialRootPath !== NULL) {
-			$fluidTemplate->setPartialRootPath($partialRootPath);
-		}
-
-		$layoutRootPath = $this->tsValue('layoutRootPath');
-		if ($layoutRootPath !== NULL) {
-			$fluidTemplate->setLayoutRootPath($layoutRootPath);
-		}
-
-			// Template resources need to be evaluated from the templates package not the requests package.
-		if (strpos($templatePath, 'resource://') === 0) {
-			$templateResourcePathParts = parse_url($templatePath);
-			$fluidTemplate->setResourcePackage($templateResourcePathParts['host']);
-		}
-		foreach ($this->properties as $key => $value) {
-			if (!is_array($value)) {
-					// if a value is a SIMPLE TYPE, e.g. neither an Eel expression nor a TypoScript object,
-					// we can just evaluate it (to handle processors) and then assign it to the template.
-				$evaluatedValue = $this->tsValue($key);
-				$fluidTemplate->assign($key, $evaluatedValue);
-			} else {
-					// It is an array; so we need to create a "proxy" for lazy evaluation, as it could be a
-					// nested TypoScript object, Eel expression or simple value.
-				$fluidTemplate->assign($key, new \TYPO3\TypoScript\TypoScriptObjects\Helpers\TypoScriptPathProxy($this, $this->path . '/' . $key, $value));
-			}
-		}
-			// Assign news to template
-		$fluidTemplate->assign('news', $this->getNewsFromCurrentRequest());
-
-		$this->initializeView($fluidTemplate);
-
-			// TODO this should be done differently lateron
-		$fluidTemplate->assign('fluidTemplateTsObject', $this);
-
-		$sectionName = $this->tsValue('sectionName');
-
-		if ($sectionName !== NULL) {
-			return $fluidTemplate->renderSection($sectionName);
-		} else {
-			return $fluidTemplate->render();
-		}
+	protected function initializeView(Helpers\FluidView $view) {
+		$view->assign('news', $this->getNewsFromCurrentRequest());
 	}
 
 	/**
