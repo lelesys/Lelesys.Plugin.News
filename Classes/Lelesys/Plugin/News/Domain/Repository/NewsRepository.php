@@ -100,10 +100,15 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 		$queryBuilder
 				->resetDQLParts()
 				->select('n')
-				->from('Lelesys\Plugin\News\Domain\Model\News', 'n')
-				->leftjoin('n.categories', 'c')
-				->leftjoin('n.tags', 't')
-				->where('n.startDate is null and n.endDate >= current_date()
+				->from('Lelesys\Plugin\News\Domain\Model\News', 'n');
+
+		if (!empty($category)) {
+			$queryBuilder->leftjoin('n.categories', 'c');
+		}
+		if (!empty($tag)) {
+			$queryBuilder->leftjoin('n.tags', 't');
+		}
+		$queryBuilder->where('n.startDate is null and n.endDate >= current_date()
 					OR DATEDIFF(n.startDate,current_date())<1 and n.endDate >= current_date()
 					OR n.endDate is null and n.startDate is null
 					OR n.endDate is null and DATEDIFF(n.startDate,current_date())<=0');
@@ -169,8 +174,10 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 		$queryBuilder
 				->resetDQLParts()
 				->select('n')
-				->from('Lelesys\Plugin\News\Domain\Model\News', 'n')
-				->leftjoin('n.categories', 'c');
+				->from('Lelesys\Plugin\News\Domain\Model\News', 'n');
+		if (!empty($category)) {
+			$queryBuilder->leftjoin('n.categories', 'c');
+		}
 		if ((!empty($category)) || (!empty($folder)) || ($user !== '')) {
 			$queryBuilder->where(
 					$newsConstraints
@@ -222,9 +229,11 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 		$queryBuilder
 				->resetDQLParts()
 				->select('n')
-				->from('Lelesys\Plugin\News\Domain\Model\News', 'n')
-				->leftjoin('n.categories', 'c')
-				->where('n.startDate is null and n.endDate >= current_date()
+				->from('Lelesys\Plugin\News\Domain\Model\News', 'n');
+		if (!empty($category)) {
+			$queryBuilder->leftjoin('n.categories', 'c');
+		}
+		$queryBuilder->where('n.startDate is null and n.endDate >= current_date()
 					OR DATEDIFF(n.startDate,current_date())<1 and n.endDate >= current_date()
 					OR n.endDate is null and n.startDate is null
 					OR n.endDate is null and DATEDIFF(n.startDate,current_date())<=0')
@@ -310,9 +319,12 @@ class NewsRepository extends \TYPO3\Flow\Persistence\Doctrine\Repository {
 		$queryBuilder
 				->resetDQLParts()
 				->select('YEAR(n.dateTime) year, MONTH(n.dateTime) month, COUNT(n) cnt')
-				->from('Lelesys\Plugin\News\Domain\Model\News', 'n')
-				->leftjoin('n.categories', 'c')
-				->where('(n.startDate is null and n.endDate >= current_date()
+				->from('Lelesys\Plugin\News\Domain\Model\News', 'n');
+		if (!empty($category)) {
+			$queryBuilder->leftjoin('n.categories', 'c');
+		}
+
+		$queryBuilder->where('(n.startDate is null and n.endDate >= current_date()
 					OR DATEDIFF(n.startDate,current_date())<1 and n.endDate >= current_date()
 					OR n.endDate is null and n.startDate is null
 					OR n.endDate is null and DATEDIFF(n.startDate,current_date())<=0) AND n.hidden = 0');
