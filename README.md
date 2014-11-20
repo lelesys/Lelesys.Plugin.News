@@ -3,7 +3,7 @@ Lelesys News Plugin
 
 This plugin adds news to your websites.
 
-##### Important note: Initial package development was done when TYPO3 Neos was at alpha3/4. We are working hard continuously to get this to work perfectly and to beautify source code using best practices/concepts of Flow/Neos. Stay tuned!
+##### Important note: This package is no more maintained. We are going to remove this package soon. We have developed node based Neos plugin for News. You can find it https://github.com/lelesys/Lelesys.News here.
 
 Quick start
 ---------
