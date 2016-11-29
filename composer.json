@@ -10,9 +10,8 @@
 		}
 	],
 	"require": {
-		"typo3/flow": "2.2.*",
-		"typo3/neos": "1.2.*",
-		"typo3/swiftmailer": "4.1.5",
+		"typo3/neos": "~2.3.0",
+		"typo3/swiftmailer": "~5.4.2",
 		"lelesys/captcha": "1.0.*"
 	},
 	"autoload": {
